@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import React, { Component } from 'react';
 import Header from '../../Header';
-import MainVideo from '../../MainVideo';
+import MainVideo from '../../Videos/MainVideo';
 
 class B83Component extends Component {
   render() {
