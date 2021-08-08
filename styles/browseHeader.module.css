@@ -1,0 +1,8 @@
+.navbar {
+  background: transparent;
+  transition: ease-in;
+}
+
+.navbar.active {
+  background: #141414;
+}

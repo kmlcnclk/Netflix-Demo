@@ -1,0 +1,54 @@
+.swiperSlide {
+  text-align: center;
+  font-size: 18px;
+  background: #141414;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  transition: 250ms all;
+}
+
+.swiperSlide:hover {
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.sliderText {
+  display: none;
+  transition: 250ms ease;
+  width: 100%;
+  /* height: 200px; */
+  /* background-color: #141414; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
+}
+
+.swiperSlide:hover .sliderText {
+  display: block;
+  transition: 250ms ease;
+}
+
+.swiperPlayer {
+  display: flex;
+}
+
+.swiperReactPlayer {
+  display: none;
+}
+
+.swiperSlide:hover .swiperPlayer {
+  display: none;
+}
+
+.swiperSlide:hover .swiperReactPlayer {
+  display: block;
+}
