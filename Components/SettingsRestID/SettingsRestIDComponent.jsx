@@ -32,6 +32,8 @@ class SettingsRestIDComponent extends Component {
     defaultSliderValueState: false,
     titleR: [],
     options: [],
+    a: false,
+    defaultKids: false,
   };
 
   async componentDidMount() {
@@ -46,6 +48,19 @@ class SettingsRestIDComponent extends Component {
     await this.setState({
       imageName: this.state.profiles[clickProfile].profileName,
     });
+    await this.setState({
+      defaultKids: this.state.profiles[clickProfile].kids,
+    });
+
+    await this.props.setKids(this.state.defaultKids);
+
+    if (this.state.defaultKids) {
+      await this.props.setSliderValue(25);
+      await this.setState({
+        defaultSliderValueState: true,
+        a: true,
+      });
+    }
 
     await this.props.setSliderValue(this.state.defaultSliderValue);
 
@@ -304,6 +319,8 @@ class SettingsRestIDComponent extends Component {
       data,
       titleR,
       options,
+      a,
+      defaultKids,
     } = this.state;
 
     return (
@@ -347,42 +364,54 @@ class SettingsRestIDComponent extends Component {
                       <Text fontSize="2xl" color="#333333" mt={7}>
                         Profile Maturity Rating for {imageName}
                       </Text>
-                      {sliderValue == 100 ? (
-                        <Text fontSize="md" color="#333" mt={5}>
-                          Show titles of all maturity ratings for this profile.
-                        </Text>
-                      ) : null}
-                      {sliderValue == 75 ? (
-                        <Text fontSize="md" color="#333" mt={5}>
-                          Only show titles rated <strong>16+ and below</strong>{' '}
-                          for this profile.
-                        </Text>
-                      ) : null}
-                      {sliderValue == 50 ? (
-                        <Text fontSize="md" color="#333" mt={5}>
-                          Only show titles rated <strong>13+ and below</strong>{' '}
-                          for this profile.
-                        </Text>
-                      ) : null}
-                      {sliderValue == 25 ? (
-                        <Text fontSize="md" color="#333" mt={5}>
-                          Only show titles rated <strong>7+ and below</strong>{' '}
-                          for this profile.
-                        </Text>
-                      ) : null}
-                      {sliderValue == 0 ? (
-                        <Text fontSize="md" color="#333" mt={5}>
-                          Only show titles rated <strong>All</strong> for this
-                          profile.
-                        </Text>
-                      ) : null}
+
+                      {a ? (
+                        <Box>
+                          <Text fontSize="md" color="#333" mt={5}>
+                            Only show titles rated <strong>7+ and below</strong>{' '}
+                            for this profile.
+                          </Text>
+                        </Box>
+                      ) : (
+                        <Box>
+                          {sliderValue == 100 ? (
+                            <Text fontSize="md" color="#333" mt={5}>
+                              Show titles of all maturity ratings for this
+                              profile.
+                            </Text>
+                          ) : null}
+                          {sliderValue == 75 ? (
+                            <Text fontSize="md" color="#333" mt={5}>
+                              Only show titles rated{' '}
+                              <strong>16+ and below</strong> for this profile.
+                            </Text>
+                          ) : null}
+                          {sliderValue == 50 ? (
+                            <Text fontSize="md" color="#333" mt={5}>
+                              Only show titles rated{' '}
+                              <strong>13+ and below</strong> for this profile.
+                            </Text>
+                          ) : null}
+                          {sliderValue == 25 ? (
+                            <Text fontSize="md" color="#333" mt={5}>
+                              Only show titles rated{' '}
+                              <strong>7+ and below</strong> for this profile.
+                            </Text>
+                          ) : null}
+                          {sliderValue == 0 ? (
+                            <Text fontSize="md" color="#333" mt={5}>
+                              Only show titles rated <strong>All</strong> for
+                              this profile.
+                            </Text>
+                          ) : null}
+                        </Box>
+                      )}
+
                       <Slider
-                        defaultValue={
-                          defaultSliderValueState ? 25 : defaultSliderValue
-                        }
+                        defaultValue={defaultSliderValue}
                         min={0}
-                        //bunu değiştiremiyonbunu değiştir
                         max={100}
+                        value={defaultSliderValueState ? 25 : sliderValue}
                         step={25}
                         mt={10}
                         w="96%"
@@ -470,9 +499,14 @@ class SettingsRestIDComponent extends Component {
                         onChange={(e) => {
                           setKids(!kids);
                           setSliderValue(25);
-                          this.setState({ defaultSliderValueState: true });
+                          this.setState({
+                            defaultSliderValueState: !defaultSliderValueState,
+                            a: !a,
+                          });
                         }}
-                        value={kids}
+                        // defaultValue={kids}
+                        // value={kids}
+                        defaultChecked={kids}
                       >
                         Display the Netflix Kids experience with titles just for
                         kids

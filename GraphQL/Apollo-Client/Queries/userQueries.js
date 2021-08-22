@@ -58,6 +58,7 @@ export const GET_USER_FROM_ID = gql`
         profileName
         profileImageUrl
         titleRestrictions
+        kids
       }
     }
   }
@@ -69,6 +70,7 @@ export const GET_UNCLICKED_PROFILES = gql`
       success
       profilesImage
       profilesName
+      i
     }
   }
 `;

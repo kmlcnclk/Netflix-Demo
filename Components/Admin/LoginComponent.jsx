@@ -34,7 +34,7 @@ class LoginComponent extends Component {
       <Flex h="100vh" align="center" justify="center">
         <Flex
           bgColor="#fff"
-          w="lg"
+          w="md"
           p="12"
           as="form"
           onSubmit={this.adminLoginForm}
@@ -47,7 +47,7 @@ class LoginComponent extends Component {
           <Input
             type="email"
             placeholder="Email"
-            size="lg"
+            size="md"
             mb={3}
             border="#bfbfbf 1px solid"
             variant="outline"
@@ -62,7 +62,7 @@ class LoginComponent extends Component {
           <Input
             type="password"
             placeholder="Password"
-            size="lg"
+            size="md"
             mb={6}
             border="#bfbfbf 1px solid"
             variant="outline"

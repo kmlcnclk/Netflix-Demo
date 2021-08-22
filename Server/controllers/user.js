@@ -409,6 +409,7 @@ const getUnclickedProfiles = asyncHandler(
 
     let profilesImage = [];
     let profilesName = [];
+    let ind = [];
 
     for (let i = 0; i < user.profiles.length; i++) {
       if (i != clickProfileIndex) {
@@ -416,6 +417,7 @@ const getUnclickedProfiles = asyncHandler(
 
         await profilesImage.push(p.profileImageUrl);
         await profilesName.push(p.profileName);
+        await ind.push(i);
       }
     }
 
@@ -423,6 +425,7 @@ const getUnclickedProfiles = asyncHandler(
       success: true,
       profilesImage: profilesImage,
       profilesName: profilesName,
+      i: ind,
     };
   }
 );

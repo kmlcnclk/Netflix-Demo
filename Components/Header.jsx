@@ -126,7 +126,7 @@ function Header({}) {
       }
     };
 
-    window.addEventListener('scroll',changeBackground);
+    window.addEventListener('scroll', changeBackground);
   }, [
     router,
     getUnclickedProfiles,
@@ -204,7 +204,7 @@ function Header({}) {
   };
 
   return (
-    <Box ref={ref}>
+    <Box ref={ref} className="transition-colors">
       {getUnclickedProfilesData ? (
         <Flex
           // bgColor={'rgba(20, 20, 20, 0.0)'}
@@ -352,12 +352,15 @@ function Header({}) {
                 color="white"
                 borderColor="#080808"
               >
+                {/* burdaki profile değiştirme şeyine bakarken clickProfileIndexin numaralarına göre takıp et yanı önce sıfır olanlar sonra 1 sonra 2 sonra da 3 clickprofileindex in olmayan indexleri al yani clickprofileindex ==2 ise önce 0 gönderilir clickprofile funcına (onclick funcınındaki) sonra 1 sonrada 3 tabi 4 elemanlı ise. */}
+
                 {clickProfileIndex == 0 &&
                 getUnclickedProfilesData.getUnclickedProfiles
                   .profilesImage[0] ? (
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -400,6 +403,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -442,6 +446,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -484,6 +489,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -526,6 +532,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -568,10 +575,11 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
-                        '1',
+                        '2',
                         getUnclickedProfilesData.getUnclickedProfiles
                           .profilesImage[1],
                         getUnclickedProfilesData.getUnclickedProfiles
@@ -610,6 +618,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -652,6 +661,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -694,6 +704,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -737,10 +748,11 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
-                        '2',
+                        '3',
                         getUnclickedProfilesData.getUnclickedProfiles
                           .profilesImage[2],
                         getUnclickedProfilesData.getUnclickedProfiles
@@ -780,10 +792,11 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
-                        '2',
+                        '3',
                         getUnclickedProfilesData.getUnclickedProfiles
                           .profilesImage[2],
                         getUnclickedProfilesData.getUnclickedProfiles
@@ -823,6 +836,7 @@ function Header({}) {
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
                     onClick={(e) =>
                       clickProfile(
                         e,
@@ -860,21 +874,28 @@ function Header({}) {
                   </MenuItem>
                 ) : null}
 
+                <MenuItem
+                  color="white"
+                  _focus={{ bgColor: '#141414' }}
+                  _hover={{ bgColor: '#141414' }}
+                  _active={{ bgColor: '#141414' }}
+                >
+                  <Link href="/profiles/manage" passHref>
+                    <Text
+                      fontSize="sm"
+                      _hover={{ textDecoration: 'underline' }}
+                    >
+                      Manage Profiles
+                    </Text>
+                  </Link>
+                </MenuItem>
                 <MenuDivider color="#757575" />
 
                 <MenuItem
                   color="white"
                   _focus={{ bgColor: '#141414' }}
                   _hover={{ bgColor: '#141414' }}
-                >
-                  <Text fontSize="sm" _hover={{ textDecoration: 'underline' }}>
-                    Manage Profiles
-                  </Text>
-                </MenuItem>
-                <MenuItem
-                  color="white"
-                  _focus={{ bgColor: '#141414' }}
-                  _hover={{ bgColor: '#141414' }}
+                  _active={{ bgColor: '#141414' }}
                 >
                   <Link href="/YourAccount" passHref>
                     <a target="_blank">
@@ -892,6 +913,7 @@ function Header({}) {
                   color="white"
                   _focus={{ bgColor: '#141414' }}
                   _hover={{ bgColor: '#141414' }}
+                  _active={{ bgColor: '#141414' }}
                 >
                   <Link href="https://help.netflix.com/tr/" passHref>
                     <a target="_blank">
@@ -909,6 +931,7 @@ function Header({}) {
                   color="white"
                   _focus={{ bgColor: '#141414' }}
                   _hover={{ bgColor: '#141414' }}
+                  _active={{ bgColor: '#141414' }}
                   onClick={logout}
                 >
                   <Text fontSize="sm" _hover={{ textDecoration: 'underline' }}>

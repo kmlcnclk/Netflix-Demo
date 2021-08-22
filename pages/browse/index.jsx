@@ -18,6 +18,7 @@ import { useToast } from '@chakra-ui/react';
 import AddProfilePage from '../../Components/Browse/AddProfilePage';
 import { ADD_PROFILE_TO_USER } from '../../GraphQL/Apollo-Client/Mutations/userMutation';
 import { getClickProfileIndexFromLocal } from '../../SessionStorage/clickProfileIndexStorage';
+import { getClickProfileFromLocal } from '../../SessionStorage/clickProfileStorage';
 
 export default function Browse() {
   const [getProfilesFromUser, { data }] = useLazyQuery(GET_PROFILES_FROM_USER);
@@ -56,6 +57,13 @@ export default function Browse() {
     router.prefetch('/');
     router.prefetch('/browse');
     router.prefetch('/ManageProfiles');
+
+    const clickProfile = getClickProfileFromLocal()[0];
+    const clickProfileIndex = getClickProfileIndexFromLocal()[0];
+
+    if (clickProfile && clickProfileIndex) {
+      setProfileState(true);
+    }
 
     const profile = async () => {
       const email = await getEmailFromLocal()[0];

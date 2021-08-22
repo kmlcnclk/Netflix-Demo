@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { getEmailFromLocal } from '../../LocalStorage/emailStorage';
 // import { getUserIDFromLocal } from '../LocalStorage/userIDStorage';
 import Head from 'next/head';
-import AdminComponent from '../../Components/Admin/AdminComponent';
+import AdminComponent from '../../Components/Admin/AdminC/AdminComponent';
 import { useState } from 'react';
 import { getAdminEmailFromLocal } from '../../LocalStorage/adminEmailStorage';
 import LoginComponent from '../../Components/Admin/LoginComponent';
@@ -18,6 +18,8 @@ function Admin() {
   const [adminEmailState, setAdminEmailState] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [adminMenuState, setAdminMenuState] = useState(false);
 
   const [adminLogin, { data: adminLoginData }] = useMutation(ADMIN_LOGIN);
 
@@ -53,7 +55,7 @@ function Admin() {
   }, [router, setAdminEmailState]);
 
   return (
-    <Box bgColor="gray.100">
+    <Box bgColor="gray.100" h="full">
       <Head>
         <title>Netflix</title>
         <meta name="description" content="Netflix" />
@@ -61,7 +63,11 @@ function Admin() {
       </Head>
 
       {adminEmailState ? (
-        <AdminComponent router={router} />
+        <AdminComponent
+          router={router}
+          adminMenuState={adminMenuState}
+          setAdminMenuState={setAdminMenuState}
+        />
       ) : (
         <LoginComponent
           email={email}

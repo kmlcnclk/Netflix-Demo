@@ -19,6 +19,7 @@
     "apollo-server": "^2.23.0",
     "apollo-server-errors": "^2.5.0",
     "apollo-server-micro": "^2.23.0",
+    "autoprefixer": "^10.3.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.0.2",
     "cloudinary": "^1.26.1",
@@ -30,6 +31,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.14",
     "next": "11.0.1",
+    "postcss": "^8.3.6",
     "react": "17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-bootstrap-carousel": "^4.1.1",
@@ -48,6 +50,7 @@
     "react-tagsinput": "^3.19.0",
     "slugify": "^1.5.3",
     "swiper": "^6.7.5",
+    "tailwindcss": "^2.2.7",
     "video-react": "^0.14.1"
   },
   "devDependencies": {

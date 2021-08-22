@@ -14,7 +14,10 @@ import React from 'react';
 import NextImage from 'next/image';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { deleteEmailFromLocal } from '../../LocalStorage/emailStorage';
-import { deleteClickProfileFromLocal } from '../../SessionStorage/clickProfileStorage';
+import {
+  addClickProfileToLocal,
+  deleteClickProfileFromLocal,
+} from '../../SessionStorage/clickProfileStorage';
 import { deleteEmailStateFromLocal } from '../../LocalStorage/emailStateStorage';
 import { deletePlanFromLocal } from '../../LocalStorage/planformStorage';
 import { deleteLoginStateFromLocal } from '../../LocalStorage/loginStateStorage';
@@ -23,10 +26,19 @@ import { getRememberMeFromLocal } from '../../LocalStorage/rememberMeStorage';
 import { deleteUserIDFromLocal } from '../../LocalStorage/userIDStorage';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
-import { deleteClickProfileIndexFromLocal } from '../../SessionStorage/clickProfileIndexStorage';
+import {
+  addClickProfileIndexToLocal,
+  deleteClickProfileIndexFromLocal,
+} from '../../SessionStorage/clickProfileIndexStorage';
 import { deleteBrowsePageFromLocal } from '../../LocalStorage/browsePageStorage';
-import { deleteImageUrlFromLocal } from '../../LocalStorage/imageUrlStorage';
-import { deleteImageNameFromLocal } from '../../LocalStorage/imageNameStorage';
+import {
+  addImageUrlToLocal,
+  deleteImageUrlFromLocal,
+} from '../../LocalStorage/imageUrlStorage';
+import {
+  addImageNameToLocal,
+  deleteImageNameFromLocal,
+} from '../../LocalStorage/imageNameStorage';
 import { deleteRegistrationStateFromLocal } from '../../LocalStorage/registrationStateStorage';
 
 function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
@@ -34,6 +46,7 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
 
   useEffect(() => {
     router.prefetch('/logout');
+    router.prefetch('/browse');
   }, [router]);
 
   const logout = async () => {
@@ -56,6 +69,30 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
     await deleteRegistrationStateFromLocal();
 
     router.push('/logout');
+  };
+
+  const clickMenuItem = async (i) => {
+    const clci = await getUnclickedProfilesData.getUnclickedProfiles.i[i];
+    await deleteClickProfileIndexFromLocal();
+    await addClickProfileIndexToLocal(`${clci}`);
+
+    const clcp = await getUnclickedProfilesData.getUnclickedProfiles.i[i];
+    await deleteClickProfileFromLocal();
+    await addClickProfileToLocal(`${clcp}`);
+
+    const imgURL = await getUnclickedProfilesData.getUnclickedProfiles
+      .profilesImage[i];
+
+    await deleteImageUrlFromLocal();
+    await addImageUrlToLocal(imgURL);
+
+    const imgName = await getUnclickedProfilesData.getUnclickedProfiles
+      .profilesName[i];
+
+    await deleteImageNameFromLocal();
+    await addImageNameToLocal(imgName);
+
+    router.push('/browse');
   };
 
   return (
@@ -114,6 +151,8 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
             <MenuItem
               _hover={{ bgColor: '#080808' }}
               _focus={{ bgColor: '#080808' }}
+              _active={{ bgColor: '#080808' }}
+              onClick={(e) => clickMenuItem('0')}
             >
               <Image
                 w="32px"
@@ -138,6 +177,8 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
             <MenuItem
               _hover={{ bgColor: '#080808' }}
               _focus={{ bgColor: '#080808' }}
+              _active={{ bgColor: '#080808' }}
+              onClick={(e) => clickMenuItem('1')}
             >
               <Image
                 w="32px"
@@ -162,6 +203,8 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
             <MenuItem
               _hover={{ bgColor: '#080808' }}
               _focus={{ bgColor: '#080808' }}
+              _active={{ bgColor: '#080808' }}
+              onClick={(e) => clickMenuItem('2')}
             >
               <Image
                 w="32px"
@@ -187,15 +230,19 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
           <MenuItem
             _hover={{ bgColor: '#080808' }}
             _focus={{ bgColor: '#080808' }}
+            _active={{ bgColor: '#080808' }}
           >
-            <Text fontSize="sm" _hover={{ textDecoration: 'underline' }}>
-              Manage Profiles
-            </Text>
+            <Link href="/profiles/manage" passHref>
+              <Text fontSize="sm" _hover={{ textDecoration: 'underline' }}>
+                Manage Profiles
+              </Text>
+            </Link>
           </MenuItem>
           <MenuDivider color="#757575" />
           <MenuItem
             _hover={{ bgColor: '#080808' }}
             _focus={{ bgColor: '#080808' }}
+            _active={{ bgColor: '#080808' }}
           >
             <Link href="/YourAccount" passHref>
               <a target="_blank">
@@ -212,6 +259,7 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
           <MenuItem
             _hover={{ bgColor: '#080808' }}
             _focus={{ bgColor: '#080808' }}
+            _active={{ bgColor: '#080808' }}
           >
             <Link href="https://help.netflix.com/tr/" passHref>
               <a target="_blank">
@@ -228,6 +276,7 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
           <MenuItem
             _hover={{ bgColor: '#080808' }}
             _focus={{ bgColor: '#080808' }}
+            _active={{ bgColor: '#080808' }}
             onClick={logout}
           >
             <Text fontSize="sm" _hover={{ textDecoration: 'underline' }}>

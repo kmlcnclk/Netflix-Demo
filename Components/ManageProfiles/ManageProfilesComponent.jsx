@@ -8,14 +8,7 @@ import {
   Select,
   Heading,
   Checkbox,
-  Menu,
-  MenuList,
-  MenuButton,
-  MenuItem,
-  Button,
-  MenuGroup,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { AddIcon } from '@chakra-ui/icons';

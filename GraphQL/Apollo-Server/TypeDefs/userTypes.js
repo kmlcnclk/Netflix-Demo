@@ -114,6 +114,7 @@ export const UserTypes = gql`
     success: Boolean!
     profilesImage: [String]!
     profilesName: [String]!
+    i: [Int]!
   }
 
   type AdminLogin {
