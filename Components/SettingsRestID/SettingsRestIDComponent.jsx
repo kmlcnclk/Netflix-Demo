@@ -34,93 +34,180 @@ class SettingsRestIDComponent extends Component {
     options: [],
     a: false,
     defaultKids: false,
+    child: {},
+    clickProfile: '',
   };
 
   async componentDidMount() {
     const clickProfile = await getClickProfileFromLocal()[0];
 
-    await this.setState({
-      profiles: this.props.data.getUserFromID.profiles,
-    });
-    await this.setState({
-      imageUrl: this.state.profiles[clickProfile].profileImageUrl,
-    });
-    await this.setState({
-      imageName: this.state.profiles[clickProfile].profileName,
-    });
-    await this.setState({
-      defaultKids: this.state.profiles[clickProfile].kids,
-    });
+    await this.setState({ clickProfile: clickProfile });
 
-    await this.props.setKids(this.state.defaultKids);
-
-    if (this.state.defaultKids) {
-      await this.props.setSliderValue(25);
+    if (clickProfile != 'Child') {
       await this.setState({
-        defaultSliderValueState: true,
-        a: true,
+        profiles: this.props.data.getUserFromID.profiles,
       });
-    }
+      await this.setState({
+        imageUrl: this.state.profiles[clickProfile].profileImageUrl,
+      });
+      await this.setState({
+        imageName: this.state.profiles[clickProfile].profileName,
+      });
+      await this.setState({
+        defaultKids: this.state.profiles[clickProfile].kids,
+      });
 
-    await this.props.setSliderValue(this.state.defaultSliderValue);
+      await this.props.setKids(this.state.defaultKids);
 
-    this.props.setTitleRestrictions(
-      this.state.profiles[clickProfile].titleRestrictions
-    );
+      if (this.state.defaultKids) {
+        await this.props.setSliderValue(25);
+        await this.setState({
+          defaultSliderValueState: true,
+          a: true,
+        });
+      }
 
-    let titleR = [];
+      // await this.props.setSliderValue(this.state.defaultSliderValue);
 
-    for (let i = 0; i < this.props.titleRestrictions.length; i++) {
-      const title = {
-        value: this.props.titleRestrictions[i],
-        label: this.props.titleRestrictions[i],
-      };
+      await this.props.setSliderValue(
+        this.state.profiles[clickProfile].maturitySettings.sliderValue
+      );
 
-      await titleR.push(title);
-    }
+      this.props.setTitleRestrictions(
+        this.state.profiles[clickProfile].titleRestrictions
+      );
 
-    await this.setState({
-      titleR: titleR,
-    });
+      let titleR = [];
 
-    let options = await [];
+      for (let i = 0; i < this.props.titleRestrictions.length; i++) {
+        const title = {
+          value: this.props.titleRestrictions[i],
+          label: this.props.titleRestrictions[i],
+        };
 
-    for (
-      let i = 0;
-      i < this.props.getAllMoviesData.getAllMovies.movies.length;
-      i++
-    ) {
-      const option = {
-        value: this.props.getAllMoviesData.getAllMovies.movies[i].name,
-        label: this.props.getAllMoviesData.getAllMovies.movies[i].name,
-      };
+        await titleR.push(title);
+      }
 
-      options.push(option);
-    }
-    for (
-      let i = 0;
-      i < this.props.getAllTVShowsData.getAllTVShows.tvShows.length;
-      i++
-    ) {
-      const option = {
-        value: this.props.getAllTVShowsData.getAllTVShows.tvShows[i].name,
-        label: this.props.getAllTVShowsData.getAllTVShows.tvShows[i].name,
-      };
+      await this.setState({
+        titleR: titleR,
+      });
 
-      options.push(option);
-    }
+      let options = await [];
 
-    for (let t = 0; t < this.state.titleR.length; t++) {
-      for (let o = 0; o < options.length; o++) {
-        if (options[o]) {
-          if (options[o].value == this.state.titleR[t].value) {
-            await options.splice(o, 1);
+      for (
+        let i = 0;
+        i < this.props.getAllMoviesData.getAllMovies.movies.length;
+        i++
+      ) {
+        const option = {
+          value: this.props.getAllMoviesData.getAllMovies.movies[i].name,
+          label: this.props.getAllMoviesData.getAllMovies.movies[i].name,
+        };
+
+        options.push(option);
+      }
+      for (
+        let i = 0;
+        i < this.props.getAllTVShowsData.getAllTVShows.tvShows.length;
+        i++
+      ) {
+        const option = {
+          value: this.props.getAllTVShowsData.getAllTVShows.tvShows[i].name,
+          label: this.props.getAllTVShowsData.getAllTVShows.tvShows[i].name,
+        };
+
+        options.push(option);
+      }
+
+      for (let t = 0; t < this.state.titleR.length; t++) {
+        for (let o = 0; o < options.length; o++) {
+          if (options[o]) {
+            if (options[o].value == this.state.titleR[t].value) {
+              await options.splice(o, 1);
+            }
           }
         }
       }
-    }
 
-    await this.setState({ options: options });
+      await this.setState({ options: options });
+    } else if (clickProfile == 'Child') {
+      await this.setState({
+        child: this.props.data.getUserFromID.child,
+      });
+      await this.setState({
+        imageUrl: this.state.child.childImageUrl,
+      });
+      await this.setState({
+        imageName: this.state.child.childName,
+      });
+      await this.setState({
+        defaultKids: this.state.child.kids,
+      });
+
+      await this.props.setKids(this.state.defaultKids);
+
+      // await this.props.setSliderValue(this.state.defaultSliderValue);
+
+      await this.props.setSliderValue(
+        this.state.child.maturitySettings.sliderValue
+      );
+
+      this.props.setTitleRestrictions(this.state.child.titleRestrictions);
+
+      let titleR = [];
+
+      for (let i = 0; i < this.props.titleRestrictions.length; i++) {
+        const title = {
+          value: this.props.titleRestrictions[i],
+          label: this.props.titleRestrictions[i],
+        };
+
+        await titleR.push(title);
+      }
+
+      await this.setState({
+        titleR: titleR,
+      });
+
+      let options = await [];
+
+      for (
+        let i = 0;
+        i < this.props.getAllMoviesData.getAllMovies.movies.length;
+        i++
+      ) {
+        const option = {
+          value: this.props.getAllMoviesData.getAllMovies.movies[i].name,
+          label: this.props.getAllMoviesData.getAllMovies.movies[i].name,
+        };
+
+        options.push(option);
+      }
+      for (
+        let i = 0;
+        i < this.props.getAllTVShowsData.getAllTVShows.tvShows.length;
+        i++
+      ) {
+        const option = {
+          value: this.props.getAllTVShowsData.getAllTVShows.tvShows[i].name,
+          label: this.props.getAllTVShowsData.getAllTVShows.tvShows[i].name,
+        };
+
+        options.push(option);
+      }
+
+      for (let t = 0; t < this.state.titleR.length; t++) {
+        for (let o = 0; o < options.length; o++) {
+          if (options[o]) {
+            if (options[o].value == this.state.titleR[t].value) {
+              await options.splice(o, 1);
+            }
+          }
+        }
+      }
+
+      await this.setState({ options: options });
+    }
   }
 
   isThePasswordCorrectForm = async (e) => {
@@ -129,31 +216,63 @@ class SettingsRestIDComponent extends Component {
     const email = await getEmailFromLocal()[0];
     const clickProfile = await getClickProfileFromLocal()[0];
 
-    try {
-      await this.props.isThePasswordCorrect({
-        variables: {
-          email: email,
-          password: this.props.password,
-          clickProfileIndex: clickProfile,
-        },
-      });
-    } catch (err) {
-      this.props.toast({
-        title: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-
-    if (this.props.isThePasswordCorrectData) {
-      if (this.props.isThePasswordCorrectData.isThePasswordCorrect.success) {
-        this.props.setPasswordState(true);
-        this.setState({
-          defaultSliderValue:
-            this.props.isThePasswordCorrectData.isThePasswordCorrect
-              .sliderValue,
+    if (clickProfile != 'Child') {
+      try {
+        await this.props.isThePasswordCorrect({
+          variables: {
+            email: email,
+            password: this.props.password,
+            clickProfileIndex: clickProfile,
+          },
         });
+      } catch (err) {
+        this.props.toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+
+      if (this.props.isThePasswordCorrectData) {
+        if (this.props.isThePasswordCorrectData.isThePasswordCorrect.success) {
+          this.props.setPasswordState(true);
+          this.setState({
+            defaultSliderValue:
+              this.props.isThePasswordCorrectData.isThePasswordCorrect
+                .sliderValue,
+          });
+        }
+      }
+    } else {
+      try {
+        await this.props.isThePasswordCorrectChildProfile({
+          variables: {
+            email: email,
+            password: this.props.password,
+          },
+        });
+      } catch (err) {
+        this.props.toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+
+      if (this.props.isThePasswordCorrectChildProfileData) {
+        if (
+          this.props.isThePasswordCorrectChildProfileData
+            .isThePasswordCorrectChildProfile.success
+        ) {
+          this.props.setPasswordState(true);
+          this.setState({
+            defaultSliderValue:
+              this.props.isThePasswordCorrectChildProfileData
+                .isThePasswordCorrectChildProfile.sliderValue,
+          });
+        }
       }
     }
   };
@@ -321,13 +440,15 @@ class SettingsRestIDComponent extends Component {
       options,
       a,
       defaultKids,
+      child,
+      clickProfile,
     } = this.state;
 
     return (
       <Box>
         {passwordState ? (
           <Box>
-            {profiles[0] ? (
+            {profiles[0] || child ? (
               <Box bgColor="#f3f3f3">
                 <SettingsRestHeader
                   imageUrl={imageUrl}
@@ -361,9 +482,24 @@ class SettingsRestIDComponent extends Component {
                           h="50px"
                         />
                       </Flex>
+
                       <Text fontSize="2xl" color="#333333" mt={7}>
                         Profile Maturity Rating for {imageName}
                       </Text>
+                      {clickProfile == 'Child' ? (
+                        <Box
+                          mt={5}
+                          border="1px solid"
+                          borderColor="gray.500"
+                          p={4}
+                        >
+                          <Text fontSize="md" color="#333">
+                            Since this is a default Netflix kids profile,
+                            content above a certain maturity rating is
+                            restricted.
+                          </Text>
+                        </Box>
+                      ) : null}
 
                       {a ? (
                         <Box>
@@ -417,7 +553,27 @@ class SettingsRestIDComponent extends Component {
                         w="96%"
                         ml={3.5}
                         onChange={(value) => {
-                          setSliderValue(value);
+                          if (clickProfile == 'Child') {
+                            if (value == 25 || value == 0) {
+                              if (value != 25) {
+                                setKids(false);
+                                this.setState({
+                                  defaultSliderValueState: false,
+                                  a: false,
+                                });
+                              }
+                              setSliderValue(value);
+                            }
+                          } else {
+                            if (value != 25) {
+                              setKids(false);
+                              this.setState({
+                                defaultSliderValueState: false,
+                                a: false,
+                              });
+                            }
+                            setSliderValue(value);
+                          }
                         }}
                       >
                         <SliderTrack bg="gray.200">
@@ -489,29 +645,31 @@ class SettingsRestIDComponent extends Component {
                         </Box>
                       </Flex>
                     </Box>
-
-                    <Box borderBottom="1px solid #ccc" pt={7} pb={7}>
-                      <Text fontSize="2xl" mb={5}>
-                        Kids Profile
-                      </Text>
-                      <Checkbox
-                        size="lg"
-                        onChange={(e) => {
-                          setKids(!kids);
-                          setSliderValue(25);
-                          this.setState({
-                            defaultSliderValueState: !defaultSliderValueState,
-                            a: !a,
-                          });
-                        }}
-                        // defaultValue={kids}
-                        // value={kids}
-                        defaultChecked={kids}
-                      >
-                        Display the Netflix Kids experience with titles just for
-                        kids
-                      </Checkbox>
-                    </Box>
+                    {clickProfile != 'Child' ? (
+                      <Box borderBottom="1px solid #ccc" pt={7} pb={7}>
+                        <Text fontSize="2xl" mb={5}>
+                          Kids Profile
+                        </Text>
+                        <Checkbox
+                          size="lg"
+                          onChange={(e) => {
+                            setKids(!kids);
+                            setSliderValue(25);
+                            this.setState({
+                              defaultSliderValueState: !defaultSliderValueState,
+                              a: !a,
+                            });
+                          }}
+                          // defaultValue={kids}
+                          // value={kids}
+                          defaultChecked={kids}
+                          isChecked={kids}
+                        >
+                          Display the Netflix Kids experience with titles just
+                          for kids
+                        </Checkbox>
+                      </Box>
+                    ) : null}
                     <Box pt={7}>
                       <Text fontSize="2xl">
                         Title Restrictions for {imageName}
@@ -602,7 +760,7 @@ class SettingsRestIDComponent extends Component {
           </Box>
         ) : (
           <Box>
-            {profiles[0] ? (
+            {profiles[0] || child ? (
               <Box bgColor="#f3f3f3">
                 <SettingsRestHeader
                   imageUrl={imageUrl}

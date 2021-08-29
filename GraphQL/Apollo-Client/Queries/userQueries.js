@@ -59,6 +59,18 @@ export const GET_USER_FROM_ID = gql`
         profileImageUrl
         titleRestrictions
         kids
+        maturitySettings {
+          sliderValue
+        }
+      }
+      child {
+        childName
+        childImageUrl
+        titleRestrictions
+        kids
+        maturitySettings {
+          sliderValue
+        }
       }
     }
   }
@@ -117,6 +129,34 @@ export const GET_PROFILE_IMAGE_FROM_USER = gql`
     getProfileImageFromUser(email: $email) {
       success
       images
+    }
+  }
+`;
+
+export const GET_CHILD_FROM_USER = gql`
+  query getChildFromUser($email: String!) {
+    getChildFromUser(email: $email) {
+      success
+      child {
+        _id
+        childName
+        likes
+        likeCount
+        myList
+        childImageUrl
+        language
+        maturitySettings {
+          ageLimit
+          sliderValue
+        }
+        autoplayControls {
+          autoplayNextEpisode
+          previews
+        }
+        watchHistory
+        kids
+        titleRestrictions
+      }
     }
   }
 `;

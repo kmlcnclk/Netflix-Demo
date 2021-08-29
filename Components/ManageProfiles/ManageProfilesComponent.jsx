@@ -18,6 +18,7 @@ import {
   addClickProfileToLocal,
   deleteClickProfileFromLocal,
 } from '../../SessionStorage/clickProfileStorage';
+import { deleteClickProfileIndexFromLocal } from '../../SessionStorage/clickProfileIndexStorage';
 
 class ManageProfilesComponent extends Component {
   state = {
@@ -68,16 +69,10 @@ class ManageProfilesComponent extends Component {
         setAgeLimit4,
         setAutoplayNextEpisode4,
         setPreviews4,
-        setProfileImageUrl5,
-        setLanguage5,
-        setAgeLimit5,
-        setAutoplayNextEpisode5,
-        setPreviews5,
         setKids1,
         setKids2,
         setKids3,
         setKids4,
-        setKids5,
       } = this.props;
 
       if (i == 0) {
@@ -120,17 +115,41 @@ class ManageProfilesComponent extends Component {
         setAutoplayNextEpisode4(autoplayNextEpisode);
         setPreviews4(previews);
         setKids4(kids);
-      } else if (this.state.profiles[this.state.profiles.length - 1]) {
-        await this.setState({
-          u5: this.state.profiles[this.state.profiles.length - 1],
-        });
-        setProfileImageUrl5(profileImageUrl);
-        setLanguage5(language);
-        setAgeLimit5(ageLimit);
-        setAutoplayNextEpisode5(autoplayNextEpisode);
-        setPreviews5(previews);
-        setKids5(kids);
       }
+    }
+
+    const {
+      setProfileImageUrl5,
+      setLanguage5,
+      setAgeLimit5,
+      setAutoplayNextEpisode5,
+      setPreviews5,
+      setKids5,
+    } = this.props;
+
+    if (this.props.getChildFromUserData.getChildFromUser.child) {
+      await this.setState({
+        u5: this.props.getChildFromUserData.getChildFromUser.child.childName,
+      });
+      setProfileImageUrl5(
+        this.props.getChildFromUserData.getChildFromUser.child.childImageUrl
+      );
+      setLanguage5(
+        this.props.getChildFromUserData.getChildFromUser.child.language
+      );
+      setAgeLimit5(
+        this.props.getChildFromUserData.getChildFromUser.child.maturitySettings
+          .ageLimit
+      );
+      setAutoplayNextEpisode5(
+        this.props.getChildFromUserData.getChildFromUser.child.autoplayControls
+          .autoplayNextEpisode
+      );
+      setPreviews5(
+        this.props.getChildFromUserData.getChildFromUser.child.autoplayControls
+          .previews
+      );
+      setKids5(this.props.getChildFromUserData.getChildFromUser.child.kids);
     }
 
     const ID = await getUserIDFromLocal()[0];
@@ -193,19 +212,6 @@ class ManageProfilesComponent extends Component {
             profileIndex: clickProfileIndex,
           },
         });
-      } else if (clickProfileIndex == '4') {
-        await this.props.changeToProfileName({
-          variables: {
-            email: this.props.email,
-            profileName: this.state.u5,
-            profileImageUrl: this.props.profileImageUrl5,
-            language: this.props.language5,
-            ageLimit: this.props.ageLimit5,
-            autoplayNextEpisode: this.props.autoplayNextEpisode5,
-            previews: this.props.previews5,
-            profileIndex: clickProfileIndex,
-          },
-        });
       }
     } catch (err) {
       this.props.toast({
@@ -217,6 +223,33 @@ class ManageProfilesComponent extends Component {
     }
 
     if (this.props.changeToProfileNameData) {
+      this.props.router.reload();
+    }
+  };
+
+  changeChildFromUserFunc = async (e) => {
+    try {
+      await this.props.changeChildFromUser({
+        variables: {
+          email: this.props.email,
+          childName: this.state.u5,
+          childImageUrl: this.props.profileImageUrl5,
+          language: this.props.language5,
+          ageLimit: this.props.ageLimit5,
+          autoplayNextEpisode: this.props.autoplayNextEpisode5,
+          previews: this.props.previews5,
+        },
+      });
+    } catch (err) {
+      this.props.toast({
+        title: err.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    if (this.props.changeChildFromUserData) {
       this.props.router.reload();
     }
   };
@@ -242,6 +275,48 @@ class ManageProfilesComponent extends Component {
 
     if (this.props.deleteProfileToUserData) {
       this.props.router.reload();
+    }
+  };
+
+  deleteChildFromUser = async (e) => {
+    const { email } = this.props;
+
+    try {
+      await this.props.deleteChildFromUser({
+        variables: {
+          email: email,
+        },
+      });
+    } catch (err) {
+      this.props.toast({
+        title: err.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
+    if (this.props.deleteChildFromUserData) {
+      this.props.router.reload();
+
+      const {
+        setProfileImageUrl5,
+        setLanguage5,
+        setAgeLimit5,
+        setAutoplayNextEpisode5,
+        setPreviews5,
+        setKids5,
+      } = this.props;
+
+      await this.setState({
+        u5: '',
+      });
+      await setProfileImageUrl5('');
+      await setLanguage5('');
+      await setAgeLimit5('');
+      await setAutoplayNextEpisode5(true);
+      await setPreviews5(true);
+      await setKids5(false);
     }
   };
 
@@ -342,6 +417,7 @@ class ManageProfilesComponent extends Component {
       kids3,
       kids4,
       kids5,
+      getChildFromUserData,
     } = this.props;
 
     const { profiles, u1, u2, u3, u4, u5 } = this.state;
@@ -700,7 +776,7 @@ class ManageProfilesComponent extends Component {
                         p={2}
                         w="130.58px"
                         h="37.38px"
-                        onClick={(e) => router.push('/browse')}
+                        onClick={(e) => router.reload()}
                         cursor="pointer"
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
@@ -793,9 +869,9 @@ class ManageProfilesComponent extends Component {
                               borderColor="white"
                               bgColor="black"
                               _hover={{ bgColor: '#2b2b2b' }}
-                              defaultValue={language1}
+                              defaultValue={language2}
                               // bütün dilleri ekle
-                              onChange={(e) => setLanguage1(e.target.value)}
+                              onChange={(e) => setLanguage2(e.target.value)}
                             >
                               <option style={{ color: 'black' }}>
                                 Bahasa Indonesia
@@ -1036,7 +1112,7 @@ class ManageProfilesComponent extends Component {
                         w="130.58px"
                         h="37.38px"
                         cursor="pointer"
-                        onClick={(e) => router.push('/browse')}
+                        onClick={(e) => router.reload()}
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
                         <Text
@@ -1151,9 +1227,9 @@ class ManageProfilesComponent extends Component {
                               borderColor="white"
                               bgColor="black"
                               _hover={{ bgColor: '#2b2b2b' }}
-                              defaultValue={language1}
+                              defaultValue={language3}
                               // bütün dilleri ekle
-                              onChange={(e) => setLanguage1(e.target.value)}
+                              onChange={(e) => setLanguage3(e.target.value)}
                             >
                               <option style={{ color: 'black' }}>
                                 Bahasa Indonesia
@@ -1392,7 +1468,7 @@ class ManageProfilesComponent extends Component {
                         p={2}
                         w="130.58px"
                         h="37.38px"
-                        onClick={(e) => router.push('/browse')}
+                        onClick={(e) => router.reload()}
                         cursor="pointer"
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
@@ -1508,9 +1584,9 @@ class ManageProfilesComponent extends Component {
                               borderColor="white"
                               bgColor="black"
                               _hover={{ bgColor: '#2b2b2b' }}
-                              defaultValue={language1}
+                              defaultValue={language4}
                               // bütün dilleri ekle
-                              onChange={(e) => setLanguage1(e.target.value)}
+                              onChange={(e) => setLanguage4(e.target.value)}
                             >
                               <option style={{ color: 'black' }}>
                                 Bahasa Indonesia
@@ -1747,7 +1823,7 @@ class ManageProfilesComponent extends Component {
                         bgColor="#141414"
                         color="#808080"
                         p={2}
-                        onClick={(e) => router.push('/browse')}
+                        onClick={(e) => router.reload()}
                         w="130.58px"
                         h="37.38px"
                         cursor="pointer"
@@ -1787,362 +1863,366 @@ class ManageProfilesComponent extends Component {
                     </Flex>
                   </Flex>
                 ) : null}
-                {clickProfileIndex == '4' ? (
-                  <Flex justify="center" direction="column" mb={5}>
-                    <Flex
-                      justify="center"
-                      mt={5}
-                      ml={2}
-                      borderBottom="solid #333333 1px"
-                    >
-                      <Flex>
+
+                {getChildFromUserData.getChildFromUser.child ? (
+                  <Box>
+                    {clickProfileIndex == 'Child' ? (
+                      <Flex justify="center" direction="column" mb={5}>
                         <Flex
-                          justify="flex-start"
-                          align="flex-end"
-                          width="109.27px"
-                          height="109.27px"
-                          mb={2}
-                          p={2}
-                          bgAttachment="scroll"
-                          bgSize="cover"
-                          bgRepeat="no-repeat"
-                          bgImage="https://occ-0-2773-784.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABT5ixFQbYisnc8BoIn1xc_zMKDXVUUZsRdfNhsya9b89L6TukHzcbTefYwHzK-81f0E1jrC-R9AK9KRRBwGCLxs6FtBY.png?r=8f0"
-                        >
-                          <Box
-                            borderRadius="full"
-                            cursor="pointer"
-                            border="white solid 1px"
-                            p={1}
-                          >
-                            <RiPencilFill color="white" size="15px" />
-                          </Box>
-                        </Flex>
-                      </Flex>
-                      <Box>
-                        <Box
-                          m={2}
-                          ml={4}
-                          mt={0}
-                          textAlign="left"
+                          justify="center"
+                          mt={5}
+                          ml={2}
                           borderBottom="solid #333333 1px"
-                          pb={5}
                         >
-                          <Input
-                            type="text"
-                            h="35.52px"
-                            w="319.64px"
-                            name="code"
-                            borderRadius="none"
-                            borderColor="#666666"
-                            placeholder="Name"
-                            value={u5}
-                            onChange={(e) =>
-                              this.setState({ u5: e.target.value })
-                            }
-                            _placeholder={{ fontSize: '14px', color: '#ccc' }}
-                            _active={{ bgColor: '#666666' }}
-                            _hover={{ bgColor: '#666666' }}
-                            _focus={{ bgColor: '#666666' }}
-                            errorBorderColor="red"
-                            isRequired
-                            bgColor="#666666"
-                            size="lg"
-                          />
-                          <Flex mt={3} direction="column">
-                            <Text
-                              mb={2}
-                              fontSize="lg"
-                              color="#cccccc"
-                              textAlign="left"
-                            >
-                              Language:
-                            </Text>
-                            <Select
-                              w="max"
-                              h="25.61px"
-                              borderRadius="none"
-                              variant="outline"
-                              borderColor="white"
-                              bgColor="black"
-                              _hover={{ bgColor: '#2b2b2b' }}
-                              defaultValue={language1}
-                              // bütün dilleri ekle
-                              onChange={(e) => setLanguage1(e.target.value)}
-                            >
-                              <option style={{ color: 'black' }}>
-                                Bahasa Indonesia
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Bahasa Melayu
-                              </option>
-                              <option style={{ color: 'black' }}>Dansk</option>
-                              <option style={{ color: 'black' }}>
-                                Deutsch
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                English
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Español
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Français
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Hrvatski
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Italiano
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Kiswahili
-                              </option>
-                              <option style={{ color: 'black' }}>Magyar</option>
-                              <option style={{ color: 'black' }}>
-                                Nederlands
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Norsk bokmål
-                              </option>
-                              <option style={{ color: 'black' }}>Polski</option>
-                              <option style={{ color: 'black' }}>
-                                Português
-                              </option>
-                              <option style={{ color: 'black' }}>Românâ</option>
-                              <option style={{ color: 'black' }}>Suomi</option>
-                              <option style={{ color: 'black' }}>
-                                Svenska
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Tiéng Việt
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Turkish
-                              </option>
-                              <option style={{ color: 'black' }}>
-                                Čeština
-                              </option>
-                              {/*burda daha var onları yaz. */}
-                            </Select>
-                          </Flex>
-                        </Box>
-                        <Box
-                          m={2}
-                          ml={4}
-                          mt={0}
-                          borderBottom="solid #333333 1px"
-                          pb={5}
-                        >
-                          <Text fontSize="lg" textAlign="left" color="#ccc">
-                            Maturity Settings:
-                          </Text>
                           <Flex>
-                            {kids5 ? (
+                            <Flex
+                              justify="flex-start"
+                              align="flex-end"
+                              width="109.27px"
+                              height="109.27px"
+                              mb={2}
+                              p={2}
+                              bgAttachment="scroll"
+                              bgSize="cover"
+                              bgRepeat="no-repeat"
+                              bgImage={profileImageUrl5}
+                            >
                               <Box
-                                bgColor="#303030"
-                                borderRadius="1px"
-                                w="max"
-                                mt={2}
-                                h="30px"
-                                mr={2}
+                                borderRadius="full"
+                                cursor="pointer"
+                                border="white solid 1px"
+                                p={1}
+                              >
+                                <RiPencilFill color="white" size="15px" />
+                              </Box>
+                            </Flex>
+                          </Flex>
+                          <Box>
+                            <Box
+                              m={2}
+                              ml={4}
+                              mt={0}
+                              textAlign="left"
+                              borderBottom="solid #333333 1px"
+                              pb={5}
+                            >
+                              <Input
+                                type="text"
+                                h="35.52px"
+                                w="319.64px"
+                                name="code"
+                                borderRadius="none"
+                                borderColor="#666666"
+                                placeholder="Name"
+                                value={u5}
+                                onChange={(e) =>
+                                  this.setState({ u5: e.target.value })
+                                }
+                                _placeholder={{
+                                  fontSize: '14px',
+                                  color: '#ccc',
+                                }}
+                                _active={{ bgColor: '#666666' }}
+                                _hover={{ bgColor: '#666666' }}
+                                _focus={{ bgColor: '#666666' }}
+                                errorBorderColor="red"
+                                isRequired
+                                bgColor="#666666"
+                                size="lg"
+                              />
+                              <Flex mt={3} direction="column">
+                                <Text
+                                  mb={2}
+                                  fontSize="lg"
+                                  color="#cccccc"
+                                  textAlign="left"
+                                >
+                                  Language:
+                                </Text>
+                                <Select
+                                  w="max"
+                                  h="25.61px"
+                                  borderRadius="none"
+                                  variant="outline"
+                                  borderColor="white"
+                                  bgColor="black"
+                                  _hover={{ bgColor: '#2b2b2b' }}
+                                  defaultValue={language5}
+                                  // bütün dilleri ekle
+                                  onChange={(e) => setLanguage5(e.target.value)}
+                                >
+                                  <option style={{ color: 'black' }}>
+                                    Bahasa Indonesia
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Bahasa Melayu
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Dansk
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Deutsch
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    English
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Español
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Français
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Hrvatski
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Italiano
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Kiswahili
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Magyar
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Nederlands
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Norsk bokmål
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Polski
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Português
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Românâ
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Suomi
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Svenska
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Tiéng Việt
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Turkish
+                                  </option>
+                                  <option style={{ color: 'black' }}>
+                                    Čeština
+                                  </option>
+                                  {/*burda daha var onları yaz. */}
+                                </Select>
+                              </Flex>
+                            </Box>
+                            <Box
+                              m={2}
+                              ml={4}
+                              mt={0}
+                              borderBottom="solid #333333 1px"
+                              pb={5}
+                            >
+                              <Text fontSize="lg" textAlign="left" color="#ccc">
+                                Maturity Settings:
+                              </Text>
+                              <Flex>
+                                {kids5 ? (
+                                  <Box
+                                    bgColor="#303030"
+                                    borderRadius="1px"
+                                    w="max"
+                                    mt={2}
+                                    h="30px"
+                                    mr={2}
+                                  >
+                                    <Text
+                                      fontSize="md"
+                                      fontWeight="semibold"
+                                      p="2px"
+                                      pl={2}
+                                      pr={2}
+                                    >
+                                      Child
+                                    </Text>
+                                  </Box>
+                                ) : null}
+                                <Box
+                                  bgColor="#303030"
+                                  borderRadius="1px"
+                                  w="max"
+                                  mt={2}
+                                  h="30px"
+                                >
+                                  <Text
+                                    fontSize="md"
+                                    fontWeight="semibold"
+                                    p="2px"
+                                    pl={2}
+                                    pr={2}
+                                  >
+                                    {ageLimit5}
+                                  </Text>
+                                </Box>
+                              </Flex>
+
+                              {ageLimit5 == '7+' ? (
+                                <Text fontSize="sm" textAlign="left" mt={2}>
+                                  Only show titles rated{' '}
+                                  <strong>7+ and below</strong> for this profile
+                                </Text>
+                              ) : null}
+                              {ageLimit5 == 'All' ? (
+                                <Text fontSize="sm" textAlign="left" mt={2}>
+                                  Only show titles rated <strong>All</strong>{' '}
+                                  for this profile
+                                </Text>
+                              ) : null}
+
+                              <Flex
+                                justify="center"
+                                align="center"
+                                mt={5}
+                                border="#808080 solid 1px"
+                                bgColor="#141414"
+                                color="#808080"
+                                p={2}
+                                w="82.63px"
+                                h="31.66px"
+                                cursor="pointer"
+                                _hover={{
+                                  color: 'white',
+                                  borderColor: 'white',
+                                }}
+                                onClick={this.editProfileWithUserID}
                               >
                                 <Text
-                                  fontSize="md"
+                                  fontSize="lg"
+                                  textAlign="center"
                                   fontWeight="semibold"
-                                  p="2px"
-                                  pl={2}
-                                  pr={2}
                                 >
-                                  Child
+                                  EDIT
                                 </Text>
-                              </Box>
-                            ) : null}
-                            <Box
-                              bgColor="#303030"
-                              borderRadius="1px"
-                              w="max"
-                              mt={2}
-                              h="30px"
-                            >
-                              <Text
-                                fontSize="md"
-                                fontWeight="semibold"
-                                p="2px"
-                                pl={2}
-                                pr={2}
-                              >
-                                {ageLimit5}
-                              </Text>
+                              </Flex>
                             </Box>
-                          </Flex>
-                          {ageLimit5 == 'ALL MATURITY RATINGS' ? (
-                            <Text fontSize="sm" textAlign="left" mt={2}>
-                              Show titles of{' '}
-                              <strong>all maturity ratings</strong> for this
-                              profile
-                            </Text>
-                          ) : null}
+                            <Box m={2} ml={4} mt={0} pb={5} textAlign="left">
+                              <Text fontSize="lg" textAlign="left" color="#ccc">
+                                Autoplay controls
+                              </Text>
+                              <Checkbox
+                                size="lg"
+                                colorScheme="gray"
+                                value={autoplayNextEpisode5}
+                                onChange={(e) =>
+                                  setAutoplayNextEpisode5(!autoplayNextEpisode5)
+                                }
+                                defaultChecked={
+                                  autoplayNextEpisode5 ? true : false
+                                }
+                                mt={2}
+                              >
+                                <Flex align="center">
+                                  <Text fontSize="sm" mb="3px">
+                                    Autoplay next episode in a series on all
+                                    devices.
+                                  </Text>
+                                </Flex>
+                              </Checkbox>
+                              <Checkbox
+                                size="lg"
+                                colorScheme="gray"
+                                value={previews5}
+                                onChange={(e) => setPreviews5(!previews5)}
+                                defaultChecked={previews5 ? true : false}
+                                mt={1}
+                              >
+                                <Flex align="center">
+                                  <Text fontSize="sm" mb="3px">
+                                    Autoplay previews whiles browsing on all
+                                    devices.
+                                  </Text>
+                                </Flex>
+                              </Checkbox>
+                            </Box>
+                          </Box>
+                        </Flex>
 
-                          {ageLimit5 == '16+' ? (
-                            <Text fontSize="sm" textAlign="left" mt={2}>
-                              Only show titles rated{' '}
-                              <strong>16+ and below</strong> for this profile
-                            </Text>
-                          ) : null}
-                          {ageLimit5 == '13+' ? (
-                            <Text fontSize="sm" textAlign="left" mt={2}>
-                              Only show titles rated{' '}
-                              <strong>13+ and below</strong> for this profile
-                            </Text>
-                          ) : null}
-                          {ageLimit5 == '7+' ? (
-                            <Text fontSize="sm" textAlign="left" mt={2}>
-                              Only show titles rated{' '}
-                              <strong>7+ and below</strong> for this profile
-                            </Text>
-                          ) : null}
-                          {ageLimit5 == 'All' ? (
-                            <Text fontSize="sm" textAlign="left" mt={2}>
-                              Only show titles rated <strong>All</strong> for
-                              this profile
-                            </Text>
-                          ) : null}
-
+                        <Flex align="center" ml={2}>
                           <Flex
                             justify="center"
                             align="center"
                             mt={5}
-                            border="#808080 solid 1px"
-                            bgColor="#141414"
-                            color="#808080"
+                            mr={4}
+                            bgColor="white"
+                            color="black"
                             p={2}
-                            w="82.63px"
-                            h="31.66px"
+                            w="101.73px"
+                            onClick={this.changeChildFromUserFunc}
+                            h="37.38px"
                             cursor="pointer"
-                            _hover={{ color: 'white', borderColor: 'white' }}
-                            onClick={this.editProfileWithUserID}
+                            _hover={{ color: 'white', bgColor: '#cb0000' }}
                           >
                             <Text
                               fontSize="lg"
                               textAlign="center"
                               fontWeight="semibold"
                             >
-                              EDIT
+                              SAVE
                             </Text>
                           </Flex>
-                        </Box>
-                        <Box m={2} ml={4} mt={0} pb={5} textAlign="left">
-                          <Text fontSize="lg" textAlign="left" color="#ccc">
-                            Autoplay controls
-                          </Text>
-                          <Checkbox
-                            size="lg"
-                            colorScheme="gray"
-                            value={autoplayNextEpisode5}
-                            onChange={(e) =>
-                              setAutoplayNextEpisode5(!autoplayNextEpisode5)
-                            }
-                            defaultChecked={autoplayNextEpisode5 ? true : false}
-                            mt={2}
-                          >
-                            <Flex align="center">
-                              <Text fontSize="sm" mb="3px">
-                                Autoplay next episode in a series on all
-                                devices.
-                              </Text>
-                            </Flex>
-                          </Checkbox>
-                          <Checkbox
-                            size="lg"
-                            colorScheme="gray"
-                            value={previews5}
-                            onChange={(e) => setPreviews5(!previews5)}
-                            defaultChecked={previews5 ? true : false}
-                            mt={1}
-                          >
-                            <Flex align="center">
-                              <Text fontSize="sm" mb="3px">
-                                Autoplay previews whiles browsing on all
-                                devices.
-                              </Text>
-                            </Flex>
-                          </Checkbox>
-                        </Box>
-                      </Box>
-                    </Flex>
 
-                    <Flex align="center" ml={2}>
-                      <Flex
-                        justify="center"
-                        align="center"
-                        mt={5}
-                        mr={4}
-                        bgColor="white"
-                        color="black"
-                        p={2}
-                        w="101.73px"
-                        onClick={this.changeToProfileNameForm}
-                        h="37.38px"
-                        cursor="pointer"
-                        _hover={{ color: 'white', bgColor: '#cb0000' }}
-                      >
-                        <Text
-                          fontSize="lg"
-                          textAlign="center"
-                          fontWeight="semibold"
-                        >
-                          SAVE
-                        </Text>
+                          <Flex
+                            justify="center"
+                            align="center"
+                            mt={5}
+                            mr={4}
+                            border="#808080 solid 1px"
+                            bgColor="#141414"
+                            color="#808080"
+                            p={2}
+                            w="130.58px"
+                            h="37.38px"
+                            onClick={(e) => router.reload()}
+                            cursor="pointer"
+                            _hover={{ color: 'white', borderColor: 'white' }}
+                          >
+                            <Text
+                              fontSize="lg"
+                              textAlign="center"
+                              fontWeight="semibold"
+                            >
+                              CANCEL
+                            </Text>
+                          </Flex>
+                          <Flex
+                            justify="center"
+                            align="center"
+                            mt={5}
+                            mr={4}
+                            border="#808080 solid 1px"
+                            bgColor="#141414"
+                            color="#808080"
+                            onClick={this.deleteChildFromUser}
+                            p={2}
+                            w="214.14px"
+                            h="37.38px"
+                            cursor="pointer"
+                            _hover={{ color: 'white', borderColor: 'white' }}
+                          >
+                            <Text
+                              fontSize="lg"
+                              textAlign="center"
+                              fontWeight="semibold"
+                            >
+                              DELETE PROFILE
+                            </Text>
+                          </Flex>
+                        </Flex>
                       </Flex>
-
-                      <Flex
-                        justify="center"
-                        align="center"
-                        mt={5}
-                        mr={4}
-                        border="#808080 solid 1px"
-                        bgColor="#141414"
-                        color="#808080"
-                        p={2}
-                        w="130.58px"
-                        h="37.38px"
-                        onClick={(e) => router.push('/browse')}
-                        cursor="pointer"
-                        _hover={{ color: 'white', borderColor: 'white' }}
-                      >
-                        <Text
-                          fontSize="lg"
-                          textAlign="center"
-                          fontWeight="semibold"
-                        >
-                          CANCEL
-                        </Text>
-                      </Flex>
-                      <Flex
-                        justify="center"
-                        align="center"
-                        mt={5}
-                        mr={4}
-                        border="#808080 solid 1px"
-                        bgColor="#141414"
-                        color="#808080"
-                        onClick={this.deleteProfileToUserForm}
-                        p={2}
-                        w="214.14px"
-                        h="37.38px"
-                        cursor="pointer"
-                        _hover={{ color: 'white', borderColor: 'white' }}
-                      >
-                        <Text
-                          fontSize="lg"
-                          textAlign="center"
-                          fontWeight="semibold"
-                        >
-                          DELETE PROFILE
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  </Flex>
+                    ) : null}
+                  </Box>
                 ) : null}
               </Flex>
             </Container>
@@ -2325,47 +2405,55 @@ class ManageProfilesComponent extends Component {
                   ) : null}
                 </Flex>
 
-                <Flex
-                  direction="column"
-                  cursor="pointer"
-                  justify="center"
-                  align="center"
-                  onMouseEnter={(e) => {
-                    setChildColor('#dadada');
-                    setBorderState(true);
-                  }}
-                  onMouseLeave={(e) => {
-                    setChildColor('#808080');
-                    setBorderState(false);
-                  }}
-                  m={2}
-                >
+                {getChildFromUserData.getChildFromUser.child ? (
                   <Flex
+                    direction="column"
+                    cursor="pointer"
                     justify="center"
                     align="center"
-                    bgAttachment="scroll"
-                    bgSize="cover"
-                    border={borderState ? '2px white solid' : null}
-                    bgRepeat="no-repeat"
-                    bgImage="https://occ-0-2773-784.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABT5ixFQbYisnc8BoIn1xc_zMKDXVUUZsRdfNhsya9b89L6TukHzcbTefYwHzK-81f0E1jrC-R9AK9KRRBwGCLxs6FtBY.png?r=8f0"
-                    width="136.59px"
-                    onClick={() => {
-                      setManageProfileState(true);
-                      setClickProfileIndex('4');
+                    onMouseEnter={(e) => {
+                      setChildColor('#dadada');
+                      setBorderState(true);
                     }}
-                    height="136.59px"
-                    mb={2}
+                    onMouseLeave={(e) => {
+                      setChildColor('#808080');
+                      setBorderState(false);
+                    }}
+                    m={2}
                   >
-                    <Box borderRadius="full" border="white solid 1px" p={2}>
-                      <RiPencilFill color="white" size="25px" />
-                    </Box>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      bgAttachment="scroll"
+                      bgSize="cover"
+                      border={borderState ? '2px white solid' : null}
+                      bgRepeat="no-repeat"
+                      bgImage={
+                        getChildFromUserData.getChildFromUser.child
+                          .childImageUrl
+                      }
+                      width="136.59px"
+                      onClick={() => {
+                        setManageProfileState(true);
+                        setClickProfileIndex('Child');
+                      }}
+                      height="136.59px"
+                      mb={2}
+                    >
+                      <Box borderRadius="full" border="white solid 1px" p={2}>
+                        <RiPencilFill color="white" size="25px" />
+                      </Box>
+                    </Flex>
+
+                    <Text
+                      fontSize="lg"
+                      fontWeight="semibold"
+                      color={childColor}
+                    >
+                      {getChildFromUserData.getChildFromUser.child.childName}
+                    </Text>
                   </Flex>
-
-                  <Text fontSize="lg" fontWeight="semibold" color={childColor}>
-                    Child
-                  </Text>
-                </Flex>
-
+                ) : null}
                 {profileCount < 4 ? (
                   <Flex
                     onClick={(e) => {
@@ -2422,7 +2510,11 @@ class ManageProfilesComponent extends Component {
                   pr="24.588px"
                   cursor="pointer"
                   _hover={{ color: 'white', bgColor: '#cb0000' }}
-                  onClick={() => router.push('/browse')}
+                  onClick={async () => {
+                    await deleteClickProfileFromLocal();
+                    await deleteClickProfileIndexFromLocal();
+                    router.push('/browse');
+                  }}
                 >
                   <Text fontSize="lg" textAlign="center" fontWeight="semibold">
                     TAMAM

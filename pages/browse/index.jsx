@@ -8,6 +8,7 @@ import SelectProfilePage from '../../Components/Browse/SelectProfilePage';
 import { useEffect } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import {
+  GET_CHILD_FROM_USER,
   GET_PROFILES_FROM_USER,
   GET_PROFILE_IMAGE_FROM_USER,
 } from '../../GraphQL/Apollo-Client/Queries/userQueries';
@@ -27,6 +28,9 @@ export default function Browse() {
 
   const [getProfileImageFromUser, { data: getProfileImageFromUserData }] =
     useLazyQuery(GET_PROFILE_IMAGE_FROM_USER);
+
+  const [getChildFromUser, { data: getChildFromUserData }] =
+    useLazyQuery(GET_CHILD_FROM_USER);
 
   const [profileState, setProfileState] = useState(false);
   const [add1Color, setAdd1Color] = useState('#141414');
@@ -57,6 +61,7 @@ export default function Browse() {
     router.prefetch('/');
     router.prefetch('/browse');
     router.prefetch('/ManageProfiles');
+    router.prefetch('/Kids');
 
     const clickProfile = getClickProfileFromLocal()[0];
     const clickProfileIndex = getClickProfileIndexFromLocal()[0];
@@ -86,6 +91,26 @@ export default function Browse() {
       }
     };
 
+    const child = async () => {
+      const email = await getEmailFromLocal()[0];
+
+      try {
+        await getChildFromUser({
+          variables: {
+            email: email,
+          },
+        });
+      } catch (err) {
+        toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+    child();
+
     // const ls = getLoginStateFromLocal()[0];
 
     // if (!ls) {
@@ -97,8 +122,10 @@ export default function Browse() {
 
     const cpi = getClickProfileIndexFromLocal()[0];
 
-    if (cpi) {
+    if (cpi && cpi != 'Child') {
       setProfileState(true);
+    } else if (cpi == 'Child') {
+      router.push('/Kids');
     }
 
     const getProfileImageFromUserFunc = async () => {
@@ -135,6 +162,7 @@ export default function Browse() {
     getProfileImageFromUser,
     getProfileImageFromUserData,
     setImages,
+    getChildFromUser,
   ]);
 
   return (
@@ -144,7 +172,7 @@ export default function Browse() {
         <meta name="description" content="Netflix" />
         <link rel="icon" href="/netflix.png" />
       </Head>
-      {data && selectProfileState ? (
+      {data && selectProfileState && getChildFromUserData ? (
         <SelectProfilePage
           profileState={profileState}
           setProfileState={setProfileState}
@@ -182,6 +210,7 @@ export default function Browse() {
           router={router}
           clickProfileIndex={clickProfileIndex}
           setClickProfileIndex={setClickProfileIndex}
+          getChildFromUserData={getChildFromUserData}
         />
       ) : null}
 

@@ -13,7 +13,10 @@ import Link from 'next/link';
 import React from 'react';
 import NextImage from 'next/image';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { deleteEmailFromLocal } from '../../LocalStorage/emailStorage';
+import {
+  deleteEmailFromLocal,
+  getEmailFromLocal,
+} from '../../LocalStorage/emailStorage';
 import {
   addClickProfileToLocal,
   deleteClickProfileFromLocal,
@@ -40,14 +43,37 @@ import {
   deleteImageNameFromLocal,
 } from '../../LocalStorage/imageNameStorage';
 import { deleteRegistrationStateFromLocal } from '../../LocalStorage/registrationStateStorage';
+import { GET_CHILD_FROM_USER } from '../../GraphQL/Apollo-Client/Queries/userQueries';
+import { useLazyQuery } from '@apollo/client';
 
 function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
   const router = useRouter();
+  const [getChildFromUser, { data: getChildFromUserData }] =
+    useLazyQuery(GET_CHILD_FROM_USER);
 
   useEffect(() => {
     router.prefetch('/logout');
     router.prefetch('/browse');
-  }, [router]);
+
+    const getChildFromUserFunc = async () => {
+      const email = await getEmailFromLocal()[0];
+      try {
+        await getChildFromUser({
+          variables: {
+            email: email,
+          },
+        });
+      } catch (err) {
+        toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+    getChildFromUserFunc();
+  }, [router, getChildFromUser]);
 
   const logout = async () => {
     const rememberMe = await getRememberMeFromLocal()[0];
@@ -93,6 +119,23 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
     await addImageNameToLocal(imgName);
 
     router.push('/browse');
+  };
+
+  const clickProfileChild = async (e, i, image, name) => {
+    await deleteClickProfileIndexFromLocal();
+    await addClickProfileIndexToLocal(i);
+
+    const imageUrl = await image;
+
+    await deleteImageUrlFromLocal();
+    await addImageUrlToLocal(imageUrl);
+
+    const imageName = await name;
+
+    await deleteImageNameFromLocal();
+    await addImageNameToLocal(imageName);
+
+    await router.push('/Kids');
   };
 
   return (
@@ -223,6 +266,37 @@ function SettingsRestHeader({ imageUrl, imageName, getUnclickedProfilesData }) {
                 _hover={{ textDecoration: 'underline' }}
               >
                 {getUnclickedProfilesData.getUnclickedProfiles.profilesName[2]}
+              </Text>
+            </MenuItem>
+          ) : null}
+
+          {getChildFromUserData ? (
+            <MenuItem
+              _hover={{ bgColor: '#080808' }}
+              _focus={{ bgColor: '#080808' }}
+              _active={{ bgColor: '#080808' }}
+              onClick={(e) =>
+                clickProfileChild(
+                  e,
+                  'Child',
+                  getChildFromUserData.getChildFromUser.child.childImageUrl,
+                  getChildFromUserData.getChildFromUser.child.childName
+                )
+              }
+            >
+              <Image
+                w="32px"
+                h="32px"
+                src={getChildFromUserData.getChildFromUser.child.childImageUrl}
+                alt={getChildFromUserData.getChildFromUser.child.childName}
+              />
+
+              <Text
+                fontSize="md"
+                ml={2}
+                _hover={{ textDecoration: 'underline' }}
+              >
+                {getChildFromUserData.getChildFromUser.child.childName}
               </Text>
             </MenuItem>
           ) : null}

@@ -6,12 +6,15 @@ import AddProfilePage from '../../Components/Browse/AddProfilePage';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import {
+  GET_CHILD_FROM_USER,
   GET_PROFILES_FROM_USER,
   GET_PROFILE_IMAGE_FROM_USER,
 } from '../../GraphQL/Apollo-Client/Queries/userQueries';
 import {
   ADD_PROFILE_TO_USER,
+  CHANGE_CHILD_FROM_USER,
   CHANGE_TO_PROFILE_NAME,
+  DELETE_CHILD_FROM_USER,
   DELETE_PROFILE_TO_USER,
 } from '../../GraphQL/Apollo-Client/Mutations/userMutation';
 import { getEmailFromLocal } from '../../LocalStorage/emailStorage';
@@ -87,6 +90,16 @@ function Manage() {
   const [getProfileImageFromUser, { data: getProfileImageFromUserData }] =
     useLazyQuery(GET_PROFILE_IMAGE_FROM_USER);
 
+  const [getChildFromUser, { data: getChildFromUserData }] =
+    useLazyQuery(GET_CHILD_FROM_USER);
+
+  const [deleteChildFromUser, { data: deleteChildFromUserData }] = useMutation(
+    DELETE_CHILD_FROM_USER
+  );
+  const [changeChildFromUser, { data: changeChildFromUserData }] = useMutation(
+    CHANGE_CHILD_FROM_USER
+  );
+
   useEffect(() => {
     router.prefetch('/');
     router.prefetch('/browse');
@@ -149,6 +162,26 @@ function Manage() {
     };
 
     getProfileImageFromUserFunc();
+
+    const child = async () => {
+      const email = await getEmailFromLocal()[0];
+
+      try {
+        await getChildFromUser({
+          variables: {
+            email: email,
+          },
+        });
+      } catch (err) {
+        toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+    child();
   }, [
     toast,
     router,
@@ -158,6 +191,7 @@ function Manage() {
     getProfileImageFromUser,
     getProfileImageFromUserData,
     setImages,
+    getChildFromUser,
   ]);
 
   return (
@@ -167,7 +201,7 @@ function Manage() {
         <meta name="description" content="Netflix" />
         <link rel="icon" href="/netflix.png" />
       </Head>
-      {data && selectProfileState ? (
+      {data && selectProfileState && getChildFromUserData ? (
         <ManageProfilesComponent
           profileState={profileState}
           setProfileState={setProfileState}
@@ -273,6 +307,11 @@ function Manage() {
           setKids3={setKids3}
           setKids4={setKids4}
           setKids5={setKids5}
+          getChildFromUserData={getChildFromUserData}
+          deleteChildFromUser={deleteChildFromUser}
+          deleteChildFromUserData={deleteChildFromUserData}
+          changeChildFromUser={changeChildFromUser}
+          changeChildFromUserData={changeChildFromUserData}
         />
       ) : null}
 

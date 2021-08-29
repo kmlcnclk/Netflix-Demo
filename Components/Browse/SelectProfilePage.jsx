@@ -6,6 +6,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { BrowseProfiles } from '../../src/BrowseProfiles';
 import { RiPencilFill } from 'react-icons/ri';
 import BrowseMainVideosPageComponent from './BrowseMainVideosPageComponent';
+import BrowseMainVideosPageComponentChild from '../Child/BrowseMainVideosPageComponentChild';
 import {
   addClickProfileIndexToLocal,
   deleteClickProfileIndexFromLocal,
@@ -22,11 +23,16 @@ import {
 class SelectProfilePage extends Component {
   state = {
     profiles: [],
+    child: {},
   };
 
   async componentDidMount() {
     await this.setState({
       profiles: this.props.data.getProfilesFromUser.profiles,
+    });
+
+    await this.setState({
+      child: this.props.getChildFromUserData.getChildFromUser.child,
     });
 
     await this.props.setProfileCount(this.state.profiles.length);
@@ -47,6 +53,22 @@ class SelectProfilePage extends Component {
     await addImageNameToLocal(imageName);
 
     await this.props.setProfileState(true);
+  };
+  clickProfileChild = async (e, i) => {
+    await deleteClickProfileIndexFromLocal();
+    await addClickProfileIndexToLocal(i);
+
+    const imageUrl = await this.state.child.childImageUrl;
+
+    await deleteImageUrlFromLocal();
+    await addImageUrlToLocal(imageUrl);
+
+    const imageName = await this.state.child.childName;
+
+    await deleteImageNameFromLocal();
+    await addImageNameToLocal(imageName);
+
+    await this.props.router.push('/Kids');
   };
 
   render() {
@@ -83,15 +105,18 @@ class SelectProfilePage extends Component {
       router,
       clickProfileIndex,
       setClickProfileIndex,
+      childState,
+      getChildFromUserData,
     } = this.props;
 
-    const { profiles } = this.state;
+    const { profiles, child } = this.state;
 
     return (
       <Box>
-        {profileState ? (
+        {profileState || childState ? (
           <Box>
-            <BrowseMainVideosPageComponent />
+            {profileState ? <BrowseMainVideosPageComponent /> : null}
+            {/* {childState ? <BrowseMainVideosPageComponentChild /> : null} */}
           </Box>
         ) : (
           <Box bgColor="#141414">
@@ -267,24 +292,24 @@ class SelectProfilePage extends Component {
                       </Flex>
                     ) : null}
                   </Flex>
-
-                  <Flex
-                    direction="column"
-                    cursor="pointer"
-                    justify="center"
-                    align="center"
-                    onMouseEnter={(e) => {
-                      setChildColor('#dadada');
-                      setBorderState(true);
-                    }}
-                    onClick={(e) => this.clickProfile(e, '4')}
-                    onMouseLeave={(e) => {
-                      setChildColor('#808080');
-                      setBorderState(false);
-                    }}
-                    m={2}
-                  >
-                    <Box width="136.59px" height="136.59px" mb={2}>
+                  {getChildFromUserData.getChildFromUser.child ? (
+                    <Flex
+                      direction="column"
+                      cursor="pointer"
+                      justify="center"
+                      align="center"
+                      onMouseEnter={(e) => {
+                        setChildColor('#dadada');
+                        setBorderState(true);
+                      }}
+                      onClick={(e) => this.clickProfileChild(e, 'Child')}
+                      onMouseLeave={(e) => {
+                        setChildColor('#808080');
+                        setBorderState(false);
+                      }}
+                      m={2}
+                    >
+                      {/* <Box width="136.59px" height="136.59px" mb={2}>
                       <Image
                         src="https://occ-0-2773-784.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABT5ixFQbYisnc8BoIn1xc_zMKDXVUUZsRdfNhsya9b89L6TukHzcbTefYwHzK-81f0E1jrC-R9AK9KRRBwGCLxs6FtBY.png?r=8f0"
                         border={borderState ? '2px white solid' : null}
@@ -293,16 +318,65 @@ class SelectProfilePage extends Component {
                         alt="Child"
                         objectFit="contain"
                       />
+                    </Box> */}
+
+                      <Box
+                        width="136.59px"
+                        height="136.59px"
+                        border={borderState ? '2px white solid' : null}
+                        mb={2}
+                      >
+                        <Image
+                          src={`${child.childImageUrl}`}
+                          width="136.59px"
+                          alt={child.childName}
+                          objectFit="contain"
+                        />
+                      </Box>
+
+                      <Text
+                        fontSize="lg"
+                        fontWeight="semibold"
+                        color={childColor}
+                      >
+                        {child.childName}
+                      </Text>
+                    </Flex>
+                  ) : null}
+                  {/* <Flex
+                    direction="column"
+                    cursor="pointer"
+                    justify="center"
+                    align="center"
+                    onMouseEnter={(e) => {
+                      setUser1('#dadada');
+                      setUserBorderState1(true);
+                    }}
+                    onClick={(e) => this.clickProfile(e, '0')}
+                    onMouseLeave={(e) => {
+                      setUser1('#808080');
+                      setUserBorderState1(false);
+                    }}
+                    m={2}
+                  >
+                    <Box
+                      width="136.59px"
+                      height="136.59px"
+                      border={userBorderState1 ? '2px white solid' : null}
+                      mb={2}
+                    >
+                      <Image
+                        src={`${profiles[0].profileImageUrl}`}
+                        width="136.59px"
+                        alt={profiles[0].profileName}
+                        objectFit="contain"
+                      />
                     </Box>
 
-                    <Text
-                      fontSize="lg"
-                      fontWeight="semibold"
-                      color={childColor}
-                    >
-                      Child
+                    <Text fontSize="lg" fontWeight="semibold" color={user1}>
+                      {profiles[0].profileName}
                     </Text>
-                  </Flex>
+                  </Flex> */}
 
                   {profileCount < 4 ? (
                     <Flex

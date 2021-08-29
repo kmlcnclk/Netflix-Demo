@@ -6,6 +6,7 @@ const { UserTypes } = require('./userTypes');
 const { TVShowCategoryTypes } = require('./TVShowCategoryTypes');
 const { MovieCategoryTypes } = require('./MovieCategoryTypes');
 const { ProfileTypes } = require('./profileTypes');
+const { ChildTypes } = require('./childTypes');
 
 export const typeDefs = gql`
   type Query {
@@ -27,6 +28,7 @@ export const typeDefs = gql`
     getAllTVShows: GetAllTVShows!
     isAdmin(adminEmail: String!): IsAdmin!
     getProfileImageFromUser(email: String!): GetProfileImageFromUser!
+    getChildFromUser(email: String!): GetChildFromUser!
   }
 
   type Mutation {
@@ -128,6 +130,20 @@ export const typeDefs = gql`
       clickProfileIndex: String!
       videoName: String!
     ): DeleteTitleRestrictions!
+    deleteChildFromUser(email: String!): DeleteChildFromUser!
+    changeChildFromUser(
+      email: String!
+      childName: String!
+      childImageUrl: String!
+      language: String!
+      ageLimit: String!
+      autoplayNextEpisode: Boolean!
+      previews: Boolean!
+    ): ChangeChildFromUser!
+    isThePasswordCorrectChildProfile(
+      email: String!
+      password: String!
+    ): IsThePasswordCorrectChildProfile!
   }
 
   scalar Date
@@ -139,4 +155,5 @@ export const typeDefs = gql`
   ${TVShowCategoryTypes}
   ${MovieCategoryTypes}
   ${ProfileTypes}
+  ${ChildTypes}
 `;

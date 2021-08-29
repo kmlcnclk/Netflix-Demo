@@ -12,6 +12,7 @@ export const UserTypes = gql`
     creditCards: [CreditCards]!
     registrationPhaseState: Boolean!
     profiles: [ID]!
+    child: ID
     doNotEmailMe: Boolean!
   }
 
@@ -99,6 +100,7 @@ export const UserTypes = gql`
     success: Boolean!
     user: User!
     profiles: [Profile]!
+    child: Child!
   }
 
   type IsThePasswordCorrect {
@@ -155,5 +157,23 @@ export const UserTypes = gql`
   type DeleteTitleRestrictions {
     success: Boolean!
     titleRestrictions: [String]!
+  }
+
+  type GetChildFromUser {
+    success: Boolean!
+    child: Child
+  }
+
+  type DeleteChildFromUser {
+    success: Boolean!
+  }
+
+  type ChangeChildFromUser {
+    success: Boolean!
+  }
+
+  type IsThePasswordCorrectChildProfile {
+    success: Boolean!
+    sliderValue: Int!
   }
 `;

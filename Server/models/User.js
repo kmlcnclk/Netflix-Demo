@@ -56,6 +56,10 @@ const UserSchema = new Schema({
       ref: ['Profile'],
     },
   ],
+  child: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Child',
+  },
   doNotEmailMe: {
     type: Boolean,
     default: false,

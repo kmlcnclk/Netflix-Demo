@@ -23,6 +23,10 @@ import {
   isAdmin,
   getProfileImageFromUser,
   deleteTitleRestrictions,
+  getChildFromUser,
+  deleteChildFromUser,
+  changeChildFromUser,
+  isThePasswordCorrectChildProfile,
 } from '../../../Server/controllers/user';
 import { isManager } from '../../../Server/middlewares/auth/admin';
 import { isTheUserRegistered } from '../../../Server/middlewares/auth/auth';
@@ -80,6 +84,11 @@ export const UserResolvers = {
     },
     async getProfileImageFromUser(_, { email }, { res }) {
       await getProfileImageFromUser(email, res);
+
+      return res.status(200).results;
+    },
+    async getChildFromUser(_, { email }, { res }) {
+      await getChildFromUser(email, res);
 
       return res.status(200).results;
     },
@@ -243,6 +252,42 @@ export const UserResolvers = {
       { res }
     ) {
       await deleteTitleRestrictions(email, clickProfileIndex, videoName, res);
+
+      return res.status(200).results;
+    },
+    async deleteChildFromUser(_, { email }, { res }) {
+      await deleteChildFromUser(email, res);
+
+      return res.status(200).results;
+    },
+    async changeChildFromUser(
+      _,
+      {
+        email,
+        childName,
+        childImageUrl,
+        language,
+        ageLimit,
+        autoplayNextEpisode,
+        previews,
+      },
+      { res }
+    ) {
+      await changeChildFromUser(
+        email,
+        childName,
+        childImageUrl,
+        language,
+        ageLimit,
+        autoplayNextEpisode,
+        previews,
+        res
+      );
+
+      return res.status(200).results;
+    },
+    async isThePasswordCorrectChildProfile(_, { email, password }, { res }) {
+      await isThePasswordCorrectChildProfile(email, password, res);
 
       return res.status(200).results;
     },

@@ -8,6 +8,7 @@ const User = require('../models/User');
 const Movie = require('../models/Movie');
 const TVShow = require('../models/TVShow');
 const Profile = require('../models/Profile');
+const Child = require('../models/Child');
 
 const registerUser = asyncHandler(
   async (email, password, doNotEmailMe, res) => {
@@ -23,7 +24,12 @@ const registerUser = asyncHandler(
       profileName: sEmail,
     });
 
+    const c = await Child.create({
+      childName: 'Child',
+    });
+
     await user.profiles.push(p._id);
+    user.child = await c._id;
 
     await user.save();
 
@@ -306,7 +312,7 @@ const getUserFromID = asyncHandler(async (ID, res) => {
   const user = await User.findById(ID);
 
   if (!user) {
-    throw new ApolloError('There is no such user', 401);
+    throw new ApolloError('There is no such user', 400);
   }
 
   let profiles = [];
@@ -317,10 +323,13 @@ const getUserFromID = asyncHandler(async (ID, res) => {
     await profiles.push(p);
   }
 
+  const child = await Child.findById(user.child);
+
   res.results = {
     success: true,
     user: user,
     profiles: profiles,
+    child: child,
   };
 });
 
@@ -364,33 +373,54 @@ const changeToUserSliderValue = asyncHandler(
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new ApolloError('There is no such user', 401);
+      throw new ApolloError('There is no such user', 400);
     }
 
-    const p = await Profile.findById(user.profiles[clickProfileIndex]);
+    if (clickProfileIndex != 'Child') {
+      const p = await Profile.findById(user.profiles[clickProfileIndex]);
 
-    p.maturitySettings.ageLimit = await ageLimit;
-    p.maturitySettings.sliderValue = await sliderValue;
-    p.kids = await kids;
+      p.maturitySettings.ageLimit = await ageLimit;
+      p.maturitySettings.sliderValue = await sliderValue;
+      p.kids = await kids;
 
-    if (kids) {
-      p.maturitySettings.ageLimit = await '7+';
-      p.maturitySettings.sliderValue = await 25;
-    }
-
-    let t = [];
-
-    t = await p.titleRestrictions;
-
-    for (let a = 0; a < titleRestrictions.length; a++) {
-      if (titleRestrictions[0]) {
-        await t.push(titleRestrictions[a]);
+      if (kids) {
+        p.maturitySettings.ageLimit = await '7+';
+        p.maturitySettings.sliderValue = await 25;
       }
-    } //burda bir hata var iyice bak
 
-    p.titleRestrictions = await t;
+      let t = [];
 
-    await p.save();
+      t = await p.titleRestrictions;
+
+      for (let a = 0; a < titleRestrictions.length; a++) {
+        if (titleRestrictions[0]) {
+          await t.push(titleRestrictions[a]);
+        }
+      } //burda bir hata var iyice bak
+
+      p.titleRestrictions = await t;
+
+      await p.save();
+    } else {
+      const c = await Child.findById(user.child);
+
+      c.maturitySettings.ageLimit = await ageLimit;
+      c.maturitySettings.sliderValue = await sliderValue;
+
+      let t = [];
+
+      t = await c.titleRestrictions;
+
+      for (let a = 0; a < titleRestrictions.length; a++) {
+        if (titleRestrictions[0]) {
+          await t.push(titleRestrictions[a]);
+        }
+      } //burda bir hata var iyice bak
+
+      c.titleRestrictions = await t;
+
+      await c.save();
+    }
 
     res.results = {
       success: true,
@@ -683,6 +713,98 @@ const deleteTitleRestrictions = asyncHandler(
   }
 );
 
+const getChildFromUser = asyncHandler(async (email, res) => {
+  const user = await User.findOne({ email });
+
+  if (!user) throw new ApolloError('There is no such user', 400);
+
+  const child = await Child.findById(user.child);
+
+  res.results = {
+    success: true,
+    child,
+  };
+});
+
+const deleteChildFromUser = asyncHandler(async (email, res) => {
+  const user = await User.findOne({ email });
+
+  if (!user) throw new ApolloError('There is no such user', 400);
+
+  const child = await Child.findById(user.child);
+
+  if (!child) throw new ApolloError('There is no such child profile', 400);
+
+  await child.remove();
+
+  user.child = await null;
+
+  await user.save();
+
+  res.results = {
+    success: true,
+  };
+});
+
+const changeChildFromUser = asyncHandler(
+  async (
+    email,
+    childName,
+    childImageUrl,
+    language,
+    ageLimit,
+    autoplayNextEpisode,
+    previews,
+    res
+  ) => {
+    const user = await User.findOne({ email });
+
+    if (!user) throw new ApolloError('There is no such user', 400);
+
+    const child = await Child.findById(user.child);
+
+    if (!child) throw new ApolloError('There is no such child profile', 400);
+
+    child.childName = await childName;
+    child.childImageUrl = await childImageUrl;
+    child.language = await language;
+    child.maturitySettings.ageLimit = await ageLimit;
+    child.autoplayControls.autoplayNextEpisode = await autoplayNextEpisode;
+    child.autoplayControls.previews = await previews;
+
+    await child.save();
+
+    res.results = {
+      success: true,
+    };
+  }
+);
+
+const isThePasswordCorrectChildProfile = asyncHandler(
+  async (email, password, res) => {
+    if (!validateUserInput(email, password)) {
+      throw new ApolloError('Please check your Inputs', 400);
+    }
+
+    const user = await User.findOne({ email }).select('+password');
+
+    if (!user) {
+      throw new ApolloError('Please check your input', 400);
+    }
+
+    if (!comparePassword(password, user.password)) {
+      throw new ApolloError('Please check your credentials', 400);
+    }
+
+    const c = await Child.findById(user.child);
+
+    res.results = {
+      success: true,
+      sliderValue: c.maturitySettings.sliderValue,
+    };
+  }
+);
+
 module.exports = {
   registerUser,
   isReceivedMailAlready,
@@ -708,4 +830,8 @@ module.exports = {
   isAdmin,
   getProfileImageFromUser,
   deleteTitleRestrictions,
+  getChildFromUser,
+  deleteChildFromUser,
+  changeChildFromUser,
+  isThePasswordCorrectChildProfile,
 };

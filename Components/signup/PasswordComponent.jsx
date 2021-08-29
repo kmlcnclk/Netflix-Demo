@@ -21,6 +21,10 @@ import {
   addRegistrationStateToLocal,
   deleteRegistrationStateFromLocal,
 } from '../../LocalStorage/registrationStateStorage';
+import {
+  addUserIDToLocal,
+  deleteUserIDFromLocal,
+} from '../../LocalStorage/userIDStorage';
 
 class PasswordComponent extends Component {
   state = {
@@ -94,6 +98,9 @@ class PasswordComponent extends Component {
       await addRegistrationStateToLocal(
         this.props.data.login.registrationPhaseState
       );
+
+      await deleteUserIDFromLocal();
+      await addUserIDToLocal(this.props.data.login.ID);
 
       setTimeout(() => {
         this.props.router.push('/signup/');

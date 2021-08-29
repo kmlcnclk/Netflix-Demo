@@ -28,7 +28,10 @@ import { deleteLoginStateFromLocal } from '../LocalStorage/loginStateStorage';
 import { deleteRegistrationPhaseFromLocal } from '../LocalStorage/registrationPhase';
 import { deleteUserIDFromLocal } from '../LocalStorage/userIDStorage';
 import { deleteClickProfileFromLocal } from '../SessionStorage/clickProfileStorage';
-import { GET_UNCLICKED_PROFILES } from '../GraphQL/Apollo-Client/Queries/userQueries';
+import {
+  GET_CHILD_FROM_USER,
+  GET_UNCLICKED_PROFILES,
+} from '../GraphQL/Apollo-Client/Queries/userQueries';
 import { useLazyQuery } from '@apollo/client';
 import {
   addClickProfileIndexToLocal,
@@ -60,6 +63,9 @@ function Header({}) {
   const [getUnclickedProfiles, { data: getUnclickedProfilesData }] =
     useLazyQuery(GET_UNCLICKED_PROFILES);
 
+  const [getChildFromUser, { data: getChildFromUserData }] =
+    useLazyQuery(GET_CHILD_FROM_USER);
+
   const [clickProfileIndex, setClickProfileIndex] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [imageName, setImageName] = useState('');
@@ -75,6 +81,7 @@ function Header({}) {
     router.prefetch('/browse/genre/34399');
     router.prefetch('/latest');
     router.prefetch('/browse/my-list');
+    router.prefetch('/Kids');
 
     const cpi = getClickProfileIndexFromLocal()[0];
     if (cpi) {
@@ -113,6 +120,25 @@ function Header({}) {
 
     getUnclickedProfilesE();
 
+    const getChildFromUserFunc = async () => {
+      const email = await getEmailFromLocal()[0];
+      try {
+        await getChildFromUser({
+          variables: {
+            email: email,
+          },
+        });
+      } catch (err) {
+        toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+    getChildFromUserFunc();
+
     const bp = getBrowsePageFromLocal()[0];
     if (bp) {
       setBrowsePage(bp);
@@ -134,6 +160,7 @@ function Header({}) {
     clickProfileIndex,
     setBrowsePage,
     setNavbar,
+    getChildFromUser,
   ]);
 
   const logout = async () => {
@@ -202,10 +229,26 @@ function Header({}) {
 
     router.reload();
   };
+  const clickProfileChild = async (e, i, image, name) => {
+    await deleteClickProfileIndexFromLocal();
+    await addClickProfileIndexToLocal(i);
+
+    const imageUrl = await image;
+
+    await deleteImageUrlFromLocal();
+    await addImageUrlToLocal(imageUrl);
+
+    const imageName = await name;
+
+    await deleteImageNameFromLocal();
+    await addImageNameToLocal(imageName);
+
+    await router.push('/Kids');
+  };
 
   return (
     <Box ref={ref} className="transition-colors">
-      {getUnclickedProfilesData ? (
+      {getUnclickedProfilesData && getChildFromUserData ? (
         <Flex
           // bgColor={'rgba(20, 20, 20, 0.0)'}
           w="100%"
@@ -870,6 +913,41 @@ function Header({}) {
                         getUnclickedProfilesData.getUnclickedProfiles
                           .profilesName[2]
                       }
+                    </Text>
+                  </MenuItem>
+                ) : null}
+                {getChildFromUserData ? (
+                  <MenuItem
+                    _hover={{ bgColor: '#080808' }}
+                    _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
+                    onClick={(e) =>
+                      clickProfileChild(
+                        e,
+                        'Child',
+                        getChildFromUserData.getChildFromUser.child.childImageUrl,
+                        getChildFromUserData.getChildFromUser.child.childName
+                      )
+                    }
+                  >
+                    <Image
+                      w="32px"
+                      h="32px"
+                      src={
+                        getChildFromUserData.getChildFromUser.child
+                          .childImageUrl
+                      }
+                      alt={
+                        getChildFromUserData.getChildFromUser.child.childName
+                      }
+                    />
+
+                    <Text
+                      fontSize="md"
+                      ml={2}
+                      _hover={{ textDecoration: 'underline' }}
+                    >
+                      {getChildFromUserData.getChildFromUser.child.childName}
                     </Text>
                   </MenuItem>
                 ) : null}

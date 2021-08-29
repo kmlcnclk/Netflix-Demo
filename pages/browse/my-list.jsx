@@ -11,6 +11,7 @@ import {
 import { GET_ALL_MY_LIST_TO_PROFILE } from '../../GraphQL/Apollo-Client/Queries/userQueries';
 import { getClickProfileIndexFromLocal } from '../../SessionStorage/clickProfileIndexStorage';
 import { getEmailFromLocal } from '../../LocalStorage/emailStorage';
+import { getLoginStateFromLocal } from '../../LocalStorage/loginStateStorage';
 
 function MyList() {
   const [getAllMyListToProfile, { data: getAllMyListToProfileData }] =
@@ -26,6 +27,12 @@ function MyList() {
   const router = useRouter();
 
   useEffect(() => {
+    router.prefetch('/');
+
+    const ls = getLoginStateFromLocal()[0];
+    if (!ls) {
+      router.push('/');
+    }
     const a = async () => {
       const email = await getEmailFromLocal()[0];
       const clickProfileIndex = await getClickProfileIndexFromLocal()[0];
@@ -48,7 +55,7 @@ function MyList() {
     };
 
     a();
-  }, [getAllMyListToProfile, toast]);
+  }, [getAllMyListToProfile, toast, router]);
 
   return (
     <Box>

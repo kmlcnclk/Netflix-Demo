@@ -14,6 +14,7 @@ import {
   CHANGE_TO_USER_SLIDER_VALUE,
   DELETE_TITLE_RESTRICTIONS,
   IS_THE_PASSWORD_CORRECT,
+  IS_THE_PASSWORD_CORRECT_CHILD_PROFILE,
 } from '../../../GraphQL/Apollo-Client/Mutations/userMutation';
 import { useRouter } from 'next/dist/client/router';
 import { getEmailFromLocal } from '../../../LocalStorage/emailStorage';
@@ -25,6 +26,12 @@ function ID({ userID }) {
   const [getUserFromID, { data }] = useLazyQuery(GET_USER_FROM_ID);
   const [isThePasswordCorrect, { data: isThePasswordCorrectData }] =
     useMutation(IS_THE_PASSWORD_CORRECT);
+
+  const [
+    isThePasswordCorrectChildProfile,
+    { data: isThePasswordCorrectChildProfileData },
+  ] = useMutation(IS_THE_PASSWORD_CORRECT_CHILD_PROFILE);
+
   const [changeToUserSliderValue, { data: changeToUserSliderValueData }] =
     useMutation(CHANGE_TO_USER_SLIDER_VALUE);
 
@@ -73,6 +80,7 @@ function ID({ userID }) {
         });
       }
     };
+
     if (userID) {
       getUserID();
       router.prefetch('/YourAccount');
@@ -137,6 +145,12 @@ function ID({ userID }) {
               deleteTitleRestrictionsData={deleteTitleRestrictionsData}
               kids={kids}
               setKids={setKids}
+              isThePasswordCorrectChildProfile={
+                isThePasswordCorrectChildProfile
+              }
+              isThePasswordCorrectChildProfileData={
+                isThePasswordCorrectChildProfileData
+              }
             />
           ) : null}
         </Box>

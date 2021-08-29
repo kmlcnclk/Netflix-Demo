@@ -248,3 +248,47 @@ export const DELETE_TITLE_RESTRICTIONS = gql`
     }
   }
 `;
+
+export const DELETE_CHILD_FROM_USER = gql`
+  mutation deleteChildFromUser($email: String!) {
+    deleteChildFromUser(email: $email) {
+      success
+    }
+  }
+`;
+
+export const CHANGE_CHILD_FROM_USER = gql`
+  mutation changeChildFromUser(
+    $email: String!
+    $childName: String!
+    $childImageUrl: String!
+    $language: String!
+    $ageLimit: String!
+    $autoplayNextEpisode: Boolean!
+    $previews: Boolean!
+  ) {
+    changeChildFromUser(
+      email: $email
+      childName: $childName
+      childImageUrl: $childImageUrl
+      language: $language
+      ageLimit: $ageLimit
+      autoplayNextEpisode: $autoplayNextEpisode
+      previews: $previews
+    ) {
+      success
+    }
+  }
+`;
+
+export const IS_THE_PASSWORD_CORRECT_CHILD_PROFILE = gql`
+  mutation isThePasswordCorrectChildProfile(
+    $email: String!
+    $password: String!
+  ) {
+    isThePasswordCorrectChildProfile(email: $email, password: $password) {
+      success
+      sliderValue
+    }
+  }
+`;
