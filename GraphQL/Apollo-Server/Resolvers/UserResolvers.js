@@ -27,6 +27,7 @@ import {
   deleteChildFromUser,
   changeChildFromUser,
   isThePasswordCorrectChildProfile,
+  getProfiles,
 } from '../../../Server/controllers/user';
 import { isManager } from '../../../Server/middlewares/auth/admin';
 import { isTheUserRegistered } from '../../../Server/middlewares/auth/auth';
@@ -89,6 +90,11 @@ export const UserResolvers = {
     },
     async getChildFromUser(_, { email }, { res }) {
       await getChildFromUser(email, res);
+
+      return res.status(200).results;
+    },
+    async getProfiles(_, { email }, { res }) {
+      await getProfiles(email, res);
 
       return res.status(200).results;
     },

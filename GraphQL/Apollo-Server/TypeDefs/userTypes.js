@@ -100,7 +100,7 @@ export const UserTypes = gql`
     success: Boolean!
     user: User!
     profiles: [Profile]!
-    child: Child!
+    child: Child
   }
 
   type IsThePasswordCorrect {
@@ -175,5 +175,12 @@ export const UserTypes = gql`
   type IsThePasswordCorrectChildProfile {
     success: Boolean!
     sliderValue: Int!
+  }
+
+  type GetProfiles {
+    success: Boolean!
+    profilesImage: [String]!
+    profilesName: [String]!
+    i: [Int]!
   }
 `;

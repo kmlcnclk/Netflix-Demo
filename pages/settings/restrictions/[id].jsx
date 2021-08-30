@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import SettingsRestIDComponent from '../../../Components/SettingsRestID/SettingsRestIDComponent';
 import {
   GET_ALL_USER,
-  GET_UNCLICKED_PROFILES,
   GET_USER_FROM_ID,
 } from '../../../GraphQL/Apollo-Client/Queries/userQueries';
 import { initializeApollo } from '../../../src/apollo';
@@ -18,7 +17,6 @@ import {
 } from '../../../GraphQL/Apollo-Client/Mutations/userMutation';
 import { useRouter } from 'next/dist/client/router';
 import { getEmailFromLocal } from '../../../LocalStorage/emailStorage';
-import { getClickProfileFromLocal } from '../../../SessionStorage/clickProfileStorage';
 import { GET_ALL_MOVIES } from '../../../GraphQL/Apollo-Client/Queries/movieQueries';
 import { GET_ALL_TV_SHOWS } from '../../../GraphQL/Apollo-Client/Queries/tvShowQueries';
 
@@ -34,9 +32,6 @@ function ID({ userID }) {
 
   const [changeToUserSliderValue, { data: changeToUserSliderValueData }] =
     useMutation(CHANGE_TO_USER_SLIDER_VALUE);
-
-  const [getUnclickedProfiles, { data: getUnclickedProfilesData }] =
-    useLazyQuery(GET_UNCLICKED_PROFILES);
 
   const [deleteTitleRestrictions, { data: deleteTitleRestrictionsData }] =
     useMutation(DELETE_TITLE_RESTRICTIONS);
@@ -85,30 +80,7 @@ function ID({ userID }) {
       getUserID();
       router.prefetch('/YourAccount');
     }
-
-    const getUnclickedProfilesE = async () => {
-      const email = await getEmailFromLocal()[0];
-      const clickProfile = await getClickProfileFromLocal()[0];
-
-      try {
-        await getUnclickedProfiles({
-          variables: {
-            email: email,
-            clickProfileIndex: clickProfile,
-          },
-        });
-      } catch (err) {
-        toast({
-          title: err.message,
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-    };
-
-    getUnclickedProfilesE();
-  }, [userID, getUserFromID, data, toast, router, getUnclickedProfiles]);
+  }, [userID, getUserFromID, data, toast, router]);
 
   return (
     <Box>
@@ -117,9 +89,9 @@ function ID({ userID }) {
         <meta name="description" content="Netflix" />
         <link rel="icon" href="/netflix.png" />
       </Head>
-      {data && getUnclickedProfilesData ? (
+      {data ? (
         <Box>
-          {data.getUserFromID.profiles ? (
+          {data.getUserFromID.profiles || data.getUserFromID.child ? (
             <SettingsRestIDComponent
               data={data}
               isThePasswordCorrect={isThePasswordCorrect}
@@ -136,7 +108,6 @@ function ID({ userID }) {
               ageLimit={ageLimit}
               setAgeLimit={setAgeLimit}
               router={router}
-              getUnclickedProfilesData={getUnclickedProfilesData}
               getAllMoviesData={getAllMoviesData}
               getAllTVShowsData={getAllTVShowsData}
               titleRestrictions={titleRestrictions}

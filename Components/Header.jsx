@@ -916,7 +916,7 @@ function Header({}) {
                     </Text>
                   </MenuItem>
                 ) : null}
-                {getChildFromUserData ? (
+                {getChildFromUserData.getChildFromUser.child ? (
                   <MenuItem
                     _hover={{ bgColor: '#080808' }}
                     _focus={{ bgColor: '#080808' }}
@@ -925,7 +925,8 @@ function Header({}) {
                       clickProfileChild(
                         e,
                         'Child',
-                        getChildFromUserData.getChildFromUser.child.childImageUrl,
+                        getChildFromUserData.getChildFromUser.child
+                          .childImageUrl,
                         getChildFromUserData.getChildFromUser.child.childName
                       )
                     }

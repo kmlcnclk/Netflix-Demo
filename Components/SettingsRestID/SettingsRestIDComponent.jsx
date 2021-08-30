@@ -130,7 +130,7 @@ class SettingsRestIDComponent extends Component {
       }
 
       await this.setState({ options: options });
-    } else if (clickProfile == 'Child') {
+    } else {
       await this.setState({
         child: this.props.data.getUserFromID.child,
       });
@@ -423,7 +423,6 @@ class SettingsRestIDComponent extends Component {
       passwordState,
       setSliderValue,
       sliderValue,
-      getUnclickedProfilesData,
       getAllMoviesData,
       getAllTVShowsData,
       kids,
@@ -450,11 +449,7 @@ class SettingsRestIDComponent extends Component {
           <Box>
             {profiles[0] || child ? (
               <Box bgColor="#f3f3f3">
-                <SettingsRestHeader
-                  imageUrl={imageUrl}
-                  imageName={imageName}
-                  getUnclickedProfilesData={getUnclickedProfilesData}
-                />
+                <SettingsRestHeader imageUrl={imageUrl} imageName={imageName} />
 
                 <Flex
                   justify="center"
@@ -762,11 +757,7 @@ class SettingsRestIDComponent extends Component {
           <Box>
             {profiles[0] || child ? (
               <Box bgColor="#f3f3f3">
-                <SettingsRestHeader
-                  imageUrl={imageUrl}
-                  imageName={imageName}
-                  getUnclickedProfilesData={getUnclickedProfilesData}
-                />
+                <SettingsRestHeader imageUrl={imageUrl} imageName={imageName} />
                 <Flex
                   justify="center"
                   align="center"

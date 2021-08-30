@@ -29,6 +29,7 @@ export const typeDefs = gql`
     isAdmin(adminEmail: String!): IsAdmin!
     getProfileImageFromUser(email: String!): GetProfileImageFromUser!
     getChildFromUser(email: String!): GetChildFromUser!
+    getProfiles(email: String!): GetProfiles!
   }
 
   type Mutation {

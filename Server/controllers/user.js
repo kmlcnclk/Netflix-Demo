@@ -410,6 +410,7 @@ const changeToUserSliderValue = asyncHandler(
       let t = [];
 
       t = await c.titleRestrictions;
+      console.log(titleRestrictions);
 
       for (let a = 0; a < titleRestrictions.length; a++) {
         if (titleRestrictions[0]) {
@@ -693,22 +694,45 @@ const deleteTitleRestrictions = asyncHandler(
       throw new ApolloError('There is no such user', 401);
     }
 
-    const p = await Profile.findById(user.profiles[clickProfileIndex]);
+    let pr;
+    let ch;
 
-    if (!p) {
-      throw new ApolloError('There is no such profile', 401);
-    }
+    if (clickProfileIndex != 'Child') {
+      const p = await Profile.findById(user.profiles[clickProfileIndex]);
 
-    for (let i = 0; i < p.titleRestrictions.length; i++) {
-      if (p.titleRestrictions[i] == videoName) {
-        await p.titleRestrictions.splice(i, 1);
+      if (!p) {
+        throw new ApolloError('There is no such profile', 401);
       }
+
+      for (let i = 0; i < p.titleRestrictions.length; i++) {
+        if (p.titleRestrictions[i] == videoName) {
+          await p.titleRestrictions.splice(i, 1);
+        }
+      }
+      await p.save();
+      pr = p;
+    } else {
+      const c = await Child.findById(user.child);
+
+      if (!c) {
+        throw new ApolloError('There is no such child profile', 400);
+      }
+
+      for (let i = 0; i < c.titleRestrictions.length; i++) {
+        if (c.titleRestrictions[i] == videoName) {
+          await c.titleRestrictions.splice(i, 1);
+        }
+      }
+      await c.save();
+      ch = c;
     }
-    await p.save();
 
     res.results = {
       success: true,
-      titleRestrictions: p.titleRestrictions,
+      titleRestrictions:
+        clickProfileIndex != 'Child'
+          ? pr.titleRestrictions
+          : ch.titleRestrictions,
     };
   }
 );
@@ -805,6 +829,33 @@ const isThePasswordCorrectChildProfile = asyncHandler(
   }
 );
 
+const getProfiles = asyncHandler(async (email, res) => {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApolloError('Please check your input', 400);
+  }
+
+  let profilesImage = [];
+  let profilesName = [];
+  let ind = [];
+
+  for (let i = 0; i < user.profiles.length; i++) {
+    const profile = await Profile.findById(user.profiles[i]);
+
+    await profilesImage.push(profile.profileImageUrl);
+    await profilesName.push(profile.profileName);
+    await ind.push(i);
+  }
+
+  res.results = {
+    success: true,
+    profilesImage: profilesImage,
+    profilesName: profilesName,
+    i: ind,
+  };
+});
+
 module.exports = {
   registerUser,
   isReceivedMailAlready,
@@ -834,4 +885,5 @@ module.exports = {
   deleteChildFromUser,
   changeChildFromUser,
   isThePasswordCorrectChildProfile,
+  getProfiles,
 };

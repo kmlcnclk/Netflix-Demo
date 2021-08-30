@@ -27,7 +27,6 @@ class ManageProfilesComponent extends Component {
     u2: ' ',
     u3: ' ',
     u4: ' ',
-    u5: ' ',
     ID: '',
   };
 
@@ -125,12 +124,13 @@ class ManageProfilesComponent extends Component {
       setAutoplayNextEpisode5,
       setPreviews5,
       setKids5,
+      setU5,
     } = this.props;
 
     if (this.props.getChildFromUserData.getChildFromUser.child) {
-      await this.setState({
-        u5: this.props.getChildFromUserData.getChildFromUser.child.childName,
-      });
+      await setU5(
+        this.props.getChildFromUserData.getChildFromUser.child.childName
+      );
       setProfileImageUrl5(
         this.props.getChildFromUserData.getChildFromUser.child.childImageUrl
       );
@@ -232,7 +232,7 @@ class ManageProfilesComponent extends Component {
       await this.props.changeChildFromUser({
         variables: {
           email: this.props.email,
-          childName: this.state.u5,
+          childName: this.props.u5,
           childImageUrl: this.props.profileImageUrl5,
           language: this.props.language5,
           ageLimit: this.props.ageLimit5,
@@ -254,76 +254,24 @@ class ManageProfilesComponent extends Component {
     }
   };
 
-  deleteProfileToUserForm = async (e) => {
-    try {
-      const { clickProfileIndex, email } = this.props;
-
-      await this.props.deleteProfileToUser({
-        variables: {
-          email: email,
-          profileIndex: clickProfileIndex,
-        },
-      });
-    } catch (err) {
-      this.props.toast({
-        title: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-
-    if (this.props.deleteProfileToUserData) {
-      this.props.router.reload();
-    }
-  };
-
-  deleteChildFromUser = async (e) => {
-    const { email } = this.props;
-
-    try {
-      await this.props.deleteChildFromUser({
-        variables: {
-          email: email,
-        },
-      });
-    } catch (err) {
-      this.props.toast({
-        title: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-
-    if (this.props.deleteChildFromUserData) {
-      this.props.router.reload();
-
-      const {
-        setProfileImageUrl5,
-        setLanguage5,
-        setAgeLimit5,
-        setAutoplayNextEpisode5,
-        setPreviews5,
-        setKids5,
-      } = this.props;
-
-      await this.setState({
-        u5: '',
-      });
-      await setProfileImageUrl5('');
-      await setLanguage5('');
-      await setAgeLimit5('');
-      await setAutoplayNextEpisode5(true);
-      await setPreviews5(true);
-      await setKids5(false);
-    }
-  };
-
   editProfileWithUserID = async (e) => {
     await deleteClickProfileFromLocal();
     await addClickProfileToLocal(this.props.clickProfileIndex);
     this.props.router.push(`/settings/restrictions/${this.state.ID}`);
+  };
+
+  deletePageForm = async (click, image, name) => {
+    const {
+      setDeleteProfileCImage,
+      setDeleteProfileCName,
+      setDeleteProfileCState,
+    } = this.props;
+
+    deleteClickProfileFromLocal();
+    addClickProfileToLocal(click);
+    setDeleteProfileCState(true);
+    setDeleteProfileCImage(image);
+    setDeleteProfileCName(name);
   };
 
   render() {
@@ -418,9 +366,14 @@ class ManageProfilesComponent extends Component {
       kids4,
       kids5,
       getChildFromUserData,
+      setDeleteProfileCState,
+      setDeleteProfileCImage,
+      setDeleteProfileCName,
+      u5,
+      setU5,
     } = this.props;
 
-    const { profiles, u1, u2, u3, u4, u5 } = this.state;
+    const { profiles, u1, u2, u3, u4 } = this.state;
 
     return (
       <Box bgColor="#141414">
@@ -776,7 +729,7 @@ class ManageProfilesComponent extends Component {
                         p={2}
                         w="130.58px"
                         h="37.38px"
-                        onClick={(e) => router.reload()}
+                        onClick={() => setManageProfileState(false)}
                         cursor="pointer"
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
@@ -1112,7 +1065,7 @@ class ManageProfilesComponent extends Component {
                         w="130.58px"
                         h="37.38px"
                         cursor="pointer"
-                        onClick={(e) => router.reload()}
+                        onClick={() => setManageProfileState(false)}
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
                         <Text
@@ -1134,7 +1087,9 @@ class ManageProfilesComponent extends Component {
                         p={2}
                         w="214.14px"
                         h="37.38px"
-                        onClick={this.deleteProfileToUserForm}
+                        onClick={() =>
+                          this.deletePageForm('1', profileImageUrl2, u2)
+                        }
                         cursor="pointer"
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
@@ -1468,7 +1423,7 @@ class ManageProfilesComponent extends Component {
                         p={2}
                         w="130.58px"
                         h="37.38px"
-                        onClick={(e) => router.reload()}
+                        onClick={() => setManageProfileState(false)}
                         cursor="pointer"
                         _hover={{ color: 'white', borderColor: 'white' }}
                       >
@@ -1490,7 +1445,9 @@ class ManageProfilesComponent extends Component {
                         color="#808080"
                         p={2}
                         w="214.14px"
-                        onClick={this.deleteProfileToUserForm}
+                        onClick={() =>
+                          this.deletePageForm('2', profileImageUrl3, u3)
+                        }
                         h="37.38px"
                         cursor="pointer"
                         _hover={{ color: 'white', borderColor: 'white' }}
@@ -1823,7 +1780,7 @@ class ManageProfilesComponent extends Component {
                         bgColor="#141414"
                         color="#808080"
                         p={2}
-                        onClick={(e) => router.reload()}
+                        onClick={() => setManageProfileState(false)}
                         w="130.58px"
                         h="37.38px"
                         cursor="pointer"
@@ -1846,7 +1803,9 @@ class ManageProfilesComponent extends Component {
                         bgColor="#141414"
                         color="#808080"
                         p={2}
-                        onClick={this.deleteProfileToUserForm}
+                        onClick={() =>
+                          this.deletePageForm('3', profileImageUrl4, u4)
+                        }
                         w="214.14px"
                         h="37.38px"
                         cursor="pointer"
@@ -1915,9 +1874,7 @@ class ManageProfilesComponent extends Component {
                                 borderColor="#666666"
                                 placeholder="Name"
                                 value={u5}
-                                onChange={(e) =>
-                                  this.setState({ u5: e.target.value })
-                                }
+                                onChange={(e) => setU5(e.target.value)}
                                 _placeholder={{
                                   fontSize: '14px',
                                   color: '#ccc',
@@ -2184,7 +2141,7 @@ class ManageProfilesComponent extends Component {
                             p={2}
                             w="130.58px"
                             h="37.38px"
-                            onClick={(e) => router.reload()}
+                            onClick={() => setManageProfileState(false)}
                             cursor="pointer"
                             _hover={{ color: 'white', borderColor: 'white' }}
                           >
@@ -2204,7 +2161,9 @@ class ManageProfilesComponent extends Component {
                             border="#808080 solid 1px"
                             bgColor="#141414"
                             color="#808080"
-                            onClick={this.deleteChildFromUser}
+                            onClick={() =>
+                              this.deletePageForm('Child', profileImageUrl5, u5)
+                            }
                             p={2}
                             w="214.14px"
                             h="37.38px"

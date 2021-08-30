@@ -160,3 +160,14 @@ export const GET_CHILD_FROM_USER = gql`
     }
   }
 `;
+
+export const GET_PROFILES = gql`
+  query getProfiles($email: String!) {
+    getProfiles(email: $email) {
+      success
+      profilesImage
+      profilesName
+      i
+    }
+  }
+`;
