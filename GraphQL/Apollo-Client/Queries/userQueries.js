@@ -53,14 +53,29 @@ export const GET_USER_FROM_ID = gql`
       user {
         _id
         email
+        phoneNumber
+        plan
+        creditCards {
+          cardNumber
+          state
+        }
       }
       profiles {
         profileName
         profileImageUrl
         titleRestrictions
+        password
         kids
+        language
         maturitySettings {
           sliderValue
+          ageLimit
+        }
+        profileLock
+        autoplayControls {
+          autoplayNextEpisode
+          previews
+          dataUsagePerScreen
         }
       }
       child {
@@ -68,8 +83,17 @@ export const GET_USER_FROM_ID = gql`
         childImageUrl
         titleRestrictions
         kids
+        language
+        password
+        profileLock
         maturitySettings {
           sliderValue
+          ageLimit
+        }
+        autoplayControls {
+          autoplayNextEpisode
+          previews
+          dataUsagePerScreen
         }
       }
     }
@@ -168,6 +192,15 @@ export const GET_PROFILES = gql`
       profilesImage
       profilesName
       i
+    }
+  }
+`;
+
+export const GET_BILLING_DATE_FROM_USER = gql`
+  query getBillingDateFromUser($email: String!) {
+    getBillingDateFromUser(email: $email) {
+      success
+      billingDate
     }
   }
 `;

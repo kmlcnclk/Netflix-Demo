@@ -19,6 +19,7 @@ import {
   deleteClickProfileFromLocal,
 } from '../../SessionStorage/clickProfileStorage';
 import { deleteClickProfileIndexFromLocal } from '../../SessionStorage/clickProfileIndexStorage';
+import { deleteClickProfileIndexFromLS } from '../../LocalStorage/clickProfileIndexLocalStorage';
 
 class ManageProfilesComponent extends Component {
   state = {
@@ -2472,6 +2473,7 @@ class ManageProfilesComponent extends Component {
                   onClick={async () => {
                     await deleteClickProfileFromLocal();
                     await deleteClickProfileIndexFromLocal();
+                    await deleteClickProfileIndexFromLS();
                     router.push('/browse');
                   }}
                 >

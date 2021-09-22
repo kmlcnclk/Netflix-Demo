@@ -28,6 +28,10 @@ import {
   changeChildFromUser,
   isThePasswordCorrectChildProfile,
   getProfiles,
+  postPlanToUser,
+  changePassword,
+  changeBillingDateThatUser,
+  getBillingDateFromUser,
 } from '../../../Server/controllers/user';
 import { isManager } from '../../../Server/middlewares/auth/admin';
 import { isTheUserRegistered } from '../../../Server/middlewares/auth/auth';
@@ -95,6 +99,11 @@ export const UserResolvers = {
     },
     async getProfiles(_, { email }, { res }) {
       await getProfiles(email, res);
+
+      return res.status(200).results;
+    },
+    async getBillingDateFromUser(_, { email }, { res }) {
+      await getBillingDateFromUser(email, res);
 
       return res.status(200).results;
     },
@@ -294,6 +303,31 @@ export const UserResolvers = {
     },
     async isThePasswordCorrectChildProfile(_, { email, password }, { res }) {
       await isThePasswordCorrectChildProfile(email, password, res);
+
+      return res.status(200).results;
+    },
+    async postPlanToUser(_, { email, plan }, { res }) {
+      await postPlanToUser(email, plan, res);
+
+      return res.status(200).results;
+    },
+    async changePassword(
+      _,
+      { email, currentPassword, newPassword, confirmNewPassword },
+      { res }
+    ) {
+      await changePassword(
+        email,
+        currentPassword,
+        newPassword,
+        confirmNewPassword,
+        res
+      );
+
+      return res.status(200).results;
+    },
+    async changeBillingDateThatUser(_, { email, billingDate }, { res }) {
+      await changeBillingDateThatUser(email, billingDate, res);
 
       return res.status(200).results;
     },

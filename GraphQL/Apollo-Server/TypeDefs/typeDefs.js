@@ -30,6 +30,7 @@ export const typeDefs = gql`
     getProfileImageFromUser(email: String!): GetProfileImageFromUser!
     getChildFromUser(email: String!): GetChildFromUser!
     getProfiles(email: String!): GetProfiles!
+    getBillingDateFromUser(email: String!): GetBillingDateFromUser!
   }
 
   type Mutation {
@@ -145,6 +146,17 @@ export const typeDefs = gql`
       email: String!
       password: String!
     ): IsThePasswordCorrectChildProfile!
+    postPlanToUser(email: String!, plan: String!): PostPlanToUser!
+    changePassword(
+      email: String!
+      currentPassword: String!
+      newPassword: String!
+      confirmNewPassword: String!
+    ): ChangePassword!
+    changeBillingDateThatUser(
+      email: String!
+      billingDate: String!
+    ): ChangeBillingDateThatUser!
   }
 
   scalar Date

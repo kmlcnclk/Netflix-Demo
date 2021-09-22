@@ -12,6 +12,7 @@ import {
   addRegistrationPhaseToLocal,
   deleteRegistrationPhaseFromLocal,
 } from '../../LocalStorage/registrationPhase';
+import { getEmailFromLocal } from '../../LocalStorage/emailStorage';
 
 class PlanformComponent extends Component {
   state = {
@@ -23,26 +24,50 @@ class PlanformComponent extends Component {
 
     this.setState({ loading: true });
 
-    const plan = await getPlanFromLocal()[0];
+    const email = await getEmailFromLocal()[0];
 
-    if (plan) {
-      await deletePlanFromLocal();
+    try {
+      await this.props.postPlanToUser({
+        variables: {
+          email: email,
+          plan: this.props.product,
+        },
+      });
+    } catch (err) {
+      this.setState({ loading: false });
 
-      await addPlanToLocal(this.props.product);
+      this.props.toast({
+        title: err.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+    }
 
-      setTimeout(() => {
-        this.props.router.push('/signup/payment');
-      }, 2000);
-    } else {
-      await addPlanToLocal(this.props.product);
+    if (this.props.postPlanToUserData) {
+      if (this.props.postPlanToUserData.postPlanToUser.success) {
+        const plan = await getPlanFromLocal()[0];
 
-      await deleteRegistrationPhaseFromLocal();
+        if (plan) {
+          await deletePlanFromLocal();
 
-      await addRegistrationPhaseToLocal('/payment');
+          await addPlanToLocal(this.props.product);
 
-      setTimeout(() => {
-        this.props.router.push('/signup/payment');
-      }, 2000);
+          setTimeout(() => {
+            this.props.router.push('/signup/payment');
+          }, 2000);
+        } else {
+          await addPlanToLocal(this.props.product);
+
+          await deleteRegistrationPhaseFromLocal();
+
+          await addRegistrationPhaseToLocal('/payment');
+
+          setTimeout(() => {
+            this.props.router.push('/signup/payment');
+          }, 2000);
+        }
+      }
     }
   };
 

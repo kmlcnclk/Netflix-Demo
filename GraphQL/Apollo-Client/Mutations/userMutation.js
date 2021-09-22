@@ -292,3 +292,37 @@ export const IS_THE_PASSWORD_CORRECT_CHILD_PROFILE = gql`
     }
   }
 `;
+
+export const POST_PLAN_TO_USER = gql`
+  mutation postPlanToUser($email: String!, $plan: String!) {
+    postPlanToUser(email: $email, plan: $plan) {
+      success
+    }
+  }
+`;
+
+export const CHANGE_PASSWORD = gql`
+  mutation changePassword(
+    $email: String!
+    $currentPassword: String!
+    $newPassword: String!
+    $confirmNewPassword: String!
+  ) {
+    changePassword(
+      email: $email
+      currentPassword: $currentPassword
+      newPassword: $newPassword
+      confirmNewPassword: $confirmNewPassword
+    ) {
+      success
+    }
+  }
+`;
+
+export const CHANGE_BILLING_DATE_THAT_USER = gql`
+  mutation changeBillingDateThatUser($email: String!, $billingDate: String!) {
+    changeBillingDateThatUser(email: $email, billingDate: $billingDate) {
+      success
+    }
+  }
+`;

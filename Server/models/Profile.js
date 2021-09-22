@@ -47,6 +47,11 @@ const ProfileSchema = new Schema({
       type: Boolean,
       default: true,
     },
+    dataUsagePerScreen: {
+      type: String,
+      default: 'Auto',
+      enum: ['Auto', 'Low', 'Medium', 'High'],
+    },
   },
   watchHistory: [{ type: mongoose.Schema.ObjectId, ref: ['Movie', 'Seri'] }],
   createAt: {
@@ -62,6 +67,15 @@ const ProfileSchema = new Schema({
       type: String,
     },
   ],
+  profileLock: {
+    type: String,
+    enum: ['On', 'Off'],
+    default: 'Off',
+  },
+  password: {
+    type: String,
+    maxlength: 4,
+  },
 });
 
 module.exports =

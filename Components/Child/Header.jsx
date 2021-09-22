@@ -24,6 +24,7 @@ import { GET_CHILD_FROM_USER } from '../../GraphQL/Apollo-Client/Queries/userQue
 import { getImageUrlFromLocal } from '../../LocalStorage/imageUrlStorage';
 import { getImageNameFromLocal } from '../../LocalStorage/imageNameStorage';
 import { deleteClickProfileIndexFromLocal } from '../../SessionStorage/clickProfileIndexStorage';
+import { deleteClickProfileIndexFromLS } from '../../LocalStorage/clickProfileIndexLocalStorage';
 
 function Header({}) {
   const router = useRouter();
@@ -80,6 +81,7 @@ function Header({}) {
 
   const logoutChildP = async () => {
     await deleteClickProfileIndexFromLocal();
+    await deleteClickProfileIndexFromLS();
 
     await router.push('/browse');
   };

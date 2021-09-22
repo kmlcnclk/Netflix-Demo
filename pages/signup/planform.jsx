@@ -4,8 +4,14 @@ import { getLoginStateFromLocal } from '../../LocalStorage/loginStateStorage';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect } from 'react';
 import LayoutSignup from '../../Components/signup/LayoutSignup';
+import { POST_PLAN_TO_USER } from '../../GraphQL/Apollo-Client/Mutations/userMutation';
+import { useMutation } from '@apollo/client';
+import { useToast } from '@chakra-ui/react';
 
 function Planform() {
+  const [postPlanToUser, { data: postPlanToUserData }] =
+    useMutation(POST_PLAN_TO_USER);
+
   const [basicBG, setBasicBG] = useState('#ef6b72');
   const [standardBG, setStandardBG] = useState('#ef6b72');
   const [premiumBG, setPremiumBG] = useState('#e50914');
@@ -14,6 +20,7 @@ function Planform() {
   const [standardC, setStandardC] = useState('#737373');
 
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     router.prefetch('/signup/payment');
@@ -71,6 +78,9 @@ function Planform() {
         standardC={standardC}
         router={router}
         premiumC={premiumC}
+        postPlanToUser={postPlanToUser}
+        postPlanToUserData={postPlanToUserData}
+        toast={toast}
       />
     </LayoutSignup>
   );

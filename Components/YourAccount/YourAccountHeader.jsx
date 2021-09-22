@@ -12,7 +12,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import NextImage from 'next/image';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
@@ -34,10 +34,12 @@ import { useEffect } from 'react';
 import {
   addClickProfileIndexToLocal,
   deleteClickProfileIndexFromLocal,
+  getClickProfileIndexFromLocal,
 } from '../../SessionStorage/clickProfileIndexStorage';
 import {
   addClickProfileIndexToLS,
   deleteClickProfileIndexFromLS,
+  getClickProfileIndexFromLS,
 } from '../../LocalStorage/clickProfileIndexLocalStorage';
 import { deleteBrowsePageFromLocal } from '../../LocalStorage/browsePageStorage';
 import {
@@ -51,30 +53,40 @@ import {
 import { deleteRegistrationStateFromLocal } from '../../LocalStorage/registrationStateStorage';
 import {
   GET_CHILD_FROM_USER,
-  GET_PROFILES,
+  GET_UNCLICKED_PROFILES,
 } from '../../GraphQL/Apollo-Client/Queries/userQueries';
 import { useLazyQuery } from '@apollo/client';
 
-function SettingsRestHeader({ imageUrl, imageName }) {
+function YourAccountHeader({ imageUrl, imageName }) {
   const router = useRouter();
   const toast = useToast();
 
+  const [getUnclickedProfiles, { data: getUnclickedProfilesData }] =
+    useLazyQuery(GET_UNCLICKED_PROFILES);
+
   const [getChildFromUser, { data: getChildFromUserData }] =
     useLazyQuery(GET_CHILD_FROM_USER);
-
-  const [getProfiles, { data: getProfilesData }] = useLazyQuery(GET_PROFILES);
 
   useEffect(() => {
     router.prefetch('/logout');
     router.prefetch('/browse');
 
-    const getProfilesFunc = async () => {
+    const getUnclickedProfilesE = async () => {
       const email = await getEmailFromLocal()[0];
 
+      let cpi;
+
+      if (await getClickProfileIndexFromLocal()[0]) {
+        cpi = await getClickProfileIndexFromLocal()[0];
+      } else {
+        cpi = await getClickProfileIndexFromLS()[0];
+      }
+
       try {
-        await getProfiles({
+        await getUnclickedProfiles({
           variables: {
-            email,
+            email: email,
+            clickProfileIndex: cpi,
           },
         });
       } catch (err) {
@@ -86,7 +98,8 @@ function SettingsRestHeader({ imageUrl, imageName }) {
         });
       }
     };
-    getProfilesFunc();
+
+    getUnclickedProfilesE();
 
     const getChildFromUserFunc = async () => {
       const email = await getEmailFromLocal()[0];
@@ -106,7 +119,7 @@ function SettingsRestHeader({ imageUrl, imageName }) {
       }
     };
     getChildFromUserFunc();
-  }, [router, getChildFromUser, getProfiles, toast]);
+  }, [router, getChildFromUser, getUnclickedProfiles, toast]);
 
   const logout = async () => {
     const rememberMe = await getRememberMeFromLocal()[0];
@@ -132,23 +145,25 @@ function SettingsRestHeader({ imageUrl, imageName }) {
   };
 
   const clickMenuItem = async (i) => {
-    const clci = await getProfilesData.getProfiles.i[i];
+    const clci = await getUnclickedProfilesData.getUnclickedProfiles.i[i];
     await deleteClickProfileIndexFromLocal();
     await addClickProfileIndexToLocal(`${clci}`);
 
     await deleteClickProfileIndexFromLS();
     await addClickProfileIndexToLS(`${clci}`);
 
-    const clcp = await getProfilesData.getProfiles.i[i];
+    const clcp = await getUnclickedProfilesData.getUnclickedProfiles.i[i];
     await deleteClickProfileFromLocal();
     await addClickProfileToLocal(`${clcp}`);
 
-    const imgURL = await getProfilesData.getProfiles.profilesImage[i];
+    const imgURL = await getUnclickedProfilesData.getUnclickedProfiles
+      .profilesImage[i];
 
     await deleteImageUrlFromLocal();
     await addImageUrlToLocal(imgURL);
 
-    const imgName = await getProfilesData.getProfiles.profilesName[i];
+    const imgName = await getUnclickedProfilesData.getUnclickedProfiles
+      .profilesName[i];
 
     await deleteImageNameFromLocal();
     await addImageNameToLocal(imgName);
@@ -178,7 +193,7 @@ function SettingsRestHeader({ imageUrl, imageName }) {
 
   return (
     <>
-      {getProfilesData ? (
+      {getUnclickedProfilesData ? (
         <Flex
           align="center"
           justify="space-between"
@@ -236,7 +251,8 @@ function SettingsRestHeader({ imageUrl, imageName }) {
               color="white"
               borderColor="#080808"
             >
-              {getProfilesData.getProfiles.profilesImage[0] ? (
+              {getUnclickedProfilesData.getUnclickedProfiles
+                .profilesImage[0] ? (
                 <MenuItem
                   _hover={{ bgColor: '#080808' }}
                   _focus={{ bgColor: '#080808' }}
@@ -246,19 +262,29 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                   <Image
                     w="32px"
                     h="32px"
-                    src={getProfilesData.getProfiles.profilesImage[0]}
-                    alt={getProfilesData.getProfiles.profilesName[0]}
+                    src={
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesImage[0]
+                    }
+                    alt={
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesName[0]
+                    }
                   />
                   <Text
                     fontSize="md"
                     ml={2}
                     _hover={{ textDecoration: 'underline' }}
                   >
-                    {getProfilesData.getProfiles.profilesName[0]}
+                    {
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesName[0]
+                    }
                   </Text>
                 </MenuItem>
               ) : null}
-              {getProfilesData.getProfiles.profilesImage[1] ? (
+              {getUnclickedProfilesData.getUnclickedProfiles
+                .profilesImage[1] ? (
                 <MenuItem
                   _hover={{ bgColor: '#080808' }}
                   _focus={{ bgColor: '#080808' }}
@@ -268,19 +294,29 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                   <Image
                     w="32px"
                     h="32px"
-                    src={getProfilesData.getProfiles.profilesImage[1]}
-                    alt={getProfilesData.getProfiles.profilesName[1]}
+                    src={
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesImage[1]
+                    }
+                    alt={
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesName[1]
+                    }
                   />
                   <Text
                     fontSize="md"
                     ml={2}
                     _hover={{ textDecoration: 'underline' }}
                   >
-                    {getProfilesData.getProfiles.profilesName[1]}
+                    {
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesName[1]
+                    }
                   </Text>
                 </MenuItem>
               ) : null}
-              {getProfilesData.getProfiles.profilesImage[2] ? (
+              {getUnclickedProfilesData.getUnclickedProfiles
+                .profilesImage[2] ? (
                 <MenuItem
                   _hover={{ bgColor: '#080808' }}
                   _focus={{ bgColor: '#080808' }}
@@ -290,8 +326,14 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                   <Image
                     w="32px"
                     h="32px"
-                    src={getProfilesData.getProfiles.profilesImage[2]}
-                    alt={getProfilesData.getProfiles.profilesName[2]}
+                    src={
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesImage[2]
+                    }
+                    alt={
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesName[2]
+                    }
                   />
 
                   <Text
@@ -299,30 +341,10 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                     ml={2}
                     _hover={{ textDecoration: 'underline' }}
                   >
-                    {getProfilesData.getProfiles.profilesName[2]}
-                  </Text>
-                </MenuItem>
-              ) : null}
-              {getProfilesData.getProfiles.profilesImage[3] ? (
-                <MenuItem
-                  _hover={{ bgColor: '#080808' }}
-                  _focus={{ bgColor: '#080808' }}
-                  _active={{ bgColor: '#080808' }}
-                  onClick={(e) => clickMenuItem('3')}
-                >
-                  <Image
-                    w="32px"
-                    h="32px"
-                    src={getProfilesData.getProfiles.profilesImage[3]}
-                    alt={getProfilesData.getProfiles.profilesName[3]}
-                  />
-
-                  <Text
-                    fontSize="md"
-                    ml={2}
-                    _hover={{ textDecoration: 'underline' }}
-                  >
-                    {getProfilesData.getProfiles.profilesName[3]}
+                    {
+                      getUnclickedProfilesData.getUnclickedProfiles
+                        .profilesName[2]
+                    }
                   </Text>
                 </MenuItem>
               ) : null}
@@ -367,26 +389,30 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                   ) : null}
                 </Box>
               ) : null}
-
-              <MenuItem
-                _hover={{ bgColor: '#080808' }}
-                _focus={{ bgColor: '#080808' }}
-                _active={{ bgColor: '#080808' }}
-              >
-                <Link href="/profiles/manage" passHref>
-                  <Text fontSize="sm" _hover={{ textDecoration: 'underline' }}>
-                    Manage Profiles
-                  </Text>
-                </Link>
-              </MenuItem>
+              <Link href="/profiles/manage" passHref>
+                <a>
+                  <MenuItem
+                    _hover={{ bgColor: '#080808' }}
+                    _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
+                  >
+                    <Text
+                      fontSize="sm"
+                      _hover={{ textDecoration: 'underline' }}
+                    >
+                      Manage Profiles
+                    </Text>
+                  </MenuItem>
+                </a>
+              </Link>
               <MenuDivider color="#757575" />
-              <MenuItem
-                _hover={{ bgColor: '#080808' }}
-                _focus={{ bgColor: '#080808' }}
-                _active={{ bgColor: '#080808' }}
-              >
-                <Link href="/YourAccount" passHref>
-                  <a>
+              <Link href="/YourAccount" passHref>
+                <a>
+                  <MenuItem
+                    _hover={{ bgColor: '#080808' }}
+                    _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
+                  >
                     <Text
                       fontSize="sm"
                       color="white"
@@ -394,16 +420,16 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                     >
                       Account
                     </Text>
-                  </a>
-                </Link>
-              </MenuItem>
-              <MenuItem
-                _hover={{ bgColor: '#080808' }}
-                _focus={{ bgColor: '#080808' }}
-                _active={{ bgColor: '#080808' }}
-              >
-                <Link href="https://help.netflix.com/tr/" passHref>
-                  <a target="_blank">
+                  </MenuItem>
+                </a>
+              </Link>
+              <Link href="https://help.netflix.com/tr/" passHref>
+                <a target="_blank">
+                  <MenuItem
+                    _hover={{ bgColor: '#080808' }}
+                    _focus={{ bgColor: '#080808' }}
+                    _active={{ bgColor: '#080808' }}
+                  >
                     <Text
                       fontSize="sm"
                       color="white"
@@ -411,9 +437,9 @@ function SettingsRestHeader({ imageUrl, imageName }) {
                     >
                       Help Center
                     </Text>
-                  </a>
-                </Link>
-              </MenuItem>
+                  </MenuItem>
+                </a>
+              </Link>
               <MenuItem
                 _hover={{ bgColor: '#080808' }}
                 _focus={{ bgColor: '#080808' }}
@@ -432,4 +458,4 @@ function SettingsRestHeader({ imageUrl, imageName }) {
   );
 }
 
-export default SettingsRestHeader;
+export default YourAccountHeader;

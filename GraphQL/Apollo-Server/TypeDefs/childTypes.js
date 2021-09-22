@@ -15,6 +15,8 @@ export const ChildTypes = gql`
     watchHistory: [ID]!
     kids: Boolean!
     titleRestrictions: [String]!
+    profileLock: String!
+    password: String
   }
 
   type MaturitySettingsC {
@@ -25,5 +27,6 @@ export const ChildTypes = gql`
   type AutoplayControlsC {
     autoplayNextEpisode: Boolean!
     previews: Boolean!
+    dataUsagePerScreen: String!
   }
 `;

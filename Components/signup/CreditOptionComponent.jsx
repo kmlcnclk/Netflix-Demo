@@ -67,7 +67,6 @@ class CreditOptionComponent extends Component {
 
     if (this.props.data) {
       console.log(this.props.data.creditOptionAddToUser.success);
-      console.log('selam');
     }
   };
 

@@ -79,7 +79,7 @@ function SettingsRestIDFooter({ code }) {
         cursor="pointer"
         onClick={serviceCodeChange}
       >
-        <Text fontSize="md" textAlign="center" fontWeight="semibold">
+        <Text fontSize="sm" textAlign="center" fontWeight="semibold">
           {serviceCode}
         </Text>
       </Flex>

@@ -19,6 +19,10 @@ import {
   addImageNameToLocal,
   deleteImageNameFromLocal,
 } from '../../LocalStorage/imageNameStorage';
+import {
+  deleteClickProfileIndexFromLS,
+  addClickProfileIndexToLS,
+} from '../../LocalStorage/clickProfileIndexLocalStorage';
 
 class SelectProfilePage extends Component {
   state = {
@@ -42,6 +46,9 @@ class SelectProfilePage extends Component {
     await deleteClickProfileIndexFromLocal();
     await addClickProfileIndexToLocal(i);
 
+    await deleteClickProfileIndexFromLS();
+    await addClickProfileIndexToLS(i);
+
     const imageUrl = await this.state.profiles[i].profileImageUrl;
 
     await deleteImageUrlFromLocal();
@@ -57,6 +64,9 @@ class SelectProfilePage extends Component {
   clickProfileChild = async (e, i) => {
     await deleteClickProfileIndexFromLocal();
     await addClickProfileIndexToLocal(i);
+
+    await deleteClickProfileIndexFromLS();
+    await addClickProfileIndexToLS(i);
 
     const imageUrl = await this.state.child.childImageUrl;
 

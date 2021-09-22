@@ -19,6 +19,7 @@ import { deleteImageNameFromLocal } from '../LocalStorage/imageNameStorage';
 import { deleteImageUrlFromLocal } from '../LocalStorage/imageUrlStorage';
 import { deleteBrowsePageFromLocal } from '../LocalStorage/browsePageStorage';
 import { deleteClickProfileIndexFromLocal } from '../SessionStorage/clickProfileIndexStorage';
+import { deleteClickProfileIndexFromLS} from '../LocalStorage/clickProfileIndexLocalStorage';
 import { deleteRegistrationStateFromLocal } from '../LocalStorage/registrationStateStorage';
 
 function HomeHeader() {
@@ -47,6 +48,7 @@ function HomeHeader() {
     await deleteImageUrlFromLocal();
     await deleteBrowsePageFromLocal();
     await deleteClickProfileIndexFromLocal();
+    await deleteClickProfileIndexFromLS();
     await deleteRegistrationStateFromLocal();
 
     router.reload();

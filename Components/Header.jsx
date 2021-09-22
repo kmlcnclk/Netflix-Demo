@@ -39,6 +39,10 @@ import {
   getClickProfileIndexFromLocal,
 } from '../SessionStorage/clickProfileIndexStorage';
 import {
+  addClickProfileIndexToLS,
+  deleteClickProfileIndexFromLS,
+} from '../LocalStorage/clickProfileIndexLocalStorage';
+import {
   addImageUrlToLocal,
   deleteImageUrlFromLocal,
   getImageUrlFromLocal,
@@ -180,6 +184,7 @@ function Header({}) {
     await deleteImageUrlFromLocal();
     await deleteBrowsePageFromLocal();
     await deleteClickProfileIndexFromLocal();
+    await deleteClickProfileIndexFromLS();
     await deleteRegistrationStateFromLocal();
 
     router.push('/logout');
@@ -195,6 +200,9 @@ function Header({}) {
   const clickProfile = async (e, i, image, name) => {
     await deleteClickProfileIndexFromLocal();
     await addClickProfileIndexToLocal(i);
+
+    await deleteClickProfileIndexFromLS();
+    await addClickProfileIndexToLS(i);
 
     const imageUrl = await image;
 
@@ -232,6 +240,9 @@ function Header({}) {
   const clickProfileChild = async (e, i, image, name) => {
     await deleteClickProfileIndexFromLocal();
     await addClickProfileIndexToLocal(i);
+
+    await deleteClickProfileIndexFromLS();
+    await addClickProfileIndexToLS(i);
 
     const imageUrl = await image;
 
@@ -952,32 +963,32 @@ function Header({}) {
                     </Text>
                   </MenuItem>
                 ) : null}
-
-                <MenuItem
-                  color="white"
-                  _focus={{ bgColor: '#141414' }}
-                  _hover={{ bgColor: '#141414' }}
-                  _active={{ bgColor: '#141414' }}
-                >
-                  <Link href="/profiles/manage" passHref>
-                    <Text
-                      fontSize="sm"
-                      _hover={{ textDecoration: 'underline' }}
+                <Link href="/profiles/manage" passHref>
+                  <a>
+                    <MenuItem
+                      color="white"
+                      _focus={{ bgColor: '#141414' }}
+                      _hover={{ bgColor: '#141414' }}
+                      _active={{ bgColor: '#141414' }}
                     >
-                      Manage Profiles
-                    </Text>
-                  </Link>
-                </MenuItem>
+                      <Text
+                        fontSize="sm"
+                        _hover={{ textDecoration: 'underline' }}
+                      >
+                        Manage Profiles
+                      </Text>
+                    </MenuItem>
+                  </a>
+                </Link>
                 <MenuDivider color="#757575" />
-
-                <MenuItem
-                  color="white"
-                  _focus={{ bgColor: '#141414' }}
-                  _hover={{ bgColor: '#141414' }}
-                  _active={{ bgColor: '#141414' }}
-                >
-                  <Link href="/YourAccount" passHref>
-                    <a target="_blank">
+                <Link href="/YourAccount" passHref>
+                  <a>
+                    <MenuItem
+                      color="white"
+                      _focus={{ bgColor: '#141414' }}
+                      _hover={{ bgColor: '#141414' }}
+                      _active={{ bgColor: '#141414' }}
+                    >
                       <Text
                         fontSize="sm"
                         color="white"
@@ -985,17 +996,17 @@ function Header({}) {
                       >
                         Account
                       </Text>
-                    </a>
-                  </Link>
-                </MenuItem>
-                <MenuItem
-                  color="white"
-                  _focus={{ bgColor: '#141414' }}
-                  _hover={{ bgColor: '#141414' }}
-                  _active={{ bgColor: '#141414' }}
-                >
-                  <Link href="https://help.netflix.com/tr/" passHref>
-                    <a target="_blank">
+                    </MenuItem>{' '}
+                  </a>
+                </Link>
+                <Link href="https://help.netflix.com/tr/" passHref>
+                  <a target="_blank">
+                    <MenuItem
+                      color="white"
+                      _focus={{ bgColor: '#141414' }}
+                      _hover={{ bgColor: '#141414' }}
+                      _active={{ bgColor: '#141414' }}
+                    >
                       <Text
                         fontSize="sm"
                         color="white"
@@ -1003,9 +1014,9 @@ function Header({}) {
                       >
                         Help Center
                       </Text>
-                    </a>
-                  </Link>
-                </MenuItem>
+                    </MenuItem>
+                  </a>
+                </Link>
                 <MenuItem
                   color="white"
                   _focus={{ bgColor: '#141414' }}

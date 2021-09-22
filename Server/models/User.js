@@ -43,9 +43,12 @@ const UserSchema = new Schema({
       cardNumber: { type: String, default: '' },
       cardExpiry: { type: String, default: '' },
       cardCVV: { type: String, default: '' },
+      state: {
+        type: Boolean,
+        default: true,
+      },
     },
   ],
-
   registrationPhaseState: {
     type: Boolean,
     default: false,
@@ -63,6 +66,19 @@ const UserSchema = new Schema({
   doNotEmailMe: {
     type: Boolean,
     default: false,
+  },
+  phoneNumber: {
+    type: String,
+    maxlength: 11,
+    default: '***********',
+  },
+  plan: {
+    type: String,
+    enum: ['Basic', 'Standard', 'Premium'],
+  },
+  billingDate: {
+    type: String,
+    default: '29th',
   },
 });
 

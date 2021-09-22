@@ -856,6 +856,93 @@ const getProfiles = asyncHandler(async (email, res) => {
   };
 });
 
+const postPlanToUser = asyncHandler(async (email, plan, res) => {
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    throw new ApolloError("User isn't not found", 400);
+  }
+
+  user.plan = await plan;
+
+  await user.save();
+
+  res.results = {
+    success: true,
+  };
+});
+
+const changePassword = asyncHandler(
+  async (email, currentPassword, newPassword, confirmNewPassword, res) => {
+    if (newPassword != confirmNewPassword) {
+      throw new ApolloError(
+        "New password and Confirm new password aren't the same!!",
+        400
+      );
+    }
+
+    if (newPassword.length < 6 || newPassword.length > 60) {
+      throw new ApolloError(
+        'Password can be a minimum of 6 characters and a maximum of 60 characters.',
+        400
+      );
+    }
+
+    const user = await User.findOne({ email: email }).select('+password');
+
+    if (!user) {
+      throw new ApolloError("user isn't not found", 400);
+    }
+
+    const passwordRes = await comparePassword(currentPassword, user.password);
+
+    if (!passwordRes) {
+      throw new ApolloError(
+        "User's password and Current password aren't the same!!",
+        400
+      );
+    }
+
+    user.password = await newPassword;
+    await user.save();
+
+    res.results = {
+      success: true,
+    };
+  }
+);
+
+const getBillingDateFromUser = asyncHandler(async (email, res) => {
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    throw new ApolloError('There is no such user!!', 400);
+  }
+
+  res.results = {
+    success: true,
+    billingDate: user.billingDate,
+  };
+});
+
+const changeBillingDateThatUser = asyncHandler(
+  async (email, billingDate, res) => {
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      throw new ApolloError('There is no such user!!', 400);
+    }
+
+    user.billingDate = await billingDate;
+
+    await user.save();
+
+    res.results = {
+      success: true,
+    };
+  }
+);
+
 module.exports = {
   registerUser,
   isReceivedMailAlready,
@@ -886,4 +973,8 @@ module.exports = {
   changeChildFromUser,
   isThePasswordCorrectChildProfile,
   getProfiles,
+  postPlanToUser,
+  changePassword,
+  getBillingDateFromUser,
+  changeBillingDateThatUser,
 };

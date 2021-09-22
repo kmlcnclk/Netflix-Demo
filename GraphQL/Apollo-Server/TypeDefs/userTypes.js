@@ -14,6 +14,9 @@ export const UserTypes = gql`
     profiles: [ID]!
     child: ID
     doNotEmailMe: Boolean!
+    phoneNumber: String
+    plan: String!
+    billingDate: String!
   }
 
   type RegisterUser {
@@ -22,11 +25,13 @@ export const UserTypes = gql`
   }
 
   type CreditCards {
+    _id: ID!
     fName: String!
     lName: String!
     cardNumber: String!
     cardExpiry: String!
     cardCVV: String!
+    state: Boolean
   }
   type MakeTheUserAdmin {
     success: Boolean!
@@ -182,5 +187,22 @@ export const UserTypes = gql`
     profilesImage: [String]!
     profilesName: [String]!
     i: [Int]!
+  }
+
+  type PostPlanToUser {
+    success: Boolean!
+  }
+
+  type ChangePassword {
+    success: Boolean!
+  }
+
+  type GetBillingDateFromUser {
+    success: Boolean!
+    billingDate: String!
+  }
+  
+  type ChangeBillingDateThatUser {
+    success: Boolean!
   }
 `;
