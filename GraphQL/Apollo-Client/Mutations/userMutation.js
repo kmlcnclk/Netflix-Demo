@@ -326,3 +326,12 @@ export const CHANGE_BILLING_DATE_THAT_USER = gql`
     }
   }
 `;
+
+export const GET_BILLING_DATE_FROM_USER = gql`
+  mutation getBillingDateFromUser($email: String!) {
+    getBillingDateFromUser(email: $email) {
+      success
+      billingDate
+    }
+  }
+`;

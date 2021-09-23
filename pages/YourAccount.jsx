@@ -106,8 +106,8 @@ function YourAccount() {
 
   return (
     <>
-      {data && getUserFromIDData ? (
-        <LayoutYourAccount>
+      <LayoutYourAccount>
+        {data && getUserFromIDData ? (
           <YourAccountComponent
             data={data}
             email={email}
@@ -124,8 +124,8 @@ function YourAccount() {
             onToggleChild={onToggleChild}
             clickProfileIndex={clickProfileIndex}
           />
-        </LayoutYourAccount>
-      ) : null}
+        ) : null}
+      </LayoutYourAccount>
     </>
   );
 }

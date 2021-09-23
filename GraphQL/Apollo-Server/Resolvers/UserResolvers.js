@@ -102,11 +102,6 @@ export const UserResolvers = {
 
       return res.status(200).results;
     },
-    async getBillingDateFromUser(_, { email }, { res }) {
-      await getBillingDateFromUser(email, res);
-
-      return res.status(200).results;
-    },
   },
   Mutation: {
     async registerUser(_, { email, password, doNotEmailMe }, { res }) {
@@ -328,6 +323,11 @@ export const UserResolvers = {
     },
     async changeBillingDateThatUser(_, { email, billingDate }, { res }) {
       await changeBillingDateThatUser(email, billingDate, res);
+
+      return res.status(200).results;
+    },
+    async getBillingDateFromUser(_, { email }, { res }) {
+      await getBillingDateFromUser(email, res);
 
       return res.status(200).results;
     },

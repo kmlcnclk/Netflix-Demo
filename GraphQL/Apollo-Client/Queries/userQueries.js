@@ -195,12 +195,3 @@ export const GET_PROFILES = gql`
     }
   }
 `;
-
-export const GET_BILLING_DATE_FROM_USER = gql`
-  query getBillingDateFromUser($email: String!) {
-    getBillingDateFromUser(email: $email) {
-      success
-      billingDate
-    }
-  }
-`;

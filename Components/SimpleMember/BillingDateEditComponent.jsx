@@ -35,6 +35,39 @@ class BillingDateEditComponent extends Component {
       '26rd',
       '27rd',
     ],
+    date: false,
+  };
+
+  componentDidMount = async () => {
+    const email = await getEmailFromLocal()[0];
+
+    if (email) {
+      try {
+        await this.props.getBillingDateFromUser({
+          variables: {
+            email: email,
+          },
+        });
+      } catch (err) {
+        this.props.toast({
+          title: err.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+
+      if (this.props.getBillingDateFromUserData) {
+        if (
+          this.props.getBillingDateFromUserData.getBillingDateFromUser.success
+        ) {
+          this.setState({
+            date: this.props.getBillingDateFromUserData.getBillingDateFromUser
+              .success,
+          });
+        }
+      }
+    }
   };
 
   changeBillingDate = async (e) => {
@@ -69,76 +102,84 @@ class BillingDateEditComponent extends Component {
   };
 
   render() {
-    const { days } = this.state;
+    const { days, date } = this.state;
     const { day, setDay, getBillingDateFromUserData } = this.props;
 
     return (
-      <Box>
-        <Header />
-        <Container maxW="container.sm" mr="280px" mt={3} mb="200px">
-          <Box w="420px" as="form" onSubmit={this.changeBillingDate}>
-            <Text fontSize="2xl" color="#333" fontWeight="semibold">
-              Choose a new billing day.
-            </Text>
-            <Text fontSize="md" color="#333" mt={3} lineHeight="1.2">
-              Right now, your membership is billed on the{' '}
-              <strong className="font-semibold">
-                {getBillingDateFromUserData.getBillingDateFromUser.billingDate}{' '}
-                of each month
-              </strong>
-              , but feel free to change it to a day that’s more convenient for
-              you.
-            </Text>
-            <Box mt={4}>
-              <Text fontSize="xs" fontWeight="semibold" color="#757575">
-                Your new billing day
-              </Text>
-
-              <Flex align="center" mt={1}>
-                <Box>
-                  <Select
-                    h="60px"
-                    w="195px"
-                    placeholder="Day"
-                    borderColor="#a6a6a6"
-                    _hover={{ borderColor: '#a6a6a6' }}
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                    _active={{ borderColor: '#333' }}
-                    _focus={{ borderColor: '#333' }}
-                    size="xs"
-                  >
-                    {days.map((d, i) => (
-                      <option key={i} value={d}>
-                        {d}
-                      </option>
-                    ))}
-                  </Select>
-                </Box>
-                <Text ml={4} fontSize="md" color="#333">
-                  of each month
+      <>
+        {date ? (
+          <Box>
+            <Header />
+            <Container maxW="container.sm" mr="280px" mt={3} mb="200px">
+              <Box w="420px" as="form" onSubmit={this.changeBillingDate}>
+                <Text fontSize="2xl" color="#333" fontWeight="semibold">
+                  Choose a new billing day.
                 </Text>
-              </Flex>
-            </Box>
-            <Button
-              w="420px"
-              h="48px"
-              disabled={day == '' ? true : false}
-              type="submit"
-              colorScheme="red"
-              bgColor="#e50914"
-              borderRadius="sm"
-              mt={7}
-              _hover={{ bgColor: '#e50900', ring: '0px' }}
-              _active={{ bgColor: '#e50900', ring: '0px' }}
-              _focus={{ bgColor: '#e50900', ring: '0px' }}
-            >
-              REVIEW & CONFIRM
-            </Button>
+                <Text fontSize="md" color="#333" mt={3} lineHeight="1.2">
+                  Right now, your membership is billed on the{' '}
+                  <strong className="font-semibold">
+                    {
+                      getBillingDateFromUserData.getBillingDateFromUser
+                        .billingDate
+                    }{' '}
+                    of each month
+                  </strong>
+                  , but feel free to change it to a day that’s more convenient
+                  for you.
+                </Text>
+                <Box mt={4}>
+                  <Text fontSize="xs" fontWeight="semibold" color="#757575">
+                    Your new billing day
+                  </Text>
+
+                  <Flex align="center" mt={1}>
+                    <Box>
+                      <Select
+                        h="60px"
+                        w="195px"
+                        placeholder="Day"
+                        borderColor="#a6a6a6"
+                        _hover={{ borderColor: '#a6a6a6' }}
+                        value={day}
+                        onChange={(e) => setDay(e.target.value)}
+                        _active={{ borderColor: '#333' }}
+                        _focus={{ borderColor: '#333' }}
+                        size="xs"
+                      >
+                        {days.map((d, i) => (
+                          <option key={i} value={d}>
+                            {d}
+                          </option>
+                        ))}
+                      </Select>
+                    </Box>
+                    <Text ml={4} fontSize="md" color="#333">
+                      of each month
+                    </Text>
+                  </Flex>
+                </Box>
+                <Button
+                  w="420px"
+                  h="48px"
+                  disabled={day == '' ? true : false}
+                  type="submit"
+                  colorScheme="red"
+                  bgColor="#e50914"
+                  borderRadius="sm"
+                  mt={7}
+                  _hover={{ bgColor: '#e50900', ring: '0px' }}
+                  _active={{ bgColor: '#e50900', ring: '0px' }}
+                  _focus={{ bgColor: '#e50900', ring: '0px' }}
+                >
+                  REVIEW & CONFIRM
+                </Button>
+              </Box>
+            </Container>
+
+            <Footer />
           </Box>
-        </Container>
-        <Footer />
-      </Box>
+        ) : null}
+      </>
     );
   }
 }
