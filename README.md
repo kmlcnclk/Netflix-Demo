@@ -11,6 +11,7 @@ This project is my fourth project I am still working on this project. In this pr
 
 * React JS
 * Chakra UI
+* Tailwindcss
 * Next JS
 * GraphQL
 * JavaScript
