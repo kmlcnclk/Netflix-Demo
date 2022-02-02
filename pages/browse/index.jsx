@@ -62,7 +62,7 @@ export default function Browse() {
     router.prefetch('/browse');
     router.prefetch('/ManageProfiles');
     router.prefetch('/Kids');
-    console.log(process.env)
+    console.log(process.env.JWT_EXPIRE);
 
     const clickProfile = getClickProfileFromLocal()[0];
     const clickProfileIndex = getClickProfileIndexFromLocal()[0];
