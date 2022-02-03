@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { onDrop } from '../toolbox/UserOnDrop';
 import ReactPlayer from 'react-player';
 // import styles from '../../styles/MainVideo.module.css';
@@ -22,6 +22,7 @@ function MainVideo() {
   const abc = useRef(null);
 
   const [sliderText, setSliderText] = useState(false);
+  const [mainVideoState, setMainVideoState] = useState(true);
 
   const fileChangeInput = (e) => {
     const file = e.target.files[0];
@@ -33,6 +34,17 @@ function MainVideo() {
 
     setB(await onDrop(file));
   };
+
+  useEffect(() => {
+    const changeBackground = () => {
+      if (window.scrollY >= 500) {
+        setMainVideoState(false);
+      } else {
+        setMainVideoState(true);
+      }
+    };
+    window.addEventListener('scroll', changeBackground);
+  }, []);
 
   return (
     <Box bgColor="#141414">
@@ -46,7 +58,7 @@ function MainVideo() {
         <Box>
           <ReactPlayer
             url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-            playing={false}
+            playing={mainVideoState ? true : false}
             width="100%"
             height="620px"
             loop={true}

@@ -127,7 +127,7 @@ const logout = asyncHandler(async (res) => {
       expires: new Date(Date.now()),
       samSite: 'strict',
       path: '/',
-      secure: process.env.NODE_ENV === 'development' ? false : true,
+      secure: process.env.NEXT_PUBLIC_NODE_ENV === 'development' ? false : true,
     })
   );
 
@@ -397,7 +397,7 @@ const forgotPassword = asyncHandler(async (resetEmail, res) => {
 
   const resetPasswordToken = user.getResetPasswordTokenFromUser();
   await user.save();
-  const MY_URL = process.env.MY_URL;
+  const MY_URL = process.env.NEXT_PUBLIC_MY_URL;
 
   const resetPasswordUrl = `${MY_URL}/resetPassword?resetPasswordToken=${resetPasswordToken}`;
   const emailTemplate = `
@@ -407,7 +407,7 @@ const forgotPassword = asyncHandler(async (resetEmail, res) => {
     `;
   try {
     await sendEmail({
-      from: process.env.SMTP_USER,
+      from: process.env.NEXT_PUBLIC_SMTP_USER,
       to: resetEmail,
       subject: 'Reset Your Password',
       html: emailTemplate,

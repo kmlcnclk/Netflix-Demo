@@ -47,3 +47,24 @@ function Billingdateedit() {
 }
 
 export default Billingdateedit;
+
+
+
+//bunu dene
+// export const getStaticProps = async ({ params }) => {
+//   const apolloClient = initializeApollo();
+
+//   const { connectDatabase } = require('Server/DB/connectDatabase');
+
+//   await connectDatabase();
+//   await apolloClient.readQuery({
+//     query: CART,
+//   });
+
+//   return {
+//     props: {
+//       initialApolloState: apolloClient.cache.extract(),
+//       revalidate: 60,
+//     },
+//   };
+// };

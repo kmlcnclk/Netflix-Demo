@@ -16,16 +16,23 @@ const getAccessToRoute = (access_token, res) => {
   }
 
   const accessToken = getAccessTokenFromHeader(access_token);
-  jwt.verify(accessToken, process.env.JSON_SECRET_KEY, (err, decoded) => {
-    if (err) {
-      throw new ApolloError('You are not authorized to access this route', 401);
-    }
+  jwt.verify(
+    accessToken,
+    process.env.NEXT_PUBLIC_JSON_SECRET_KEY,
+    (err, decoded) => {
+      if (err) {
+        throw new ApolloError(
+          'You are not authorized to access this route',
+          401
+        );
+      }
 
-    res.user = {
-      id: decoded.id,
-      name: decoded.name,
-    };
-  });
+      res.user = {
+        id: decoded.id,
+        name: decoded.name,
+      };
+    }
+  );
 };
 
 // Is the user registered ?

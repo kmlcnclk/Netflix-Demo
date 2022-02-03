@@ -156,7 +156,7 @@ function Header({}) {
       }
     };
 
-    window.addEventListener('scroll', changeBackground);
+    window.addEventListener('scroll', changeBackground);// buraya remove event listener ekle
   }, [
     router,
     getUnclickedProfiles,

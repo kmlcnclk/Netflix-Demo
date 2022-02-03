@@ -7,7 +7,7 @@ const Clo = async (req, res) => {
     {
       timestamp,
     },
-    process.env.CLOUDINARY_SECRET
+    process.env.NEXT_PUBLIC_CLOUDINARY_SECRET
   );
 
   res.statusCode = 200;

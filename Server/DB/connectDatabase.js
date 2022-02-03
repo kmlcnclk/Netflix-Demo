@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 export const connectDatabase = () => {
   if (mongoose.connection.readyState >= 1) return;
 
-  return mongoose.connect(process.env.MONGO_URI, {
+  return mongoose.connect(process.env.NEXT_PUBLIC_MONGO_URI, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,

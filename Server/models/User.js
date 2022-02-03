@@ -91,7 +91,7 @@ UserSchema.methods.getResetPasswordTokenFromUser = function () {
     .update(randomHexString)
     .digest('hex');
 
-  const expire = parseInt(process.env.RESET_PASSWORD_EXPIRE);
+  const expire = parseInt(process.env.NEXT_PUBLIC_RESET_PASSWORD_EXPIRE);
 
   this.resetPasswordToken = resetPasswordToken;
   this.resetPasswordExpire = Date.now() + expire;
