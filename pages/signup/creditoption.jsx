@@ -48,7 +48,6 @@ function Creditoption() {
         setCardCVV={setCardCVV}
         data={data}
         toast={toast}
-        router={router}
       />
     </LayoutSignup>
   );
