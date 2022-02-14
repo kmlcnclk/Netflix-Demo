@@ -71,8 +71,14 @@ class CreditOptionComponent extends Component {
   };
 
   render() {
-    const { setFName, setLName, setCardNumber, setCardExpiry, setCardCVV } =
-      this.props;
+    const {
+      setFName,
+      setLName,
+      setCardNumber,
+      setCardExpiry,
+      setCardCVV,
+      router,
+    } = this.props;
     return (
       <Box>
         <Header />
@@ -350,6 +356,7 @@ class CreditOptionComponent extends Component {
                   w="full"
                   h="64px"
                   mt={3}
+                  onCLick={() => router.push('/browse')}
                 >
                   <Text fontSize="24px">Start Membership</Text>
                 </Button>
