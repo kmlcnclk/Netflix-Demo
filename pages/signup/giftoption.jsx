@@ -9,6 +9,7 @@ function Giftoption() {
 
   useEffect(() => {
     router.prefetch('/');
+    router.prefetch('/browse');
     const loginState = getLoginStateFromLocal()[0];
 
     if (!loginState) {
@@ -18,7 +19,7 @@ function Giftoption() {
 
   return (
     <LayoutSignup>
-      <GiftOptionComponent />
+      <GiftOptionComponent router={router} />
     </LayoutSignup>
   );
 }

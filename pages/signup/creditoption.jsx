@@ -23,6 +23,7 @@ function Creditoption() {
 
   useEffect(() => {
     router.prefetch('/');
+    router.prefetch('/browse');
     const loginState = getLoginStateFromLocal()[0];
 
     if (!loginState) {
@@ -48,6 +49,7 @@ function Creditoption() {
         setCardCVV={setCardCVV}
         data={data}
         toast={toast}
+        router={router}
       />
     </LayoutSignup>
   );

@@ -17,12 +17,24 @@ class GiftOptionComponent extends Component {
   state = {
     show: false,
     plan: '',
+    giftCode: '',
   };
 
   async componentDidMount() {
     const plan = await getPlanFromLocal()[0];
     await this.setState({ plan: plan });
   }
+
+  giftOption = async (e) => {
+    e.preventDefault();
+
+    const { giftCode } = this.state;
+    const { router } = this.props;
+
+    if (giftCode) {
+      router.push('/browse');
+    }
+  };
 
   render() {
     return (
@@ -40,7 +52,7 @@ class GiftOptionComponent extends Component {
               <Flex
                 as="form"
                 m={2}
-                onSubmit={this.login}
+                onSubmit={this.giftOption}
                 justify="flex-start"
                 align="center"
                 direction="column"
@@ -52,6 +64,7 @@ class GiftOptionComponent extends Component {
                   mr={2}
                   mt={3}
                   name="code"
+                  onChange={(e) => this.setState({ giftCode: e.target.value })}
                   borderRadius="none"
                   placeholder="Gift Card Pin or Code"
                   _placeholder={{ fontSize: '14px' }}

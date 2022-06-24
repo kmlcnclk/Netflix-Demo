@@ -43,159 +43,972 @@ function Top10Videos() {
             }}
           >
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/1.png"
-                  alt="1"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/1.png"
+                    alt="1"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/2.png"
-                  alt="2"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/2.png"
+                    alt="2"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/3.png"
-                  alt="3"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/3.png"
+                    alt="3"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/4.png"
-                  alt="4"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/4.png"
+                    alt="4"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/5.png"
-                  alt="5"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/5.png"
+                    alt="5"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/6.png"
-                  alt="6"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/6.png"
+                    alt="6"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
             <SwiperSlide>
-              <Flex
-                justify="flex-start"
-                align="center"
-                className="swiper-player"
-              >
-                <Image
-                  src="/7.png"
-                  alt="7"
-                  width="122.11px"
-                  height="174.44px"
-                  objectFit="contain"
-                />
-                <ReactPlayer
-                  url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
-                  playing={false}
-                  width="auto"
-                  height="auto"
-                  loop={true}
-                />
+              <Flex justify="center" align="center" direction="column">
+                <Flex
+                  justify="flex-start"
+                  align="center"
+                  className="swiper-player"
+                >
+                  <Image
+                    src="/7.png"
+                    alt="7"
+                    width="122.11px"
+                    height="174.44px"
+                    objectFit="contain"
+                  />
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Flex>
+                <Box className="swiper-react-player">
+                  <ReactPlayer
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                    playing={false}
+                    width="auto"
+                    height="auto"
+                    loop={true}
+                  />
+                </Box>
+
+                <Box className="sliderText">
+                  <Flex mb={2} justify="space-between" align="center">
+                    <Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        pl="3px"
+                        textAlign="center"
+                        bgColor="white"
+                        w="min"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BiPlay color="black" size="20" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="1px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <BsPlus size="20" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillLike size="13" color="white" />
+                      </Flex>
+                      <Flex
+                        justify="center"
+                        align="center"
+                        borderRadius="full"
+                        p="4px"
+                        textAlign="center"
+                        bgColor="#141414"
+                        w="min"
+                        border="1px white solid"
+                        mr={1}
+                        cursor="pointer"
+                      >
+                        <AiFillDislike size="13" color="white" />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      borderRadius="full"
+                      p="4px"
+                      textAlign="center"
+                      bgColor="#141414"
+                      w="min"
+                      border="1px white solid"
+                      cursor="pointer"
+                    >
+                      <FiChevronDown size="13" color="white" />
+                    </Flex>
+                  </Flex>
+
+                  <Flex mb={2}>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="semibold"
+                      color="teal"
+                      mr={1}
+                    >
+                      New
+                    </Text>
+                    <Flex
+                      justify="center"
+                      align="center"
+                      border="1px white solid"
+                      p="1px"
+                      mr={1}
+                    >
+                      <Text fontSize="x-small">13+</Text>
+                    </Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      2h 16m
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text fontSize="xs" fontWeight="semibold">
+                      Emotional &bull; Drama &bull; Cold War Era
+                    </Text>
+                  </Flex>
+                </Box>
               </Flex>
             </SwiperSlide>
+
             <SwiperSlide>
               <Flex justify="center" align="center" direction="column">
                 <Flex
@@ -211,7 +1024,7 @@ function Top10Videos() {
                     objectFit="contain"
                   />
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
@@ -220,7 +1033,7 @@ function Top10Videos() {
                 </Flex>
                 <Box className="swiper-react-player">
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
@@ -349,7 +1162,7 @@ function Top10Videos() {
                     objectFit="contain"
                   />
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
@@ -358,7 +1171,7 @@ function Top10Videos() {
                 </Flex>
                 <Box className="swiper-react-player">
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
@@ -494,7 +1307,7 @@ function Top10Videos() {
                     objectFit="contain"
                   />
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
@@ -503,7 +1316,7 @@ function Top10Videos() {
                 </Flex>
                 <Box className="swiper-react-player">
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"

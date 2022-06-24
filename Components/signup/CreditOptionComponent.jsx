@@ -21,6 +21,7 @@ class CreditOptionComponent extends Component {
     plan: '',
     planPrice: '',
     loading: false,
+    checkBoxValue: false,
   };
 
   async componentDidMount() {
@@ -67,12 +68,19 @@ class CreditOptionComponent extends Component {
 
     if (this.props.data) {
       console.log(this.props.data.creditOptionAddToUser.success);
+      router.push('/browse');
     }
   };
 
   render() {
-    const { setFName, setLName, setCardNumber, setCardExpiry, setCardCVV } =
-      this.props;
+    const {
+      setFName,
+      setLName,
+      setCardNumber,
+      setCardExpiry,
+      setCardCVV,
+      router,
+    } = this.props;
     return (
       <Box>
         <Header />
@@ -334,7 +342,16 @@ class CreditOptionComponent extends Component {
                   </Box>
                 </Box>
                 <Flex w="full" m={2}>
-                  <Checkbox isRequired size="lg" color="#73737f">
+                  <Checkbox
+                    onChange={() =>
+                      this.setState({
+                        checkBoxValue: !this.state.checkBoxValue,
+                      })
+                    }
+                    isRequired
+                    size="lg"
+                    color="#73737f"
+                  >
                     I agree
                   </Checkbox>
                 </Flex>

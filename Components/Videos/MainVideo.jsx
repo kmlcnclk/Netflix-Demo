@@ -37,13 +37,16 @@ function MainVideo() {
 
   useEffect(() => {
     const changeBackground = () => {
-      if (window.scrollY >= 500) {
-        setMainVideoState(false);
-      } else {
+      if (window.scrollY < 500) {
         setMainVideoState(true);
+      } else {
+        setMainVideoState(false);
       }
     };
     window.addEventListener('scroll', changeBackground);
+    return () => {
+      window.removeEventListener(changeBackground);
+    };
   }, []);
 
   return (
@@ -57,10 +60,10 @@ function MainVideo() {
       >
         <Box>
           <ReactPlayer
-            url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+            url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
             playing={mainVideoState ? true : false}
             width="100%"
-            height="620px"
+            height="820px"
             loop={true}
           />
         </Box>
@@ -137,7 +140,7 @@ function MainVideo() {
               <Flex justify="center" align="center" direction="column">
                 <Box className="swiper-player">
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
@@ -146,7 +149,7 @@ function MainVideo() {
                 </Box>
                 <Box className="swiper-react-player">
                   <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1626784177/reyvc24xmipm4xqzuopg.mp4"
+                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
                     playing={false}
                     width="auto"
                     height="auto"
