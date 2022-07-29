@@ -70,23 +70,24 @@ function MainVideo() {
         // className={styles.mainVideoDiv}
       >
         <div className="relative">
-            <Box className={mVideoState ? 'block' : 'hidden'}>
-              <ReactPlayer
-                url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-                playing={mainVideoState && mVideoState}
-                width="100%"
-                height="820px"
-                loop={true}
-              />
-            </Box>
+          <Box className={mVideoState ? 'block' : 'hidden'}>
+            <ReactPlayer
+              url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+              playing={mainVideoState && mVideoState}
+              width="100%"
+              height="820px"
+              loop={true}
+            />
+          </Box>
+          <div className={mVideoState ? 'hidden' : 'block'}>
             <NextImage
               src="/squid-game.jpg"
               width="1349px"
               height="820px"
-              className={mVideoState ? 'hidden' : 'block'}
               objectFit="cover"
               priority={true}
             />
+          </div>
           <div className="absolute top-24 left-20">
             <div className="flex justify-between w-72 items-center">
               <h1 className="font-bold text-4xl text-white ">TV Shows</h1>
