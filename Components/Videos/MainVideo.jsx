@@ -60,6 +60,8 @@ function MainVideo() {
     };
   }, []);
 
+  console.log('1', mainVideoState, '2', mVideoState);
+
   return (
     <Box bgColor="#141414">
       {/* <Script src="./Browse/mv.js" /> */}
@@ -76,8 +78,14 @@ function MainVideo() {
               playing={mainVideoState && mVideoState}
               width="100%"
               height="820px"
-              // loop={true}
-              onEnded={() => setMVideoState(false)}
+              loop={false}
+              onStart={()=>{
+                console.log("asdana")
+              }}
+              onEnded={() => {
+                console.log('selam', mVideoState);
+                setMVideoState(false);
+              }}
             />
           </Box>
           <div className={mVideoState ? 'hidden' : 'block'}>
