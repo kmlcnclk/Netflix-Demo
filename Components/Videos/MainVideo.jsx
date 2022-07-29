@@ -76,7 +76,7 @@ function MainVideo() {
               playing={mainVideoState && mVideoState}
               width="100%"
               height="820px"
-              loop={true}
+              // loop={true}
               onEnded={() => setMVideoState(false)}
             />
           </Box>
