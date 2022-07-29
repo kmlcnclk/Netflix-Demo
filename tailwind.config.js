@@ -1,9 +1,18 @@
 module.exports = {
   // mode: 'jit',
-  purge: [],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        hoverWhite: '#c9c5c3',
+        buttonBG: '#6d6d6eb3',
+        buttonBGHover: '#433e3a',
+      },
+    },
   },
   variants: {
     extend: {},

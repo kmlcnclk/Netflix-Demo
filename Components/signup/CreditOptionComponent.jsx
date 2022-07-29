@@ -68,19 +68,13 @@ class CreditOptionComponent extends Component {
 
     if (this.props.data) {
       console.log(this.props.data.creditOptionAddToUser.success);
-      router.push('/browse');
+      this.props.router.push('/browse');
     }
   };
 
   render() {
-    const {
-      setFName,
-      setLName,
-      setCardNumber,
-      setCardExpiry,
-      setCardCVV,
-      router,
-    } = this.props;
+    const { setFName, setLName, setCardNumber, setCardExpiry, setCardCVV } =
+      this.props;
     return (
       <Box>
         <Header />

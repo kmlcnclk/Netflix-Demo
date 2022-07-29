@@ -13,12 +13,16 @@ import { BsPlus } from 'react-icons/bs';
 import { AiFillLike, AiFillDislike } from 'react-icons/ai';
 import { FiChevronDown } from 'react-icons/fi';
 import Top10Videos from './Top10Videos';
+import NextImage from 'next/image';
+import Icon from '../../src/Icon';
 
 // SwiperCore.use([Pagination, Navigation]);
 
 function MainVideo() {
   const [file, setFile] = useState({});
   const [b, setB] = useState('');
+  const [mVideoState, setMVideoState] = useState(false);
+
   const abc = useRef(null);
 
   const [sliderText, setSliderText] = useState(false);
@@ -36,6 +40,9 @@ function MainVideo() {
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      setMVideoState(true);
+    }, 4000);
     const changeBackground = () => {
       if (window.scrollY < 500) {
         setMainVideoState(true);
@@ -43,9 +50,13 @@ function MainVideo() {
         setMainVideoState(false);
       }
     };
-    window.addEventListener('scroll', changeBackground);
+    window?.addEventListener('scroll', changeBackground);
+
     return () => {
-      window.removeEventListener(changeBackground);
+      window?.removeEventListener(changeBackground);
+      clearTimeout(() => {
+        setMVideoState(true);
+      });
     };
   }, []);
 
@@ -58,15 +69,59 @@ function MainVideo() {
         align="center"
         // className={styles.mainVideoDiv}
       >
-        <Box>
-          <ReactPlayer
-            url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-            playing={mainVideoState ? true : false}
-            width="100%"
-            height="820px"
-            loop={true}
-          />
-        </Box>
+        <div className="relative">
+          {mVideoState ? (
+            <Box>
+              <ReactPlayer
+                url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                playing={true}
+                width="100%"
+                height="820px"
+                loop={true}
+              />
+            </Box>
+          ) : (
+            <NextImage
+              src="/squid-game.jpg"
+              width="1349px"
+              height="820px"
+              objectFit="cover"
+              priority={true}
+            />
+          )}
+          <div className="absolute top-24 left-20">
+            <div className="flex justify-between w-72 items-center">
+              <h1 className="font-bold text-4xl text-white ">TV Shows</h1>
+              <select className="bg-black text-white w-24 h-6 border-2 border-white flex items-center">
+                <option value="">Genres</option>
+              </select>
+            </div>
+          </div>
+          <div className="absolute bottom-48 left-20">
+            <NextImage
+              src="/squid-game-text.webp"
+              width="485px"
+              height="194px"
+              objectFit="cover"
+              priority={true}
+            />
+            <Text w={485} color="white" fontWeight="semibold" mb={6}>
+              The final round presents another cruel test — but this time, how
+              it ends depends on just one player. The game&apos;s creator steps
+              out of the shadows.
+            </Text>
+            <div className="flex space-x-3">
+              <button className="bg-white w-28 h-10 rounded-md hover:bg-hoverWhite transition-all flex justify-center items-center space-x-2">
+                <Icon name="play" size="24px" color="#000" />
+                <p className="text-black font-bold">Play</p>
+              </button>
+              <button className="bg-buttonBG w-36 h-10 rounded-md hover:bg-buttonBGHover transition-all flex justify-center items-center space-x-2">
+                <Icon name="exclamation" size="24px" color="#ffffff" />
+                <p className="text-white font-bold">More Info</p>
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* <Box as="form" onSubmit={selam}>
         <Center mb={6}>

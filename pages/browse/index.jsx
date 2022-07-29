@@ -63,19 +63,44 @@ export default function Browse() {
     router.prefetch('/ManageProfiles');
     router.prefetch('/Kids');
 
-    const clickProfile = getClickProfileFromLocal()[0];
-    const clickProfileIndex = getClickProfileIndexFromLocal()[0];
+    const ls = getLoginStateFromLocal()[0];
 
-    if (clickProfile && clickProfileIndex) {
-      setProfileState(true);
-    }
+    if (!ls) {
+      router.push('/');
+    } else {
+      const clickProfile = getClickProfileFromLocal()[0];
+      const clickProfileIndex = getClickProfileIndexFromLocal()[0];
 
-    const profile = async () => {
-      const email = await getEmailFromLocal()[0];
+      if (clickProfile && clickProfileIndex) {
+        setProfileState(true);
+      }
 
-      if (email) {
+      const profile = async () => {
+        const email = await getEmailFromLocal()[0];
+
+        if (email) {
+          try {
+            await getProfilesFromUser({
+              variables: {
+                email: email,
+              },
+            });
+          } catch (err) {
+            toast({
+              title: err.message,
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+            });
+          }
+        }
+      };
+
+      const child = async () => {
+        const email = await getEmailFromLocal()[0];
+
         try {
-          await getProfilesFromUser({
+          await getChildFromUser({
             variables: {
               email: email,
             },
@@ -88,72 +113,46 @@ export default function Browse() {
             isClosable: true,
           });
         }
+      };
+      child();
+
+      profile();
+
+      const cpi = getClickProfileIndexFromLocal()[0];
+
+      if (cpi && cpi != 'Child') {
+        setProfileState(true);
+      } else if (cpi == 'Child') {
+        router.push('/Kids');
       }
-    };
 
-    const child = async () => {
-      const email = await getEmailFromLocal()[0];
+      const getProfileImageFromUserFunc = async () => {
+        const email = await getEmailFromLocal()[0];
 
-      try {
-        await getChildFromUser({
-          variables: {
-            email: email,
-          },
-        });
-      } catch (err) {
-        toast({
-          title: err.message,
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-    };
-    child();
+        try {
+          await getProfileImageFromUser({
+            variables: {
+              email: email,
+            },
+          });
+        } catch (err) {
+          toast({
+            title: err.message,
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+        }
 
-    // const ls = getLoginStateFromLocal()[0];
+        if (getProfileImageFromUserData) {
+          await setImages(
+            getProfileImageFromUserData.getProfileImageFromUser.images
+          );
+        }
+      };
 
-    // if (!ls) {
-    //   router.push('/');
-    // } else {
-    //   profile();
-    // }
-    profile();
-
-    const cpi = getClickProfileIndexFromLocal()[0];
-
-    if (cpi && cpi != 'Child') {
-      setProfileState(true);
-    } else if (cpi == 'Child') {
-      router.push('/Kids');
+      getProfileImageFromUserFunc();
     }
-
-    const getProfileImageFromUserFunc = async () => {
-      const email = await getEmailFromLocal()[0];
-
-      try {
-        await getProfileImageFromUser({
-          variables: {
-            email: email,
-          },
-        });
-      } catch (err) {
-        toast({
-          title: err.message,
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-
-      if (getProfileImageFromUserData) {
-        await setImages(
-          getProfileImageFromUserData.getProfileImageFromUser.images
-        );
-      }
-    };
-
-    getProfileImageFromUserFunc();
   }, [
     toast,
     router,

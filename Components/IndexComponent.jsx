@@ -132,13 +132,13 @@ class IndexComponent extends Component {
                 Ready to watch? Enter your email to create or restart your
                 membership.
               </Text>
-              <div className="input-group mb-3">
+              <div className="flex mb-3">
                 <Input
                   h="50px"
                   type="email"
                   borderRadius="none"
+                  color="black"
                   value={email}
-                  className="form-control"
                   placeholder="Email address"
                   _placeholder={{ fontSize: '14px' }}
                   _active={{ bgColor: 'white' }}
@@ -147,6 +147,7 @@ class IndexComponent extends Component {
                     setEmail(e.target.value);
                   }}
                   variant="filled"
+                  w="469px"
                   isRequired
                   size="lg"
                 />
@@ -154,6 +155,7 @@ class IndexComponent extends Component {
                 <Button
                   size="lg"
                   h="50px"
+                  w="140px"
                   borderRadius="none"
                   isLoading={this.state.loading ? true : false}
                   colorScheme="red"
@@ -354,26 +356,29 @@ class IndexComponent extends Component {
                 Ready to watch? Enter your email to create or restart your
                 membership.
               </Text>
-              <div className="input-group mb-3">
+              <div className="flex mb-3">
                 <Input
                   h="50px"
                   type="email"
                   borderRadius="none"
-                  className="form-control"
                   placeholder="Email address"
                   _placeholder={{ fontSize: '14px' }}
+                  color="black"
                   _active={{ bgColor: 'white' }}
                   _focus={{ bgColor: 'white' }}
                   variant="filled"
                   size="lg"
+                  w="425px"
                 />
 
                 <Button
                   size="lg"
                   h="50px"
                   borderRadius="none"
+                  w="140px"
                   colorScheme="red"
                   style={{ backgroundColor: '#f40612' }}
+                  isLoading={this.state.loading ? true : false}
                   type="button"
                 >
                   Get Started

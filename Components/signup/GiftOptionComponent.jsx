@@ -17,6 +17,7 @@ class GiftOptionComponent extends Component {
   state = {
     show: false,
     plan: '',
+    loading: false,
     giftCode: '',
   };
 
@@ -28,6 +29,8 @@ class GiftOptionComponent extends Component {
   giftOption = async (e) => {
     e.preventDefault();
 
+    this.setState({ loading: true });
+    
     const { giftCode } = this.state;
     const { router } = this.props;
 
@@ -136,6 +139,7 @@ class GiftOptionComponent extends Component {
                   size="lg"
                   w="full"
                   h="64px"
+                  isLoading={this.state.loading ? true : false}
                   mt={3}
                 >
                   <Text fontSize="24px">Redeem Gift Code</Text>
