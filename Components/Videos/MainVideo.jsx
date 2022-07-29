@@ -77,6 +77,7 @@ function MainVideo() {
               width="100%"
               height="820px"
               loop={true}
+              onEnded={() => setMVideoState(false)}
             />
           </Box>
           <div className={mVideoState ? 'hidden' : 'block'}>
