@@ -74,7 +74,7 @@ function MainVideo() {
             <Box>
               <ReactPlayer
                 url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-                playing={true}
+                playing={mainVideoState}
                 width="100%"
                 height="820px"
                 loop={true}
