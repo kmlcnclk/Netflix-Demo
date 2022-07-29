@@ -22,6 +22,8 @@ function MainVideo() {
   const [file, setFile] = useState({});
   const [b, setB] = useState('');
   const [mVideoState, setMVideoState] = useState(false);
+  const [loudSpeakerState, setLoudSpeakerState] = useState(true);
+  const [volumeState, setVolumeState] = useState(1);
 
   const abc = useRef(null);
 
@@ -80,6 +82,7 @@ function MainVideo() {
               onEnded={() => {
                 setMVideoState(false);
               }}
+              volume={volumeState}
             />
           </Box>
           <div className={mVideoState ? 'hidden' : 'block'}>
@@ -122,6 +125,29 @@ function MainVideo() {
                 <p className="text-white font-bold">More Info</p>
               </button>
             </div>
+          </div>
+          <div className="absolute right-20 bottom-56 rounded-full border p-2 border-white  cursor-pointer">
+            {loudSpeakerState ? (
+              <Icon
+                name="loudSpeaker"
+                size="18.44px"
+                color="#fff"
+                onClickFunc={() => {
+                  setLoudSpeakerState(false);
+                  setVolumeState(0);
+                }}
+              />
+            ) : (
+              <Icon
+                name="nonLoudSpeaker"
+                size="18.44px"
+                color="#fff"
+                onClickFunc={() => {
+                  setLoudSpeakerState(true);
+                  setVolumeState(1);
+                }}
+              />
+            )}
           </div>
         </div>
 
