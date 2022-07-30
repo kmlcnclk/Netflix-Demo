@@ -213,21 +213,11 @@ function MainVideo() {
             // className={styles.swiperContainer}
             //üstüne gelince büyültme olayını falan yap.
           >
-            <SwiperSlide
-              onMouseLeave={() =>
-                setTimeout(() => {
-                  setMyListVideoState(false);
-                }, 1100)
-              }
-            >
+            <SwiperSlide onMouseLeave={() => setMyListVideoState(false)}>
               <Flex justify="center" align="center" direction="column">
                 <div
                   className="swiper-player"
-                  onMouseEnter={() =>
-                    setTimeout(() => {
-                      setMyListVideoState(true);
-                    }, 1000)
-                  }
+                  onMouseEnter={() => setMyListVideoState(true)}
                 >
                   <NextImage
                     src="/squid-game.jpg"

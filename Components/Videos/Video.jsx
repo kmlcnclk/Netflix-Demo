@@ -15,22 +15,14 @@ function Video({ src, alt }) {
       align="center"
       justify="center"
       direction="column"
-      onMouseLeave={() =>
-        setTimeout(() => {
-          setVideoState(false);
-        }, 1100)
-      }
+      onMouseLeave={() => setVideoState(false)}
     >
       <Flex
         justify="flex-start"
         align="center"
         className="swiper-player"
         position="relative"
-        onMouseEnter={() =>
-          setTimeout(() => {
-            setVideoState(true);
-          }, 1000)
-        }
+        onMouseEnter={() => setVideoState(true)}
       >
         {src == 10 && alt == 10 ? (
           <>
