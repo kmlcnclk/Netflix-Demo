@@ -24,6 +24,7 @@ function MainVideo() {
   const [mVideoState, setMVideoState] = useState(false);
   const [loudSpeakerState, setLoudSpeakerState] = useState(true);
   const [volumeState, setVolumeState] = useState(1);
+  const [myListVideoState, setMyListVideoState] = useState(false);
 
   const abc = useRef(null);
 
@@ -72,7 +73,7 @@ function MainVideo() {
         // className={styles.mainVideoDiv}
       >
         <div className="relative">
-          <Box className={mVideoState ? 'block' : 'hidden'}>
+          {/* <Box className={mVideoState ? 'block' : 'hidden'}>
             <ReactPlayer
               url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
               playing={mainVideoState && mVideoState}
@@ -84,24 +85,17 @@ function MainVideo() {
               }}
               volume={volumeState}
             />
-          </Box>
-          <div className={mVideoState ? 'hidden' : 'block'}>
-            <NextImage
-              src="/squid-game.jpg"
-              width="1349px"
-              height="820px"
-              objectFit="cover"
-              priority={true}
-            />
-          </div>
-          <div className="absolute top-24 left-20">
-            <div className="flex justify-between w-72 items-center">
-              <h1 className="font-bold text-4xl text-white ">TV Shows</h1>
-              <select className="bg-black text-white w-24 h-6 border-2 border-white flex items-center">
-                <option value="">Genres</option>
-              </select>
-            </div>
-          </div>
+          </Box> */}
+          {/* <div className={mVideoState ? 'hidden' : 'block'}> */}
+          <NextImage
+            src="/squid-game.jpg"
+            width="1349px"
+            height="820px"
+            objectFit="cover"
+            priority={true}
+          />
+          {/* </div> */}
+
           <div className="absolute bottom-48 left-20">
             <NextImage
               src="/squid-game-text.webp"
@@ -219,25 +213,53 @@ function MainVideo() {
             // className={styles.swiperContainer}
             //üstüne gelince büyültme olayını falan yap.
           >
-            <SwiperSlide>
+            <SwiperSlide
+              onMouseLeave={() => {
+                console.log('asd');
+                setMyListVideoState(false);
+              }}
+            >
               <Flex justify="center" align="center" direction="column">
-                <Box className="swiper-player">
-                  <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-                    playing={false}
-                    width="auto"
-                    height="auto"
-                    loop={true}
+                <div
+                  className="swiper-player"
+                  onMouseEnter={() =>
+                    setTimeout(() => {
+                      setMyListVideoState(true);
+                    }, 1000)
+                  }
+                >
+                  <NextImage
+                    src="/squid-game.jpg"
+                    width="245px"
+                    height="138px"
+                    objectFit="cover"
+                    priority={true}
+                    alt="squid-game"
                   />
-                </Box>
+                </div>
                 <Box className="swiper-react-player">
-                  <ReactPlayer
-                    url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-                    playing={false}
-                    width="auto"
-                    height="auto"
-                    loop={true}
-                  />
+                  {myListVideoState ? (
+                    <ReactPlayer
+                      url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+                      playing={myListVideoState}
+                      width="auto"
+                      height="auto"
+                      loop={false}
+                      onEnded={() => {
+                        setMyListVideoState(false);
+                      }}
+                      // volume={volumeState}
+                    />
+                  ) : (
+                    <NextImage
+                      src="/squid-game.jpg"
+                      width="245px"
+                      height="138px"
+                      objectFit="cover"
+                      priority={true}
+                      alt="squid-game"
+                    />
+                  )}
                 </Box>
 
                 <Box className="sliderText">
