@@ -73,7 +73,7 @@ function MainVideo() {
         // className={styles.mainVideoDiv}
       >
         <div className="relative">
-          {/* <Box className={mVideoState ? 'block' : 'hidden'}>
+          <Box className={mVideoState ? 'block' : 'hidden'}>
             <ReactPlayer
               url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
               playing={mainVideoState && mVideoState}
@@ -85,8 +85,8 @@ function MainVideo() {
               }}
               volume={volumeState}
             />
-          </Box> */}
-          {/* <div className={mVideoState ? 'hidden' : 'block'}> */}
+          </Box>
+          <div className={mVideoState ? 'hidden' : 'block'}>
           <NextImage
             src="/squid-game.jpg"
             width="1349px"
@@ -94,7 +94,7 @@ function MainVideo() {
             objectFit="cover"
             priority={true}
           />
-          {/* </div> */}
+          </div>
 
           <div className="absolute bottom-48 left-20">
             <NextImage
