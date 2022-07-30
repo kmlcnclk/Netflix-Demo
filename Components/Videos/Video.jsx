@@ -15,7 +15,11 @@ function Video({ src, alt }) {
       align="center"
       justify="center"
       direction="column"
-      onMouseLeave={() => setVideoState(false)}
+      onMouseLeave={() =>
+        setTimeout(() => {
+          setVideoState(false);
+        }, 1100)
+      }
     >
       <Flex
         justify="flex-start"

@@ -214,10 +214,11 @@ function MainVideo() {
             //üstüne gelince büyültme olayını falan yap.
           >
             <SwiperSlide
-              onMouseLeave={() => {
-                console.log('asd');
-                setMyListVideoState(false);
-              }}
+              onMouseLeave={() =>
+                setTimeout(() => {
+                  setMyListVideoState(false);
+                }, 1100)
+              }
             >
               <Flex justify="center" align="center" direction="column">
                 <div
