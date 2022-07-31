@@ -32,6 +32,7 @@ function Video({ name }) {
             objectFit="cover"
             priority={true}
             alt="squid-game"
+            quality={100}
           />
         </div>
       </div>
