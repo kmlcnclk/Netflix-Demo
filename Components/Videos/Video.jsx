@@ -26,10 +26,10 @@ function Video({ name }) {
 
         <div className="my-swiper-image shadow-xl">
           <Image
-            src="/squid-game.jpg"
+            src="/squid-game-cut.jpg"
             width="121px"
             height="173.41px"
-            objectFit="cover"
+            objectFit="contain"
             priority={true}
             alt="squid-game"
             quality={100}
