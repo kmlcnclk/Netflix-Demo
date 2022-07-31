@@ -4,6 +4,16 @@ import {
   ExclamationIcon,
   LoudSpeakerIcon,
   NonLoudSpeakerIcon,
+  NumberOneIcon,
+  NumberTwoIcon,
+  NumberThreeIcon,
+  NumberFourIcon,
+  NumberFiveIcon,
+  NumberSixIcon,
+  NumberSevenIcon,
+  NumberEightIcon,
+  NumberNineIcon,
+  NumberTenIcon,
 } from './Icons';
 
 const Icon = ({ name, size, height, width, onClickFunc, color, className }) => {
@@ -12,6 +22,16 @@ const Icon = ({ name, size, height, width, onClickFunc, color, className }) => {
     exclamation: ExclamationIcon,
     loudSpeaker: LoudSpeakerIcon,
     nonLoudSpeaker: NonLoudSpeakerIcon,
+    numberOne: NumberOneIcon,
+    numberTwo: NumberTwoIcon,
+    numberThree: NumberThreeIcon,
+    numberFour: NumberFourIcon,
+    numberFive: NumberFiveIcon,
+    numberSix: NumberSixIcon,
+    numberSeven: NumberSevenIcon,
+    numberEight: NumberEightIcon,
+    numberNine: NumberNineIcon,
+    numberTen: NumberTenIcon,
   };
 
   const Component = icons[name];
@@ -39,6 +59,14 @@ const Icon = ({ name, size, height, width, onClickFunc, color, className }) => {
         }}
       />
     );
+  } else {
+    <Component
+      {...{
+        onClickFunc,
+        color,
+        className,
+      }}
+    />;
   }
 };
 

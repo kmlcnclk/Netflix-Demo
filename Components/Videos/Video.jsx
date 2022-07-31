@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
@@ -6,8 +6,9 @@ import { BiPlay } from 'react-icons/bi';
 import { BsPlus } from 'react-icons/bs';
 import { FiChevronDown } from 'react-icons/fi';
 import ReactPlayer from 'react-player';
+import Icon from '../../src/Icon';
 
-function Video({ src, alt }) {
+function Video({ name }) {
   const [videoState, setVideoState] = useState(false);
 
   return (
@@ -15,56 +16,25 @@ function Video({ src, alt }) {
       align="center"
       justify="center"
       direction="column"
+      w="242.78px"
       onMouseLeave={() => setVideoState(false)}
     >
-      <Flex
-        justify="flex-start"
-        align="center"
-        className="swiper-player"
-        position="relative"
-        onMouseEnter={() => setVideoState(true)}
-      >
-        {src == 10 && alt == 10 ? (
-          <>
-            <Image
-              src="/11.png"
-              alt="1"
-              width="54px"
-              height="174.44px"
-              objectFit="contain"
-              priority={true}
-            />
-            <Image
-              src="/0.png"
-              alt="0"
-              width="69px"
-              height="174.44px"
-              objectFit="contain"
-              priority={true}
-            />
-          </>
-        ) : (
-          <Image
-            src={src}
-            alt={alt}
-            width="122.11px"
-            height="174.44px"
-            objectFit="cover"
-            priority={true}
-          />
-        )}
+      <div className="swiper-player" onMouseEnter={() => setVideoState(true)}>
+        <div className="my-swiper-icon">
+          <Icon name={name} size="100%" />
+        </div>
 
-        <div className="absolute left-10 w-56 h-32 bottom-12 shadow-xl ">
+        <div className="my-swiper-image shadow-xl">
           <Image
             src="/squid-game.jpg"
             width="121px"
-            height="173px"
+            height="173.41px"
             objectFit="cover"
             priority={true}
             alt="squid-game"
           />
         </div>
-      </Flex>
+      </div>
 
       <Box className="swiper-react-player">
         {videoState ? (

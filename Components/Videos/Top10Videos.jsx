@@ -42,37 +42,36 @@ function Top10Videos() {
             pagination={{
               clickable: true,
             }}
-
           >
             <SwiperSlide>
-              <Video src="/1.png" alt="1" />
+              <Video name="numberOne" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/2.png" alt="2" />
+              <Video name="numberTwo" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/3.png" alt="3" />
+              <Video name="numberThree" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/4.png" alt="4" />
+              <Video name="numberFour" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/5.png" alt="5" />
+              <Video name="numberFive" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/6.png" alt="6" />
+              <Video name="numberSix" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/7.png" alt="7" />
+              <Video name="numberSeven" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/8.png" alt="8" />
+              <Video name="numberEight" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="/9.png" alt="9" />
+              <Video name="numberNine" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video src="10" alt="10" />
+              <Video name="numberTen" />
             </SwiperSlide>
           </Swiper>
         </Flex>
