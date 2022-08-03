@@ -8,7 +8,7 @@ import { BsPlus } from 'react-icons/bs';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { FiChevronDown } from 'react-icons/fi';
 
-function Video({ src, alt }) {
+function Video({ src, alt, url }) {
   const [myListVideoState, setMyListVideoState] = useState(false);
 
   return (
@@ -36,7 +36,7 @@ function Video({ src, alt }) {
       <Box className="swiper-react-player">
         {myListVideoState ? (
           <ReactPlayer
-            url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
+            url={url}
             playing={myListVideoState}
             width="auto"
             height="auto"
