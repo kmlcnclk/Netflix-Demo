@@ -215,18 +215,38 @@ function MainVideo() {
             //üstüne gelince büyültme olayını falan yap.
           >
             <SwiperSlide>
-              <Video />
+              <Video src="/squid-game.jpg" alt="Squid Game" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video />
+              <Video src="/the_witcher.jpg" alt="The Witcher" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video />
+              <Video
+                src="/the_umbrella_academy.jpg"
+                alt="The Umbrella Academy"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video />
+              <Video src="/sherlock_holmes.jpg" alt="Sherlock Holmes" />
             </SwiperSlide>
-            
+            <SwiperSlide>
+              <Video src="/la_casa_de_papel.jpg" alt="La casa de papel" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Video src="/vikings.jpg" alt="Vikings" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Video src="/dark.jpg" alt="Dark" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Video src="/stranger_things.jpg" alt="Stranger Things" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Video src="/lupin.jpg" alt="Lupin" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <Video src="/emily_in_paris.jpg" alt="Emily in Paris" />
+            </SwiperSlide>
           </Swiper>
         </Flex>
       </Flex>

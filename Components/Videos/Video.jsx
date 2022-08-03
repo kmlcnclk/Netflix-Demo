@@ -8,7 +8,7 @@ import { BsPlus } from 'react-icons/bs';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { FiChevronDown } from 'react-icons/fi';
 
-function Video() {
+function Video({ src, alt }) {
   const [myListVideoState, setMyListVideoState] = useState(false);
 
   return (
@@ -25,12 +25,12 @@ function Video() {
         onMouseEnter={() => setMyListVideoState(true)}
       >
         <NextImage
-          src="/squid-game.jpg"
+          src={src}
           width="245px"
           height="138px"
           objectFit="cover"
           priority={true}
-          alt="squid-game"
+          alt={alt}
         />
       </div>
       <Box className="swiper-react-player">
