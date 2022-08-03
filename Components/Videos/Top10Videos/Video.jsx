@@ -8,7 +8,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import ReactPlayer from 'react-player';
 import Icon from '../../../src/Icon';
 
-function Video({ name, src, alt }) {
+function Video({ name,src,alt }) {
   const [videoState, setVideoState] = useState(false);
 
   return (
@@ -40,8 +40,7 @@ function Video({ name, src, alt }) {
       <Box className="swiper-react-player">
         {videoState ? (
           <ReactPlayer
-            // url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-            url="https://www.youtube.com/watch?v=skJfjpYNhvM"
+            url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
             playing={videoState}
             width="auto"
             height="auto"
