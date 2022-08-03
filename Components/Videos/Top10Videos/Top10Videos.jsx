@@ -44,34 +44,62 @@ function Top10Videos() {
             }}
           >
             <SwiperSlide>
-              <Video name="numberOne" />
+              <Video
+                name="numberOne"
+                src="/squid-game-cut.jpg"
+                alt="Squid Game"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberTwo" />
+              <Video
+                name="numberTwo"
+                src="/the_witcher_cut.jpg"
+                alt="The Witcher"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberThree" />
+              <Video
+                name="numberThree"
+                src="/the_umbrella_academy_cut.jpg"
+                alt="The Umbrella Academy"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberFour" />
+              <Video
+                name="numberFour"
+                src="/sherlock_holmes_cut.jpg"
+                alt="Sherlock Holmes"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberFive" />
+              <Video
+                name="numberFive"
+                src="/la_casa_de_papel_cut.jpg"
+                alt="La casa de papel"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberSix" />
+              <Video name="numberSix" src="/vikings_cut.jpg" alt="Vikings" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberSeven" />
+              <Video name="numberSeven" src="/dark_cut.jpg" alt="Dark" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberEight" />
+              <Video
+                name="numberEight"
+                src="/stranger_things_cut.jpg"
+                alt="Stranger Things"
+              />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberNine" />
+              <Video name="numberNine" src="/lupin_cut.jpg" alt="Lupin" />
             </SwiperSlide>
             <SwiperSlide>
-              <Video name="numberTen" />
+              <Video
+                name="numberTen"
+                src="/emily_in_paris_cut.jpg"
+                alt="Emily in Paris"
+              />
             </SwiperSlide>
           </Swiper>
         </Flex>

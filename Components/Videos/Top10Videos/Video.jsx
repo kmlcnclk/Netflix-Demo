@@ -8,7 +8,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import ReactPlayer from 'react-player';
 import Icon from '../../../src/Icon';
 
-function Video({ name }) {
+function Video({ name,src,alt }) {
   const [videoState, setVideoState] = useState(false);
 
   return (
@@ -26,12 +26,12 @@ function Video({ name }) {
 
         <div className="my-swiper-image shadow-xl">
           <Image
-            src="/squid-game-cut.jpg"
+            src={src}
             width="121px"
             height="173.41px"
             objectFit="contain"
             priority={true}
-            alt="squid-game"
+            alt={alt}
             quality={100}
           />
         </div>
