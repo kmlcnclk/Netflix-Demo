@@ -1,56 +1,60 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
+import Image from 'next/image';
 import React, { useState } from 'react';
-import { SwiperSlide } from 'swiper/react';
-import NextImage from 'next/image';
-import ReactPlayer from 'react-player';
+import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { BiPlay } from 'react-icons/bi';
 import { BsPlus } from 'react-icons/bs';
-import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { FiChevronDown } from 'react-icons/fi';
+import ReactPlayer from 'react-player';
+import Icon from '../../../src/Icon';
 
-function Video() {
-  const [myListVideoState, setMyListVideoState] = useState(false);
+function Video({ name }) {
+  const [videoState, setVideoState] = useState(false);
 
   return (
     <Flex
-      justify="center"
-      w="full"
-      h="full"
       align="center"
+      justify="center"
       direction="column"
-      onMouseLeave={() => setMyListVideoState(false)}
+      w="242.78px"
+      onMouseLeave={() => setVideoState(false)}
     >
-      <div
-        className="swiper-player"
-        onMouseEnter={() => setMyListVideoState(true)}
-      >
-        <NextImage
-          src="/squid-game.jpg"
-          width="245px"
-          height="138px"
-          objectFit="cover"
-          priority={true}
-          alt="squid-game"
-        />
+      <div className="swiper-player" onMouseEnter={() => setVideoState(true)}>
+        <div className="my-swiper-icon">
+          <Icon name={name} size="100%" />
+        </div>
+
+        <div className="my-swiper-image shadow-xl">
+          <Image
+            src="/squid-game-cut.jpg"
+            width="121px"
+            height="173.41px"
+            objectFit="contain"
+            priority={true}
+            alt="squid-game"
+            quality={100}
+          />
+        </div>
       </div>
+
       <Box className="swiper-react-player">
-        {myListVideoState ? (
+        {videoState ? (
           <ReactPlayer
             url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-            playing={myListVideoState}
+            playing={videoState}
             width="auto"
             height="auto"
             loop={false}
             onEnded={() => {
-              setMyListVideoState(false);
+              setVideoState(false);
             }}
             // volume={volumeState}
           />
         ) : (
-          <NextImage
+          <Image
             src="/squid-game.jpg"
-            width="245px"
-            height="138px"
+            width="217px"
+            height="122px"
             objectFit="cover"
             priority={true}
             alt="squid-game"
