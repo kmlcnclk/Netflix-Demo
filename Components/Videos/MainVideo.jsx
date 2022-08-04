@@ -32,7 +32,7 @@ function MainVideo() {
 
   const [sliderText, setSliderText] = useState(false);
   const [mainVideoState, setMainVideoState] = useState(true);
-  const [size, setSize] = useState(true);
+  // const [size, setSize] = useState(true);
 
   const fileChangeInput = (e) => {
     const file = e.target.files[0];
@@ -58,18 +58,18 @@ function MainVideo() {
     };
     window?.addEventListener('scroll', changeBackground);
 
-    const changeWidth = () => {
-      console.log(window.innerWidth);
-      if (window.innerWidth < 885) {
-        setSize(false);
-      }
-    };
+    // const changeWidth = () => {
+    //   console.log(window.innerWidth);
+    //   if (window.innerWidth < 885) {
+    //     setSize(false);
+    //   }
+    // };
 
-    window?.addEventListener('resize', changeWidth);
+    // window?.addEventListener('resize', changeWidth);
 
     return () => {
       window?.removeEventListener(changeBackground);
-      window?.removeEventListener(changeWidth);
+      // window?.removeEventListener(changeWidth);
       clearTimeout(() => {
         setMVideoState(true);
       });
@@ -87,7 +87,7 @@ function MainVideo() {
           <Box className={mVideoState ? 'block' : 'hidden'}>
             <ReactPlayer
               url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-              playing={mainVideoState && mVideoState && size}
+              playing={mainVideoState && mVideoState}
               width="100%"
               height="820px"
               loop={false}
