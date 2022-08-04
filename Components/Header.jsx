@@ -258,7 +258,7 @@ function Header({}) {
   };
 
   return (
-    <Box ref={ref} className="transition-colors">
+    <Box ref={ref} className="transition-colors browse-header">
       {getUnclickedProfilesData && getChildFromUserData ? (
         <Flex
           // bgColor={'rgba(20, 20, 20, 0.0)'}

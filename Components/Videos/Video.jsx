@@ -13,12 +13,9 @@ function Video({ src, alt, url }) {
 
   return (
     <Flex
-      justify="center"
-      w="full"
-      h="full"
-      align="center"
-      direction="column"
+  
       onMouseLeave={() => setMyListVideoState(false)}
+      className="myMainVideoComponent"
     >
       <div
         className="swiper-player"

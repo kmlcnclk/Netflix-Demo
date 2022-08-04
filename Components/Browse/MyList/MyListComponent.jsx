@@ -483,9 +483,44 @@ class MyListComponent extends Component {
                   </Flex>
                 ))} */}
                 <Swiper
-                  slidesPerView={5}
-                  spaceBetween={10}
-                  slidesPerGroup={5}
+                  breakpoints={{
+                    320: {
+                      width: 320,
+                      slidesPerView: 1,
+                      slidesPerGroup: 1,
+                      spaceBetween: 5,
+                    },
+                    425: {
+                      width: 425,
+                      slidesPerView: 2,
+                      slidesPerGroup: 2,
+                      spaceBetween: 6,
+                    },
+                    768: {
+                      width: 768,
+                      slidesPerView: 3,
+                      slidesPerGroup: 3,
+                      spaceBetween: 7,
+                    },
+                    1000: {
+                      width: 1000,
+                      slidesPerView: 4,
+                      slidesPerGroup: 4,
+                      spaceBetween: 8,
+                    },
+                    1150: {
+                      width: 1150,
+                      slidesPerView: 5,
+                      slidesPerGroup: 5,
+                      spaceBetween: 9,
+                    },
+                    1440: {
+                      width: 1440,
+                      slidesPerView: 5,
+                      slidesPerGroup: 5,
+                      spaceBetween: 10,
+                    },
+                  }}
                   // loop={true}
                   loopFillGroupWithBlank={true}
                   pagination={{
@@ -531,11 +566,46 @@ class MyListComponent extends Component {
                       url="https://res.cloudinary.com/nextjs/video/upload/v1659515276/Money_Heist___Series_Trailer___Netflix_s0j9dd.mp4"
                     />
                   </SwiperSlide>
-                </Swiper>{' '}
+                </Swiper>
                 <Swiper
-                  slidesPerView={5}
-                  spaceBetween={10}
-                  slidesPerGroup={5}
+                  breakpoints={{
+                    320: {
+                      width: 320,
+                      slidesPerView: 1,
+                      slidesPerGroup: 1,
+                      spaceBetween: 5,
+                    },
+                    425: {
+                      width: 425,
+                      slidesPerView: 2,
+                      slidesPerGroup: 2,
+                      spaceBetween: 6,
+                    },
+                    768: {
+                      width: 768,
+                      slidesPerView: 3,
+                      slidesPerGroup: 3,
+                      spaceBetween: 7,
+                    },
+                    1000: {
+                      width: 1000,
+                      slidesPerView: 4,
+                      slidesPerGroup: 4,
+                      spaceBetween: 8,
+                    },
+                    1150: {
+                      width: 1150,
+                      slidesPerView: 5,
+                      slidesPerGroup: 5,
+                      spaceBetween: 9,
+                    },
+                    1440: {
+                      width: 1440,
+                      slidesPerView: 5,
+                      slidesPerGroup: 5,
+                      spaceBetween: 10,
+                    },
+                  }}
                   // loop={true}
                   loopFillGroupWithBlank={true}
                   pagination={{

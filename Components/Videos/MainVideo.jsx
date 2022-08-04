@@ -32,6 +32,7 @@ function MainVideo() {
 
   const [sliderText, setSliderText] = useState(false);
   const [mainVideoState, setMainVideoState] = useState(true);
+  const [size, setSize] = useState(true);
 
   const fileChangeInput = (e) => {
     const file = e.target.files[0];
@@ -57,8 +58,18 @@ function MainVideo() {
     };
     window?.addEventListener('scroll', changeBackground);
 
+    const changeWidth = () => {
+      console.log(window.innerWidth);
+      if (window.innerWidth < 885) {
+        setSize(false);
+      }
+    };
+
+    window?.addEventListener('resize', changeWidth);
+
     return () => {
       window?.removeEventListener(changeBackground);
+      window?.removeEventListener(changeWidth);
       clearTimeout(() => {
         setMVideoState(true);
       });
@@ -68,17 +79,15 @@ function MainVideo() {
   return (
     <Box bgColor="#141414">
       {/* <Script src="./Browse/mv.js" /> */}
-      <Flex
-        justify="center"
-        direction="column"
-        align="center"
+      <div
+        className="myMainVideo"
         // className={styles.mainVideoDiv}
       >
         <div className="relative">
           <Box className={mVideoState ? 'block' : 'hidden'}>
             <ReactPlayer
               url="https://res.cloudinary.com/nextjs/video/upload/v1656050304/Squid_Game_Official_Trailer_Netflix_mruikb.mp4"
-              playing={mainVideoState && mVideoState}
+              playing={mainVideoState && mVideoState && size}
               width="100%"
               height="820px"
               loop={false}
@@ -170,7 +179,7 @@ function MainVideo() {
           </Button>
         </Center>
       </Box> */}
-      </Flex>
+      </div>
       <VideoList text="My List" />
       <Top10Videos />
       <VideoList text="Trending Now" />
