@@ -54,14 +54,14 @@ a {
   padding-top: 31px;
 }
 
-.myMainVideoComponent {
+/* .myMainVideoComponent {
   justify-content: center;
   width: 100%;
   h: 100%;
   align-items: center;
   flex-direction: column;
-}
-
+} */
+/* 
 @media only screen and (min-width: 1150px) {
   .swiper-wrapper {
     padding: 60px 20px;
@@ -95,7 +95,7 @@ a {
   .myMainVideoComponent {
     width: 80%;
   }
-}
+} */
 /* .swiper-player {
     display: flex;
     align-items: center;
@@ -191,7 +191,7 @@ a {
   display: block;
 }
 
-.browse-header {
+/* .browse-header {
   display: block;
 }
 
@@ -200,13 +200,13 @@ a {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-}
+} */
 
-@media only screen and (max-width: 885px) {
+/* @media only screen and (max-width: 885px) {
   .browse-header {
     display: none;
   }
   .myMainVideo {
     display: none;
   }
-}
+} */
